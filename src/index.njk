@@ -90,6 +90,17 @@ permalink: "/"
                     </div>
                 </div>
             </article>
+
+            <!-- Card 4: Google Ads In-Feed Sponsored Scene -->
+            <div class="infeed-grid-item">
+                {% set adType = "infeed" %}
+                {% set adBrand = "Google Cloud AI" %}
+                {% set adTitle = "Supercharge Full-Stack Development with Gemini 1.5 Pro" %}
+                {% set adDesc = "Build agentic reasoning pipelines, analyze 1M token contexts, and deploy production ML microservices in minutes." %}
+                {% set adLink = "https://cloud.google.com/products/gemini" %}
+                {% set adImage = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" %}
+                {% include "google-ad.njk" %}
+            </div>
         </div>
     </div>
 </section>
@@ -142,6 +153,10 @@ permalink: "/"
 
             <!-- News Sidebar -->
             <aside class="news-sidebar">
+                <!-- Sidebar Google Ads Display Unit -->
+                {% set adType = "sidebar" %}
+                {% include "google-ad.njk" %}
+
                 <div class="sidebar-widget">
                     <h3 class="sidebar-title">Trending Now</h3>
                     <ul class="trending-list">

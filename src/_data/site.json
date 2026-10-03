@@ -4,6 +4,16 @@
   "description": "Your go-to source for viral news, entertainment, technology, lifestyle, and community discussions.",
   "url": "https://viralson.com",
   "author": "Viral Son Editorial Team",
+  "googleAdSense": {
+    "clientId": "ca-pub-9481237418920194",
+    "slots": {
+      "leaderboard": "8947291032",
+      "sidebar": "4920192831",
+      "inarticle": "3819204918",
+      "infeed": "5839201847",
+      "billboard": "9182736450"
+    }
+  },
   "navigation": [
     { "title": "Home", "url": "/" },
     { "title": "News", "url": "/news/" },

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "js-yaml": "^5.4.2"
   }
 }

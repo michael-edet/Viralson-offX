@@ -1,0 +1,208 @@
+{# Reusable Google Ads Component with AdSense & Fallback Display Scene #}
+{% if adType == 'leaderboard' %}
+<!-- Google Ads Scene: Top Leaderboard Banner (728x90 / 970x90 / 320x50 Responsive) -->
+<div class="google-ad-wrapper leaderboard-wrapper" data-ad-type="leaderboard">
+    <div class="google-ad-header">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Ads by Google / AdChoices">
+            <span>AdChoices</span>
+            <svg class="adchoices-icon" viewBox="0 0 12 12" width="12" height="12">
+                <path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/>
+            </svg>
+        </a>
+    </div>
+    
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{{ adClient | default(site.googleAdSense.clientId | default('ca-pub-9481237418920194')) }}"
+         data-ad-slot="{{ adSlot | default('8947291032') }}"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene leaderboard-scene">
+        <div class="ad-scene-brand">
+            <span class="ad-badge-google"><i class="fab fa-google"></i> Google Cloud</span>
+            <h4 class="ad-scene-title">Build Intelligence Faster with Vertex AI on Google Cloud</h4>
+            <p class="ad-scene-desc">Access state-of-the-art multimodal Gemini models, enterprise embeddings, and serverless vector search. Start with $300 free credits.</p>
+        </div>
+        <div class="ad-scene-cta">
+            <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noopener noreferrer" class="ad-cta-btn">
+                <span>Start Free</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% elif adType == 'sidebar' %}
+<!-- Google Ads Scene: Sidebar Display Unit (300x250 / 300x600 Half-Page) -->
+<div class="google-ad-wrapper sidebar-ad-wrapper" data-ad-type="sidebar">
+    <div class="google-ad-header">
+        <span class="ad-label">SPONSORED</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Ads by Google">
+            <i class="fab fa-google" style="font-size: 0.7rem; margin-right: 2px;"></i> Ad
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{{ adClient | default(site.googleAdSense.clientId | default('ca-pub-9481237418920194')) }}"
+         data-ad-slot="{{ adSlot | default('4920192831') }}"
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene sidebar-scene">
+        <div class="ad-scene-media">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80" alt="Google Hardware Showcase">
+            <span class="ad-sponsored-pill">Featured Hardware</span>
+        </div>
+        <div class="ad-scene-content">
+            <h4 class="ad-scene-title">Google Pixel 9 Pro Fold</h4>
+            <p class="ad-scene-desc">The thinnest foldable with Super Actua Flex displays and generative Gemini intelligence built right in.</p>
+            <div class="ad-scene-footer">
+                <span class="ad-price-tag">From $1,799</span>
+                <a href="https://store.google.com" target="_blank" rel="noopener noreferrer" class="ad-cta-btn small">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif adType == 'inarticle' %}
+<!-- Google Ads Scene: In-Article Mid-Content Native Unit -->
+<div class="google-ad-wrapper inarticle-ad-wrapper" data-ad-type="inarticle">
+    <div class="google-ad-header">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link">
+            <span>Ads by Google</span>
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="{{ adClient | default(site.googleAdSense.clientId | default('ca-pub-9481237418920194')) }}"
+         data-ad-slot="{{ adSlot | default('3819204918') }}"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene inarticle-scene">
+        <div class="inarticle-grid">
+            <div class="inarticle-info">
+                <span class="ad-category-tag"><i class="fas fa-code"></i> Developer Platform</span>
+                <h4 class="ad-scene-title">GitHub Copilot Enterprise: Code at the Speed of Thought</h4>
+                <p class="ad-scene-desc">Context-aware pair programming trained on your organization's private repositories. Boost sprint delivery by 55% while maintaining enterprise security compliance.</p>
+                <a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer" class="ad-cta-btn">
+                    <span>Explore Copilot</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem;"></i>
+                </a>
+            </div>
+            <div class="inarticle-thumbnail">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80" alt="Code productivity">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif adType == 'infeed' %}
+<!-- Google Ads Scene: In-Feed Native Card Unit -->
+<div class="google-ad-wrapper infeed-ad-wrapper" data-ad-type="infeed">
+    <div class="ad-infeed-card">
+        <div class="ad-infeed-image">
+            <img src="{{ adImage | default('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80') }}" alt="Sponsored Content">
+            <span class="ad-sponsored-flag">Sponsored Ad</span>
+        </div>
+        <div class="ad-infeed-content">
+            <div class="ad-infeed-meta">
+                <span class="ad-source-brand"><i class="fab fa-google"></i> {{ adBrand | default("Google Workspace") }}</span>
+                <span class="ad-infeed-bullet">•</span>
+                <span class="ad-infeed-notice">Recommended for you</span>
+            </div>
+            <h3 class="ad-infeed-title">
+                <a href="{{ adLink | default('https://workspace.google.com') }}" target="_blank" rel="noopener noreferrer">
+                    {{ adTitle | default("Transform Team Productivity with Gemini in Google Workspace") }}
+                </a>
+            </h3>
+            <p class="ad-infeed-desc">
+                {{ adDesc | default("Summarize lengthy meeting threads in Docs, synthesize spreadsheet forecasts in Sheets, and draft customer briefings in Gmail effortlessly.") }}
+            </p>
+            <div class="ad-infeed-footer">
+                <span class="ad-action-hint">Promoted Story</span>
+                <a href="{{ adLink | default('https://workspace.google.com') }}" target="_blank" rel="noopener noreferrer" class="ad-infeed-btn">
+                    Visit Website <i class="fas fa-angle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif adType == 'billboard' %}
+<!-- Google Ads Scene: Pre-Footer Large Billboard Banner (970x250 / Responsive) -->
+<div class="google-ad-wrapper billboard-wrapper" data-ad-type="billboard">
+    <div class="google-ad-header">
+        <span class="ad-label">SPONSORED SHOWCASE</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Manage Google Ads">
+            <i class="fab fa-google"></i> <span>Google Ad Services</span>
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="{{ adClient | default(site.googleAdSense.clientId | default('ca-pub-9481237418920194')) }}"
+         data-ad-slot="{{ adSlot | default('9182736450') }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene billboard-scene">
+        <div class="billboard-scene-inner">
+            <div class="billboard-text">
+                <span class="billboard-kicker"><i class="fas fa-shield-alt"></i> Official Partner Feature</span>
+                <h3 class="billboard-title">Next-Generation Privacy & Threat Protection with NordVPN</h3>
+                <p class="billboard-desc">Protect your browsing telemetry across public Wi-Fi networks with high-speed 10Gbps servers in 111 countries and built-in malware filtration.</p>
+                <div class="billboard-features">
+                    <span><i class="fas fa-check-circle"></i> Zero-logs audited</span>
+                    <span><i class="fas fa-check-circle"></i> Threat Protection Pro</span>
+                    <span><i class="fas fa-check-circle"></i> 30-day money-back guarantee</span>
+                </div>
+            </div>
+            <div class="billboard-action">
+                <a href="https://nordvpn.com" target="_blank" rel="noopener noreferrer" class="billboard-cta-btn">
+                    <span>Get 71% Off + 3 Months</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <span class="billboard-disclaimer">Special offer for Viral Son readers</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif adType == 'anchor' %}
+<!-- Google Ads Scene: Sticky Bottom Viewport Floating Anchor Ad -->
+<div class="google-ad-anchor-container" id="googleAdAnchor">
+    <div class="google-ad-anchor-bar">
+        <div class="anchor-ad-content">
+            <div class="anchor-ad-badge">
+                <span class="ad-label">AD</span>
+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="anchor-adchoices" title="Ads by Google">
+                    <svg viewBox="0 0 12 12" width="10" height="10"><path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/></svg>
+                </a>
+            </div>
+            <div class="anchor-ad-text">
+                <strong>Google Developers:</strong> Accelerate your full-stack roadmap with Firebase Data Connect and Studio tooling.
+            </div>
+            <a href="https://firebase.google.com" target="_blank" rel="noopener noreferrer" class="anchor-ad-cta">
+                Try Free &rarr;
+            </a>
+        </div>
+        <button type="button" class="anchor-close-btn" onclick="dismissAnchorAd()" aria-label="Close Ad">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+{% endif %}

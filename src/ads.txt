@@ -1,0 +1,2 @@
+# Google AdSense Publisher Authorization File for viralson.com
+google.com, pub-9481237418920194, DIRECT, f08c47fec0942fa0

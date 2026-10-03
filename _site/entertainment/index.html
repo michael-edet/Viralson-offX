@@ -18,8 +18,22 @@
     
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <!-- Theme Initialization to prevent FOUC -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('viralson_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
-<body>
+<body class="">
     <!-- Global Reusable Page Loader -->
     <!-- Reusable Page Loader Component -->
 <div class="page-loader" id="pageLoader">
@@ -51,44 +65,281 @@
 
 
     <!-- Dynamic Header -->
-    <!-- Dynamic Header Component -->
+    <!-- Header Component with Search, Dark Mode & Navigation -->
 <header>
     <div class="container header-container">
         <a href="/" class="logo">
             <div class="logo-icon">VS</div>
             <div class="logo-text">Viral Son</div>
         </a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-wrapper">
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/" class="nav-link ">Home</a></li>
                 <li><a href="/news/" class="nav-link ">News</a></li>
                 <li><a href="/entertainment/" class="nav-link active">Entertainment</a></li>
                 <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/sports/" class="nav-link ">Sports</a></li>
                 <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
                 <li><a href="/community/" class="nav-link ">Community</a></li>
                 <li><a href="/about/" class="nav-link ">About</a></li>
             </ul>
         </nav>
+
+        <!-- Header Actions: Search, Dark Mode, Mobile Toggle -->
+        <div class="header-actions">
+            <!-- Studio CMS Button -->
+            <a href="/admin/" class="action-btn studio-trigger" aria-label="Open Content Management Studio" title="Open Content Publishing Studio" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dark); background: var(--light-blue); padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.82rem; border: 1px solid rgba(52, 152, 219, 0.25);">
+                <i class="fas fa-feather-alt" style="color: var(--primary-blue);"></i>
+                <span class="studio-label">CMS Studio</span>
+            </a>
+
+            <!-- Search Button -->
+            <button class="action-btn search-trigger" id="searchOpenBtn" aria-label="Open search dialog" title="Search site (Press /)">
+                <i class="fas fa-search"></i>
+                <span class="search-hint">Search...</span>
+            </button>
+
+            <!-- Dark Mode Toggle Button -->
+            <button class="action-btn theme-toggle" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
     </div>
 </header>
 
+<!-- Site-Wide Search Modal Overlay -->
+<div class="search-modal-backdrop" id="searchModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="search-modal-card">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-input-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search news, tech, music, guides, topics..." autocomplete="off">
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search input" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+            <button type="button" id="searchCloseBtn" class="search-close-btn" aria-label="Close search">
+                <span class="esc-badge">ESC</span>
+            </button>
+        </div>
+
+        <div class="search-results-container">
+            <div id="searchResultsSummary" class="search-summary" style="display: none;"></div>
+            <ul id="searchResultsList" class="search-results-list"></ul>
+            <div id="searchEmptyState" class="search-empty-state">
+                <i class="fas fa-search" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.8rem; opacity: 0.6;"></i>
+                <p>Type keywords to search across articles, audio downloads, and topic hubs.</p>
+                <div class="search-quick-tags">
+                    <span>Popular:</span>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Climate')">Climate</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('AI')">AI</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Phone')">Phone</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Music')">Music</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Productivity')">Productivity</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Header Navigation, Search, and Dark Mode Logic
     (function() {
-        const btn = document.getElementById('mobileMenuBtn');
-        const menu = document.getElementById('navMenu');
-        if (btn && menu) {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menu.classList.toggle('active');
+        // --- 1. Dark Mode Functionality ---
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeBtn.setAttribute('title', 'Switch to light mode');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeBtn.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeIcon(currentTheme);
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('viralson_theme', newTheme);
+                updateThemeIcon(newTheme);
             });
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('header')) {
-                    menu.classList.remove('active');
+        }
+
+        // --- 2. Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileBtn && navMenu) {
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'fas fa-times';
+                } else {
+                    menuIcon.className = 'fas fa-bars';
                 }
             });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    navMenu.classList.remove('active');
+                    if (menuIcon) menuIcon.className = 'fas fa-bars';
+                }
+            });
+        }
+
+        // --- 3. Site-Wide Search Functionality ---
+        const searchModal = document.getElementById('searchModal');
+        const searchOpenBtn = document.getElementById('searchOpenBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const resultsList = document.getElementById('searchResultsList');
+        const resultsSummary = document.getElementById('searchResultsSummary');
+        const emptyState = document.getElementById('searchEmptyState');
+
+        let searchData = [];
+        let dataFetched = false;
+
+        async function fetchSearchIndex() {
+            if (dataFetched) return;
+            try {
+                const res = await fetch('/search-index.json');
+                if (res.ok) {
+                    searchData = await res.json();
+                    dataFetched = true;
+                }
+            } catch (err) {
+                console.warn('Could not load search index:', err);
+            }
+        }
+
+        function openSearch() {
+            fetchSearchIndex();
+            searchModal.classList.add('open');
+            searchModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => searchInput.focus(), 50);
+        }
+
+        function closeSearch() {
+            searchModal.classList.remove('open');
+            searchModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        if (searchOpenBtn) searchOpenBtn.addEventListener('click', openSearch);
+        if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+
+        // Click outside modal card to close
+        searchModal.addEventListener('click', function(e) {
+            if (e.target === searchModal) {
+                closeSearch();
+            }
+        });
+
+        // Keyboard shortcuts: '/' or 'Cmd/Ctrl+K' to open, ESC to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchModal.classList.contains('open')) {
+                closeSearch();
+            } else if ((e.key === '/' || (e.ctrlKey && e.key === 'k') || (e.metaKey && e.key === 'k')) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                e.preventDefault();
+                openSearch();
+            }
+        });
+
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchClearBtn.style.display = 'none';
+                executeSearch('');
+                searchInput.focus();
+            });
+        }
+
+        window.quickSearch = function(term) {
+            searchInput.value = term;
+            searchClearBtn.style.display = 'block';
+            executeSearch(term);
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                searchClearBtn.style.display = query.length > 0 ? 'block' : 'none';
+                executeSearch(query);
+            });
+        }
+
+        function executeSearch(query) {
+            if (!query || query.length < 2) {
+                resultsList.innerHTML = '';
+                resultsSummary.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            const qLower = query.toLowerCase();
+            const matches = searchData.filter(item => {
+                const inTitle = item.title.toLowerCase().includes(qLower);
+                const inExcerpt = (item.excerpt || '').toLowerCase().includes(qLower);
+                const inCategory = (item.category || '').toLowerCase().includes(qLower);
+                const inTags = (item.tags || []).some(t => t.toLowerCase().includes(qLower));
+                return inTitle || inExcerpt || inCategory || inTags;
+            });
+
+            emptyState.style.display = 'none';
+            resultsSummary.style.display = 'block';
+            resultsSummary.innerHTML = `Found <strong>${matches.length}</strong> result${matches.length === 1 ? '' : 's'} for "<strong>${escapeHtml(query)}</strong>"`;
+
+            if (matches.length === 0) {
+                resultsList.innerHTML = `
+                    <li class="search-no-results">
+                        <i class="far fa-frown" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-light);"></i>
+                        <p>No matches found. Try searching for "climate", "foldable", "music", or "AI".</p>
+                    </li>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = matches.map(item => `
+                <li class="search-result-item">
+                    <a href="${item.url}" class="search-result-link">
+                        <div class="search-result-meta">
+                            <span class="search-category-pill">${item.category}</span>
+                            <span class="search-result-date">${item.date || ''}</span>
+                        </div>
+                        <h4 class="search-result-title">${highlightMatch(item.title, query)}</h4>
+                        <p class="search-result-excerpt">${highlightMatch(item.excerpt || '', query)}</p>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlightMatch(text, query) {
+            if (!text || !query) return escapeHtml(text || '');
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return escaped.replace(regex, '<mark class="search-highlight">$1</mark>');
         }
     })();
 </script>
@@ -107,18 +358,18 @@
 </section>
 
 <div class="container">
-    <!-- Category Filter Pills -->
-    <div class="filter-pills">
-        <span class="filter-pill active">All Entertainment</span>
-        <span class="filter-pill">Music Festivals</span>
-        <span class="filter-pill">Audio Releases</span>
-        <span class="filter-pill">Movies & TV</span>
-        <span class="filter-pill">Interviews</span>
+    <!-- Category Filter Pills with Auto-Selection Tags -->
+    <div class="filter-pills" id="entFilterPills">
+        <span class="filter-pill active" data-tag="all">All Entertainment</span>
+        <span class="filter-pill" data-tag="festivals">Music Festivals</span>
+        <span class="filter-pill" data-tag="music">Music Releases</span>
+        <span class="filter-pill" data-tag="movies">Movies & TV</span>
+        <span class="filter-pill" data-tag="interviews">Interviews</span>
     </div>
 
     <div class="posts-grid">
         <!-- Card 1: Festival -->
-        <article class="post-card">
+        <article class="post-card" data-tags="festivals live music concerts summer lineup">
             <div class="post-image">
                 <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?auto=format&fit=crop&w=600&q=80" alt="Summer Music Festival">
             </div>
@@ -133,87 +384,199 @@
             </div>
         </article>
 
-        <!-- Card 2: Single Download -->
-        <article class="post-card">
+        <!-- Card 2: Music & Movie Release News -->
+        <article class="post-card" data-tags="music releases audio aurora spotify youtube">
             <div class="post-image">
                 <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Midnight Whispers Track">
             </div>
             <div class="post-content">
-                <span class="post-category ent">Music Release</span>
-                <h3 class="post-title"><a href="/download/music/">"Midnight Whispers" by Aurora (Single)</a></h3>
-                <p class="post-excerpt">Ambient electronic textures meet soulful acoustic vocals. Download in high-definition 320kbps MP3 and FLAC.</p>
+                <span class="post-category ent">Music Release & Video</span>
+                <h3 class="post-title"><a href="/download/music/">"Midnight Whispers" by Aurora (Official Release)</a></h3>
+                <p class="post-excerpt">Ambient electronic textures meet soulful acoustic vocals. Preview with interactive YouTube, Spotify, and Apple Music widgets.</p>
                 <div class="post-meta">
-                    <span>Lossless Audio</span>
-                    <a href="/download/music/" class="btn btn-green" style="padding: 4px 12px; font-size: 0.85rem;">Download</a>
+                    <span>Official Release</span>
+                    <a href="/download/music/" class="btn btn-green" style="padding: 4px 12px; font-size: 0.85rem;">Watch & Listen</a>
                 </div>
             </div>
         </article>
 
-        <!-- Card 3: Audio Player Track -->
-        <article class="post-card">
+        <!-- Card 3: Movie Soundtrack & Trailer -->
+        <article class="post-card" data-tags="movies cinema streaming tv film trailer youtube">
             <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Alex Parker Track">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80" alt="Sci-fi Cinema Release">
+            </div>
+            <div class="post-content">
+                <span class="post-category ent">Movie Teaser & Score</span>
+                <h3 class="post-title"><a href="/download/music0/">"Echoes of Tomorrow" Sci-Fi Film Teaser & Score</a></h3>
+                <p class="post-excerpt">Cyberpunk sci-fi thriller release news featuring 4K YouTube teaser trailer and full soundtrack streaming widgets.</p>
+                <div class="post-meta">
+                    <span>Cinema Preview</span>
+                    <a href="/download/music0/" class="btn btn-purple" style="padding: 4px 12px; font-size: 0.85rem;">Trailer & Score</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 4: Audio Single Teaser -->
+        <article class="post-card" data-tags="music audio single synthwave track player">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80" alt="Alex Parker Single">
             </div>
             <div class="post-content">
                 <span class="post-category ent">Track Premiere</span>
                 <h3 class="post-title"><a href="/posts/midnight-dreams-track/">"Midnight Dreams" by Alex Parker</a></h3>
-                <p class="post-excerpt">Interactive audio stream, track stems, and studio liner notes from Alex Parker's upcoming concept album.</p>
+                <p class="post-excerpt">Interactive audio player, track stems, and behind-the-scenes recording diary of Parker's newest album preview.</p>
                 <div class="post-meta">
                     <span>June 9, 2026</span>
-                    <a href="/posts/midnight-dreams-track/" class="btn btn-purple" style="padding: 4px 12px; font-size: 0.85rem;">Listen Online</a>
+                    <a href="/posts/midnight-dreams-track/" style="color: var(--primary-blue); font-weight: 600;">Stream Track &rarr;</a>
                 </div>
             </div>
         </article>
 
-        <!-- Card 4: Feature Article -->
-        <article class="post-card">
+        <!-- Card 5: Artist Interview -->
+        <article class="post-card" data-tags="interviews music culture production artists">
             <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=600&q=80" alt="Sci-fi blockbuster">
+                <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=600&q=80" alt="Music production studio">
             </div>
             <div class="post-content">
-                <span class="post-category ent">Cinema</span>
-                <h3 class="post-title"><a href="/posts/summer-music-festival/">Critics Praise Groundbreaking Sci-Fi Epic</a></h3>
-                <p class="post-excerpt">Director interview on blending practical animatronics with real-time digital virtual production environments.</p>
+                <span class="post-category ent">Artist Interview</span>
+                <h3 class="post-title"><a href="/posts/midnight-whispers/">Inside the Analog Synth Revival with Producers</a></h3>
+                <p class="post-excerpt">Grammy-winning electronic artists discuss modular hardware, tape saturation, and staying analog in an AI world.</p>
                 <div class="post-meta">
-                    <span>June 13, 2026</span>
-                    <a href="/posts/summer-music-festival/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 5: Streaming Phenomenon -->
-        <article class="post-card">
-            <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?auto=format&fit=crop&w=600&q=80" alt="Streaming series">
-            </div>
-            <div class="post-content">
-                <span class="post-category ent">Streaming</span>
-                <h3 class="post-title"><a href="/posts/midnight-whispers/">Mystery Drama Finale Sets Viewership Record</a></h3>
-                <p class="post-excerpt">Over 45 million households tuned in across 80 countries for the tense conclusion of the international thriller.</p>
-                <div class="post-meta">
-                    <span>June 11, 2026</span>
-                    <a href="/posts/midnight-whispers/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 6: Author Profile -->
-        <article class="post-card">
-            <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80" alt="Literary release">
-            </div>
-            <div class="post-content">
-                <span class="post-category ent">Literature</span>
-                <h3 class="post-title"><a href="/posts/simple-post/">Award-Winning Author Unveils New Dystopian Novel</a></h3>
-                <p class="post-excerpt">An exclusive excerpt and Q&A on speculative fiction, societal shifts, and worldbuilding techniques.</p>
-                <div class="post-meta">
-                    <span>June 8, 2026</span>
-                    <a href="/posts/simple-post/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                    <span>June 7, 2026</span>
+                    <a href="/posts/midnight-whispers/" style="color: var(--primary-blue); font-weight: 600;">Read Interview &rarr;</a>
                 </div>
             </div>
         </article>
     </div>
 </div>
+
+<!-- Category Tabs & Dynamic Tag Filter Script -->
+<script>
+    (function() {
+        function initCategoryFilter() {
+            const filterContainer = document.querySelector('.filter-pills');
+            if (!filterContainer) return;
+
+            const pills = filterContainer.querySelectorAll('.filter-pill');
+            if (!pills.length) return;
+
+            // Find all filterable article items
+            const filterableCards = document.querySelectorAll('[data-tags]');
+            if (!filterableCards.length) return;
+
+            // Empty state container element
+            let emptyState = document.getElementById('categoryFilterEmptyState');
+            if (!emptyState) {
+                emptyState = document.createElement('div');
+                emptyState.id = 'categoryFilterEmptyState';
+                emptyState.className = 'category-filter-empty';
+                emptyState.style.display = 'none';
+                emptyState.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 1.5rem; background: var(--card-bg); border-radius: var(--radius-md); border: 1px dashed var(--border-color); margin: 2rem 0;">
+                        <i class="fas fa-filter" style="font-size: 2.2rem; color: var(--primary-blue); opacity: 0.6; margin-bottom: 0.8rem;"></i>
+                        <h4 style="font-size: 1.25rem; color: var(--text-dark); margin-bottom: 0.4rem;">No articles found under this tag</h4>
+                        <p style="color: var(--text-light); font-size: 0.92rem; margin-bottom: 1.2rem;">Try selecting a different topic or return to all stories.</p>
+                        <button type="button" class="btn btn-outline" id="resetCategoryFilterBtn">Show All Stories</button>
+                    </div>
+                `;
+                
+                // Append after grid or container
+                const grid = document.querySelector('.posts-grid') || document.querySelector('.news-container');
+                if (grid && grid.parentNode) {
+                    grid.parentNode.insertBefore(emptyState, grid.nextSibling);
+                }
+            }
+
+            const resetBtn = document.getElementById('resetCategoryFilterBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => applyFilter('all'));
+            }
+
+            function applyFilter(selectedTag) {
+                const normalizedFilter = (selectedTag || 'all').toLowerCase().trim();
+
+                // Update active class on pills
+                pills.forEach(pill => {
+                    const pillTag = (pill.getAttribute('data-tag') || pill.textContent || '').toLowerCase().trim();
+                    const isAll = (normalizedFilter === 'all' && (pillTag.includes('all') || pillTag === 'all'));
+                    const isMatch = pillTag.includes(normalizedFilter) || normalizedFilter.includes(pillTag) || (pill.getAttribute('data-tag') === normalizedFilter);
+
+                    if (isAll || isMatch) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+
+                // Filter cards
+                let matchCount = 0;
+                filterableCards.forEach(card => {
+                    const cardTags = (card.getAttribute('data-tags') || '').toLowerCase();
+                    const cardCategory = (card.querySelector('.post-category')?.textContent || '').toLowerCase();
+                    const cardTitle = (card.querySelector('h2, h3, h4')?.textContent || '').toLowerCase();
+
+                    const matches = normalizedFilter === 'all' || 
+                                    cardTags.includes(normalizedFilter) || 
+                                    cardCategory.includes(normalizedFilter) ||
+                                    cardTitle.includes(normalizedFilter);
+
+                    if (matches) {
+                        card.style.display = '';
+                        card.classList.remove('filter-hidden');
+                        card.classList.add('filter-visible');
+                        matchCount++;
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.add('filter-hidden');
+                        card.classList.remove('filter-visible');
+                    }
+                });
+
+                // Handle empty state
+                if (matchCount === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+
+                // Update query parameter without page reload
+                try {
+                    const url = new URL(window.location.href);
+                    if (normalizedFilter === 'all') {
+                        url.searchParams.delete('tag');
+                    } else {
+                        url.searchParams.set('tag', normalizedFilter);
+                    }
+                    window.history.replaceState({}, '', url.toString());
+                } catch (e) {}
+            }
+
+            // Click event listeners for filter pills
+            pills.forEach(pill => {
+                pill.style.cursor = 'pointer';
+                pill.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tag = this.getAttribute('data-tag') || this.textContent.trim();
+                    applyFilter(tag);
+                });
+            });
+
+            // Auto-selection on page load from URL (?tag=... or #...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tagFromUrl = urlParams.get('tag') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+            if (tagFromUrl) {
+                applyFilter(tagFromUrl);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCategoryFilter);
+        } else {
+            initCategoryFilter();
+        }
+    })();
+</script>
+
 
     </main>
 
@@ -247,9 +610,11 @@
                     <li class="footer-link"><a href="/news/">News</a></li>
                     <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
                     <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/sports/">Sports</a></li>
                     <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
                     <li class="footer-link"><a href="/community/">Community Hub</a></li>
                     <li class="footer-link"><a href="/about/">About Us</a></li>
+                    <li class="footer-link"><a href="/admin/"><i class="fas fa-feather-alt" style="font-size: 0.8rem; margin-right: 4px; color: var(--primary-blue);"></i> Content Studio</a></li>
                 </ul>
             </div>
 
@@ -289,10 +654,195 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+            <p>&copy; <span id="footerCurrentYear">2026</span> Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
         </div>
     </div>
 </footer>
+
+<!-- Auto-Update Yearly Date Script -->
+<script>
+    (function() {
+        const yearEl = document.getElementById('footerCurrentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    })();
+</script>
+
+
+    <!-- Sitewide Newsletter Popup Modal -->
+    <!-- Triggered Newsletter Signup Modal with Blur Backdrop & Theme Matching -->
+<div class="newsletter-modal-backdrop" id="newsletterModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="newsletter-modal-card" id="newsletterModalCard">
+        <!-- Prominent Close Button -->
+        <button type="button" class="newsletter-close-btn" id="newsletterCloseBtn" aria-label="Close newsletter popup" title="Close (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Badge -->
+        <div class="newsletter-modal-badge">
+            <i class="fas fa-bolt" style="margin-right: 5px; color: var(--primary-blue);"></i> Daily Viral Dispatch
+        </div>
+
+        <h3 class="newsletter-modal-title">Stay Ahead of the Curve</h3>
+        <p class="newsletter-modal-desc">
+            Get our editors' top investigative scoops, breaking tech & sports reports, and cultural premieres delivered directly to your inbox every morning.
+        </p>
+
+        <!-- Newsletter Submission Form -->
+        <form id="newsletterModalForm" class="newsletter-modal-form">
+            <div class="newsletter-input-group">
+                <input type="email" id="newsletterModalEmail" class="newsletter-modal-input" placeholder="Enter your email address" required autocomplete="email">
+                <button type="submit" class="btn newsletter-modal-submit" id="newsletterModalSubmit">
+                    <span>Subscribe Free</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </div>
+            <p class="newsletter-privacy-note">
+                <i class="fas fa-shield-alt" style="color: var(--green); margin-right: 4px;"></i> Zero spam. One-click unsubscribe anytime.
+            </p>
+        </form>
+
+        <!-- Success Confirmation State (shown post-submit) -->
+        <div id="newsletterSuccessState" class="newsletter-success-state" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--green); margin-bottom: 0.8rem;"></i>
+            <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark);">Welcome to Viral Son!</h4>
+            <p style="font-size: 0.92rem; color: var(--text-light);">You're on the VIP list. We've queued your first morning briefing.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const COOKIE_NAME = 'viralson_newsletter_suppressed';
+        const SUPPRESSION_DAYS = 14;
+
+        // Check if on home/index page
+        const path = window.location.pathname;
+        const isIndexPage = path === '/' || path === '/index.html' || path === '';
+
+        // Only trigger on the index page
+        if (!isIndexPage) return;
+
+        // Cookie & Storage Helpers
+        function getCookie(name) {
+            try {
+                const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+                return match ? decodeURIComponent(match[3]) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+                localStorage.setItem(name, 'true');
+            } catch (e) {}
+        }
+
+        function isSuppressed() {
+            try {
+                if (getCookie(COOKIE_NAME) === 'true') return true;
+                if (localStorage.getItem(COOKIE_NAME) === 'true') return true;
+            } catch (e) {}
+            return false;
+        }
+
+        if (isSuppressed()) return;
+
+        const backdrop = document.getElementById('newsletterModalBackdrop');
+        const card = document.getElementById('newsletterModalCard');
+        const closeBtn = document.getElementById('newsletterCloseBtn');
+        const form = document.getElementById('newsletterModalForm');
+        const successState = document.getElementById('newsletterSuccessState');
+        const emailInput = document.getElementById('newsletterModalEmail');
+
+        if (!backdrop || !card) return;
+
+        let modalShown = false;
+        let timer = null;
+
+        function showModal() {
+            if (modalShown || isSuppressed()) return;
+            modalShown = true;
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('scroll', checkScroll);
+
+            backdrop.style.display = 'flex';
+            backdrop.setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                backdrop.classList.add('visible');
+                if (emailInput) emailInput.focus();
+            }, 30);
+        }
+
+        function closeModal(suppressDays = SUPPRESSION_DAYS) {
+            setCookie(COOKIE_NAME, 'true', suppressDays);
+            backdrop.classList.remove('visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 350);
+        }
+
+        // Trigger 1: 50% Scroll of page content
+        function checkScroll() {
+            if (modalShown) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal <= 0) return;
+            const currentScroll = window.scrollY || window.pageYOffset;
+            if ((currentScroll / scrollTotal) >= 0.50) {
+                showModal();
+            }
+        }
+
+        // Trigger 2: Exactly 30 seconds on index page
+        timer = setTimeout(showModal, 30000);
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+
+        // Close Handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeModal(SUPPRESSION_DAYS);
+            });
+        }
+
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('visible')) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                if (!email) return;
+
+                form.style.display = 'none';
+                if (successState) successState.style.display = 'block';
+
+                setCookie(COOKIE_NAME, 'true', 60);
+
+                setTimeout(function() {
+                    closeModal(60);
+                }, 2600);
+            });
+        }
+    })();
+</script>
 
 </body>
 </html>

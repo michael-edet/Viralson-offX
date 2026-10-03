@@ -1,0 +1,51 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "Assets/images/uploads"
+public_folder: "/Assets/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Articles & Stories"
+    label_singular: "Article"
+    folder: "src/posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "njk"
+    format: "frontmatter"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/post.njk" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Permalink", name: "permalink", widget: "string", hint: "e.g. /posts/your-custom-slug/" }
+      - { label: "Category", name: "category", widget: "select", options: ["News", "Technology", "Entertainment", "Sports", "Lifestyle", "Community"], default: "Technology" }
+      - { label: "Category URL", name: "categoryUrl", widget: "hidden", default: "/technology/" }
+      - { label: "Category Class", name: "categoryClass", widget: "hidden", default: "tech" }
+      - { label: "Publication Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", dateFormat: "YYYY-MM-DD", timeFormat: false }
+      - { label: "Author", name: "author", widget: "string", default: "Viral Son Editorial" }
+      - { label: "Author Bio", name: "authorBio", widget: "string", required: false }
+      - { label: "Estimated Read Time", name: "readTime", widget: "string", default: "5 min read" }
+      - { label: "View Count", name: "views", widget: "string", default: "1.2K views" }
+      - { label: "Meta Description", name: "description", widget: "text" }
+      - { label: "Article Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Featured Image URL", name: "image", widget: "image" }
+      - { label: "Featured Image Caption", name: "imageCaption", widget: "string", required: false }
+      - { label: "Topic Tags", name: "tags", widget: "list", default: ["Trending", "Featured"] }
+      - { label: "Draft Mode", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Article Content", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "Site Settings"
+    delete: false
+    files:
+      - name: "site"
+        label: "Global Site Metadata"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Site Name", name: "name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Site URL", name: "url", widget: "string" }
+          - { label: "Contact Email", name: "email", widget: "string" }

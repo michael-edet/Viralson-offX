@@ -55,6 +55,10 @@ isPost: true
                 {{ content | safe }}
             </div>
 
+            <!-- In-Article Google Ads Native Scene -->
+            {% set adType = "inarticle" %}
+            {% include "google-ad.njk" %}
+
             <!-- Post Tags & Share Buttons -->
             <div class="post-footer-tools">
                 <div class="post-tags">
@@ -137,6 +141,10 @@ isPost: true
 
         <!-- Sidebar -->
         <aside class="news-sidebar">
+            <!-- Sidebar Google Ads Display Unit -->
+            {% set adType = "sidebar" %}
+            {% include "google-ad.njk" %}
+
             <div class="sidebar-widget">
                 <h3 class="sidebar-title">Trending in {{ category | default("Stories") }}</h3>
                 <ul class="trending-list">

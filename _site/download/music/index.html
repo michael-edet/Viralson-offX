@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download &quot;Midnight Whispers&quot; by Aurora</title>
-    <meta name="description" content="Direct high-speed lossless download for &#39;Midnight Whispers&#39; by Aurora. Available in 320kbps MP3 and FLAC format.">
+    <title>Premiere: &quot;Midnight Whispers&quot; by Aurora — Official Single &amp; Visualizer Release</title>
+    <meta name="description" content="Official music &amp; cinematic release news for &#39;Midnight Whispers&#39; by Aurora. Stream via automated YouTube, Spotify, Apple Music, and Audiomack preview widgets.">
     
     <!-- OpenGraph Metadata -->
-    <meta property="og:title" content="Download &quot;Midnight Whispers&quot; by Aurora">
-    <meta property="og:description" content="Direct high-speed lossless download for &#39;Midnight Whispers&#39; by Aurora. Available in 320kbps MP3 and FLAC format.">
+    <meta property="og:title" content="Premiere: &quot;Midnight Whispers&quot; by Aurora — Official Single &amp; Visualizer Release">
+    <meta property="og:description" content="Official music &amp; cinematic release news for &#39;Midnight Whispers&#39; by Aurora. Stream via automated YouTube, Spotify, Apple Music, and Audiomack preview widgets.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://viralson.com/download/music/">
     
@@ -20,8 +20,22 @@
     
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <!-- Theme Initialization to prevent FOUC -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('viralson_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
-<body>
+<body class="post-detail-page">
     <!-- Global Reusable Page Loader -->
     <!-- Reusable Page Loader Component -->
 <div class="page-loader" id="pageLoader">
@@ -53,44 +67,281 @@
 
 
     <!-- Dynamic Header -->
-    <!-- Dynamic Header Component -->
+    <!-- Header Component with Search, Dark Mode & Navigation -->
 <header>
     <div class="container header-container">
         <a href="/" class="logo">
             <div class="logo-icon">VS</div>
             <div class="logo-text">Viral Son</div>
         </a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-wrapper">
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/" class="nav-link ">Home</a></li>
                 <li><a href="/news/" class="nav-link ">News</a></li>
                 <li><a href="/entertainment/" class="nav-link active">Entertainment</a></li>
                 <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/sports/" class="nav-link ">Sports</a></li>
                 <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
                 <li><a href="/community/" class="nav-link ">Community</a></li>
                 <li><a href="/about/" class="nav-link ">About</a></li>
             </ul>
         </nav>
+
+        <!-- Header Actions: Search, Dark Mode, Mobile Toggle -->
+        <div class="header-actions">
+            <!-- Studio CMS Button -->
+            <a href="/admin/" class="action-btn studio-trigger" aria-label="Open Content Management Studio" title="Open Content Publishing Studio" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dark); background: var(--light-blue); padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.82rem; border: 1px solid rgba(52, 152, 219, 0.25);">
+                <i class="fas fa-feather-alt" style="color: var(--primary-blue);"></i>
+                <span class="studio-label">CMS Studio</span>
+            </a>
+
+            <!-- Search Button -->
+            <button class="action-btn search-trigger" id="searchOpenBtn" aria-label="Open search dialog" title="Search site (Press /)">
+                <i class="fas fa-search"></i>
+                <span class="search-hint">Search...</span>
+            </button>
+
+            <!-- Dark Mode Toggle Button -->
+            <button class="action-btn theme-toggle" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
     </div>
 </header>
 
+<!-- Site-Wide Search Modal Overlay -->
+<div class="search-modal-backdrop" id="searchModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="search-modal-card">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-input-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search news, tech, music, guides, topics..." autocomplete="off">
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search input" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+            <button type="button" id="searchCloseBtn" class="search-close-btn" aria-label="Close search">
+                <span class="esc-badge">ESC</span>
+            </button>
+        </div>
+
+        <div class="search-results-container">
+            <div id="searchResultsSummary" class="search-summary" style="display: none;"></div>
+            <ul id="searchResultsList" class="search-results-list"></ul>
+            <div id="searchEmptyState" class="search-empty-state">
+                <i class="fas fa-search" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.8rem; opacity: 0.6;"></i>
+                <p>Type keywords to search across articles, audio downloads, and topic hubs.</p>
+                <div class="search-quick-tags">
+                    <span>Popular:</span>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Climate')">Climate</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('AI')">AI</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Phone')">Phone</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Music')">Music</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Productivity')">Productivity</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Header Navigation, Search, and Dark Mode Logic
     (function() {
-        const btn = document.getElementById('mobileMenuBtn');
-        const menu = document.getElementById('navMenu');
-        if (btn && menu) {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menu.classList.toggle('active');
+        // --- 1. Dark Mode Functionality ---
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeBtn.setAttribute('title', 'Switch to light mode');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeBtn.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeIcon(currentTheme);
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('viralson_theme', newTheme);
+                updateThemeIcon(newTheme);
             });
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('header')) {
-                    menu.classList.remove('active');
+        }
+
+        // --- 2. Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileBtn && navMenu) {
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'fas fa-times';
+                } else {
+                    menuIcon.className = 'fas fa-bars';
                 }
             });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    navMenu.classList.remove('active');
+                    if (menuIcon) menuIcon.className = 'fas fa-bars';
+                }
+            });
+        }
+
+        // --- 3. Site-Wide Search Functionality ---
+        const searchModal = document.getElementById('searchModal');
+        const searchOpenBtn = document.getElementById('searchOpenBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const resultsList = document.getElementById('searchResultsList');
+        const resultsSummary = document.getElementById('searchResultsSummary');
+        const emptyState = document.getElementById('searchEmptyState');
+
+        let searchData = [];
+        let dataFetched = false;
+
+        async function fetchSearchIndex() {
+            if (dataFetched) return;
+            try {
+                const res = await fetch('/search-index.json');
+                if (res.ok) {
+                    searchData = await res.json();
+                    dataFetched = true;
+                }
+            } catch (err) {
+                console.warn('Could not load search index:', err);
+            }
+        }
+
+        function openSearch() {
+            fetchSearchIndex();
+            searchModal.classList.add('open');
+            searchModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => searchInput.focus(), 50);
+        }
+
+        function closeSearch() {
+            searchModal.classList.remove('open');
+            searchModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        if (searchOpenBtn) searchOpenBtn.addEventListener('click', openSearch);
+        if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+
+        // Click outside modal card to close
+        searchModal.addEventListener('click', function(e) {
+            if (e.target === searchModal) {
+                closeSearch();
+            }
+        });
+
+        // Keyboard shortcuts: '/' or 'Cmd/Ctrl+K' to open, ESC to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchModal.classList.contains('open')) {
+                closeSearch();
+            } else if ((e.key === '/' || (e.ctrlKey && e.key === 'k') || (e.metaKey && e.key === 'k')) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                e.preventDefault();
+                openSearch();
+            }
+        });
+
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchClearBtn.style.display = 'none';
+                executeSearch('');
+                searchInput.focus();
+            });
+        }
+
+        window.quickSearch = function(term) {
+            searchInput.value = term;
+            searchClearBtn.style.display = 'block';
+            executeSearch(term);
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                searchClearBtn.style.display = query.length > 0 ? 'block' : 'none';
+                executeSearch(query);
+            });
+        }
+
+        function executeSearch(query) {
+            if (!query || query.length < 2) {
+                resultsList.innerHTML = '';
+                resultsSummary.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            const qLower = query.toLowerCase();
+            const matches = searchData.filter(item => {
+                const inTitle = item.title.toLowerCase().includes(qLower);
+                const inExcerpt = (item.excerpt || '').toLowerCase().includes(qLower);
+                const inCategory = (item.category || '').toLowerCase().includes(qLower);
+                const inTags = (item.tags || []).some(t => t.toLowerCase().includes(qLower));
+                return inTitle || inExcerpt || inCategory || inTags;
+            });
+
+            emptyState.style.display = 'none';
+            resultsSummary.style.display = 'block';
+            resultsSummary.innerHTML = `Found <strong>${matches.length}</strong> result${matches.length === 1 ? '' : 's'} for "<strong>${escapeHtml(query)}</strong>"`;
+
+            if (matches.length === 0) {
+                resultsList.innerHTML = `
+                    <li class="search-no-results">
+                        <i class="far fa-frown" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-light);"></i>
+                        <p>No matches found. Try searching for "climate", "foldable", "music", or "AI".</p>
+                    </li>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = matches.map(item => `
+                <li class="search-result-item">
+                    <a href="${item.url}" class="search-result-link">
+                        <div class="search-result-meta">
+                            <span class="search-category-pill">${item.category}</span>
+                            <span class="search-result-date">${item.date || ''}</span>
+                        </div>
+                        <h4 class="search-result-title">${highlightMatch(item.title, query)}</h4>
+                        <p class="search-result-excerpt">${highlightMatch(item.excerpt || '', query)}</p>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlightMatch(text, query) {
+            if (!text || !query) return escapeHtml(text || '');
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return escaped.replace(regex, '<mark class="search-highlight">$1</mark>');
         }
     })();
 </script>
@@ -107,7 +358,7 @@
             
             <li class="breadcrumb-item"><a href="/entertainment/">Entertainment</a></li>
             
-            <li class="breadcrumb-item">Download &quot;Midnight Whispers&quot; by Aurora</li>
+            <li class="breadcrumb-item">Premiere: &quot;Midnight Whispers&quot; by Aurora — Official Single &amp; Visualizer Release</li>
         </ul>
     </div>
 </section>
@@ -121,24 +372,24 @@
                 
                 <span class="post-category ent">Entertainment</span>
                 
-                <h1>Download &quot;Midnight Whispers&quot; by Aurora</h1>
+                <h1>Premiere: &quot;Midnight Whispers&quot; by Aurora — Official Single &amp; Visualizer Release</h1>
                 
-                <p class="lead">Direct high-speed lossless download for &#39;Midnight Whispers&#39; by Aurora. Available in 320kbps MP3 and FLAC format.</p>
+                <p class="lead">Aurora&#39;s haunting new single merges analog synth pads with soulful vocals. Experience the official music release and stream the multi-platform preview widgets.</p>
                 
 
                 <div class="post-meta-bar">
-                    <span><i class="far fa-user"></i> Viral Son Audio Releases</span>
+                    <span><i class="far fa-user"></i> Viral Son Music Desk</span>
                     <span><i class="far fa-calendar"></i> June 11, 2026</span>
-                    <span><i class="far fa-clock"></i> 3 min read</span>
-                    <span><i class="far fa-eye"></i> 15.4K downloads</span>
+                    <span><i class="far fa-eye"></i> 28.4K streams</span>
+                    <span id="commentCountBadge"><i class="far fa-comments"></i> <span id="headerCommentCount">2</span> Comments</span>
                 </div>
             </header>
 
             
             <div class="post-featured-image">
-                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Download &quot;Midnight Whispers&quot; by Aurora">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Premiere: &quot;Midnight Whispers&quot; by Aurora — Official Single &amp; Visualizer Release">
                 
-                <div class="image-caption">Aurora - &#39;Midnight Whispers&#39; Single Artwork (Lossless Audio Master)</div>
+                <div class="image-caption">Aurora - &#39;Midnight Whispers&#39; Official Release Artwork &amp; Cinematic Visualizer</div>
                 
             </div>
             
@@ -146,61 +397,143 @@
             <!-- Post Body Content -->
             <div class="post-body">
                 
-<!-- Dedicated Download Card -->
-<div class="download-box" style="border: 2px solid var(--primary-blue); background: var(--white); padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
-    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem; flex-wrap: wrap;">
-        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=350&q=80" alt="Aurora Cover" style="width: 140px; height: 140px; border-radius: var(--radius-md); object-fit: cover; box-shadow: var(--shadow-sm);">
+<!-- Music & Video Release News Card -->
+<div class="media-release-container" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-md); margin-bottom: 2.5rem;">
+    
+    <div style="display: flex; gap: 1.8rem; align-items: center; margin-bottom: 1.8rem; flex-wrap: wrap;">
+        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=350&q=80" alt="Aurora Cover" style="width: 130px; height: 130px; border-radius: var(--radius-md); object-fit: cover; box-shadow: var(--shadow-sm); border: 2px solid var(--primary-blue);">
         <div>
-            <span class="post-category ent" style="font-size: 0.85rem;">Official Lossless Release</span>
-            <h2 style="font-size: 1.8rem; color: var(--dark-blue); margin: 0.4rem 0;">Midnight Whispers — Aurora</h2>
-            <p style="color: var(--text-light); margin-bottom: 0.8rem;">Release Date: June 11, 2026 • Label: Horizon Nordic Records • Duration: 4:12</p>
-            <div style="display: flex; gap: 15px; font-size: 0.9rem; color: var(--text-dark);">
-                <span><i class="fas fa-check-circle" style="color: var(--green);"></i> 100% Virus Free</span>
-                <span><i class="fas fa-check-circle" style="color: var(--green);"></i> High Speed Edge CDN</span>
-                <span><i class="fas fa-check-circle" style="color: var(--green);"></i> ID3 Tagged</span>
+            <span class="post-category ent" style="font-size: 0.85rem;"><i class="fas fa-compact-disc"></i> Official Release News</span>
+            <h2 style="font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text-dark); margin: 0.4rem 0;">Midnight Whispers — Aurora</h2>
+            <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 0.6rem;">Released Worldwide • Horizon Nordic Records • Genre: Ambient Synth-Pop / Indie Electronic</p>
+            <div style="display: flex; gap: 12px; font-size: 0.88rem; color: var(--text-dark); flex-wrap: wrap;">
+                <span><i class="fas fa-clock" style="color: var(--primary-blue);"></i> 4:12 Runtime</span>
+                <span><i class="fas fa-check-circle" style="color: var(--green);"></i> 24-Bit Studio Mastered</span>
+                <span><i class="fas fa-globe" style="color: var(--teal);"></i> Global Streaming Premiere</span>
             </div>
         </div>
     </div>
 
-    <!-- Download Options -->
-    <h3 style="font-size: 1.25rem; color: var(--dark-blue); margin-bottom: 1rem;">Select Your Preferred Download Option</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-        <div style="border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--radius-md); background: var(--light-gray); text-align: center;">
-            <div style="font-weight: 700; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 0.3rem;">MP3 Standard</div>
-            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.8rem;">192 kbps • 5.8 MB</div>
-            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.2rem;">Ideal for mobile data and casual headphone listening.</p>
-            <button class="btn btn-outline" style="width: 100%;" onclick="alert('Downloading MP3 192kbps version of Midnight Whispers...');"><i class="fas fa-download"></i> Download MP3</button>
+    <!-- Automated Multi-Platform Widget Switcher -->
+    <div class="media-widget-wrapper">
+        <div class="media-platform-tabs" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.8rem;">
+            <button type="button" class="media-tab-btn active" data-platform="youtube" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--surface-bg); color: var(--text-dark); font-weight: 600; cursor: pointer;">
+                <i class="fab fa-youtube" style="color: #ff0000; font-size: 1.1rem;"></i> YouTube (Official Video)
+            </button>
+            <button type="button" class="media-tab-btn" data-platform="spotify" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--surface-bg); color: var(--text-dark); font-weight: 600; cursor: pointer;">
+                <i class="fab fa-spotify" style="color: #1db954; font-size: 1.1rem;"></i> Spotify Preview
+            </button>
+            <button type="button" class="media-tab-btn" data-platform="apple" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--surface-bg); color: var(--text-dark); font-weight: 600; cursor: pointer;">
+                <i class="fab fa-apple" style="color: var(--text-dark); font-size: 1.1rem;"></i> Apple Music
+            </button>
+            <button type="button" class="media-tab-btn" data-platform="audiomack" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--surface-bg); color: var(--text-dark); font-weight: 600; cursor: pointer;">
+                <i class="fas fa-headphones" style="color: #ffa200; font-size: 1.1rem;"></i> Audiomack
+            </button>
         </div>
 
-        <div style="border: 2px solid var(--primary-blue); padding: 1.5rem; border-radius: var(--radius-md); background: var(--light-blue); text-align: center;">
-            <div style="font-weight: 700; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 0.3rem;">MP3 HQ (Recommended)</div>
-            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.8rem;">320 kbps • 9.6 MB</div>
-            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.2rem;">Full dynamic range studio audio with complete metadata.</p>
-            <button class="btn btn-green" style="width: 100%;" onclick="alert('Downloading MP3 320kbps HQ master of Midnight Whispers...');"><i class="fas fa-download"></i> Download HQ</button>
-        </div>
-
-        <div style="border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--radius-md); background: var(--light-gray); text-align: center;">
-            <div style="font-weight: 700; font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 0.3rem;">FLAC Studio Master</div>
-            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.8rem;">24-bit / 96kHz • 46.2 MB</div>
-            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.2rem;">Bit-perfect lossless audio for audiophile sound systems.</p>
-            <button class="btn btn-purple" style="width: 100%;" onclick="alert('Downloading FLAC 24-bit Lossless master of Midnight Whispers...');"><i class="fas fa-download"></i> Download FLAC</button>
+        <!-- Embedded Automation Player Container -->
+        <div id="mediaPlayerAutomationContainer" style="position: relative; width: 100%; border-radius: var(--radius-md); overflow: hidden; background: #000; box-shadow: var(--shadow-sm); min-height: 340px;">
+            <!-- Automated Widget Injected via Script Below -->
         </div>
     </div>
 </div>
 
-<h2>About This Release</h2>
-<p>Recorded at Ocean Sound Recordings in Giske, Norway, <em>Midnight Whispers</em> features Aurora accompanied by a string quartet and custom modular synth soundscapes. Mastered specifically for digital streaming and high-fidelity archival.</p>
-
+<!-- Release Journalism & Review -->
 <div class="post-body">
-    <h3>Technical Specifications</h3>
-    <ul>
-        <li><strong>Artist:</strong> Aurora</li>
-        <li><strong>Composer:</strong> Aurora Aksnes, Magnus Skylstad</li>
-        <li><strong>ISRC:</strong> NO-A92-26-00412</li>
-        <li><strong>Audio Channel:</strong> Stereo 2.0 (Binaural Enhanced)</li>
-    </ul>
+    <h2>Behind the Release: Aurora's Sonic Evolution</h2>
+    <p>
+        Marking her first original studio premiere in eighteen months, Scandinavian composer-producer <strong>Aurora</strong> returns with <em>"Midnight Whispers"</em>—an atmospheric synthesis of analog Juno-106 chorus progressions, intricate organic polyrhythms, and intimate, crystal-clear vocal narratives.
+    </p>
+
+    <p>
+        Recorded between Oslo's Rainbow Studios and a converted lighthouse studio in the Lofoten archipelago, the track explores themes of stillness, nocturnal introspection, and finding sanctuary in an increasingly saturated digital world.
+    </p>
+
+    <blockquote>
+        "We wanted to build an acoustic space that felt like 2:00 AM on a deserted highway—simultaneously vast and completely intimate. Every synth pad was pushed through vintage quarter-inch reel-to-reel tape to preserve tactile warmth."
+        <br><br><strong>— Aurora, on the recording process of "Midnight Whispers"</strong>
+    </blockquote>
+
+    <h2>Critical Praise & Streaming Rollout</h2>
+    <p>
+        Early radio premieres on BBC Radio 1 and Triple J have already named the record "Track of the Week," citing its immaculate dynamic headroom and cinematic crescendo in the final third. The accompanying 4K visualizer, directed by cinematic photographer Henrik Lindqvist, features slow-motion drone captures of Nordic fjords bathed in aurora borealis luminescence.
+    </p>
+
+    <div style="background: var(--light-blue); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--primary-blue); margin: 2rem 0;">
+        <h4 style="color: var(--dark-blue); margin-bottom: 0.6rem;"><i class="fas fa-info-circle"></i> Official Production Credits</h4>
+        <ul style="list-style: none; padding-left: 0; font-size: 0.95rem; color: var(--text-dark);">
+            <li style="margin-bottom: 0.4rem;"><strong>Written & Produced by:</strong> Aurora & Marcus Halvorsen</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Mixing Engineer:</strong> Emily Lazar (The Lodge, NYC)</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Mastering:</strong> Bob Ludwig (Gateway Mastering)</li>
+            <li><strong>Publisher:</strong> Horizon Nordic Music Publishing / Universal Music</li>
+        </ul>
+    </div>
 </div>
+
+<!-- Media Widget Automation Script -->
+<script>
+    (function() {
+        const platforms = {
+            youtube: {
+                title: 'YouTube 4K Official Video',
+                html: '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;"><iframe src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=0&rel=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe></div>'
+            },
+            spotify: {
+                title: 'Spotify Player Widget',
+                html: '<div style="padding: 1rem; background: #121212; display: flex; justify-content: center; align-items: center; min-height: 352px;"><iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>'
+            },
+            apple: {
+                title: 'Apple Music Player Widget',
+                html: '<div style="padding: 1rem; background: #1a1a1a; min-height: 350px; display: flex; align-items: center;"><iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="350" style="width:100%;max-width:660px;margin: 0 auto;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/midnight-city/459798782?i=459798784"></iframe></div>'
+            },
+            audiomack: {
+                title: 'Audiomack Stream Widget',
+                html: '<div style="padding: 1.5rem; background: #1a1a1a; min-height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-align: center;"><i class="fas fa-headphones" style="font-size: 3rem; color: #ffa200; margin-bottom: 1rem;"></i><h3 style="margin-bottom: 0.5rem; color: #ffffff;">Stream "Midnight Whispers" on Audiomack</h3><p style="color: #aaa; margin-bottom: 1.5rem; max-width: 480px;">Stream high-bitrate audio lossless master directly through the verified Audiomack player.</p><audio controls style="width: 100%; max-width: 500px; margin-bottom: 1.5rem;"><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">Your browser does not support audio element.</audio><a href="https://audiomack.com" target="_blank" rel="noopener noreferrer" class="btn" style="background: #ffa200; color: #000 !important; font-weight: 700;"><i class="fas fa-external-link-alt"></i> Open in Audiomack App</a></div>'
+            }
+        };
+
+        const container = document.getElementById('mediaPlayerAutomationContainer');
+        const tabBtns = document.querySelectorAll('.media-tab-btn');
+
+        function loadPlatformWidget(platformKey) {
+            const platform = platforms[platformKey] || platforms.youtube;
+            if (!container) return;
+
+            // Update active button state
+            tabBtns.forEach(btn => {
+                if (btn.getAttribute('data-platform') === platformKey) {
+                    btn.classList.add('active');
+                    btn.style.background = 'var(--primary-blue)';
+                    btn.style.color = '#ffffff';
+                    btn.style.borderColor = 'var(--primary-blue)';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = 'var(--surface-bg)';
+                    btn.style.color = 'var(--text-dark)';
+                    btn.style.borderColor = 'var(--border-color)';
+                }
+            });
+
+            // Smooth transition
+            container.style.opacity = '0.5';
+            setTimeout(() => {
+                container.innerHTML = platform.html;
+                container.style.opacity = '1';
+            }, 120);
+        }
+
+        // Initialize with default platform (YouTube)
+        loadPlatformWidget('youtube');
+
+        // Tab click event listeners
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.getAttribute('data-platform');
+                loadPlatformWidget(platform);
+            });
+        });
+    })();
+</script>
 
             </div>
 
@@ -210,7 +543,7 @@
                     
                         
                             
-                            <span class="tag-badge">#AudioDownload</span>
+                            <span class="tag-badge">#MusicRelease</span>
                             
                         
                             
@@ -218,11 +551,23 @@
                             
                         
                             
-                            <span class="tag-badge">#FLAC</span>
+                            <span class="tag-badge">#YouTube</span>
                             
                         
                             
-                            <span class="tag-badge">#MP3</span>
+                            <span class="tag-badge">#Spotify</span>
+                            
+                        
+                            
+                            <span class="tag-badge">#AppleMusic</span>
+                            
+                        
+                            
+                            <span class="tag-badge">#Audiomack</span>
+                            
+                        
+                            
+                            <span class="tag-badge">#Cinema</span>
                             
                         
                     
@@ -230,43 +575,761 @@
 
                 <div class="share-buttons">
                     <span style="font-size: 0.9rem; font-weight: 600; margin-right: 5px;">Share:</span>
-                    <a href="https://twitter.com/intent/tweet?text=Download%20%22Midnight%20Whispers%22%20by%20Aurora&url=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <button class="share-btn" style="border:none; cursor:pointer;" onclick="navigator.clipboard.writeText(window.location.href); alert('Article URL copied to clipboard!');" title="Copy Link"><i class="fas fa-link"></i></button>
+                    <a href="https://twitter.com/intent/tweet?text=Premiere%3A%20%22Midnight%20Whispers%22%20by%20Aurora%20%E2%80%94%20Official%20Single%20%26%20Visualizer%20Release&url=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <button type="button" class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Article URL copied to clipboard!');" title="Copy Link" aria-label="Copy article link"><i class="fas fa-link"></i></button>
                 </div>
             </div>
 
             <!-- Author Box -->
             <div class="author-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=150&amp;q=80" alt="Viral Son Audio Releases" class="author-avatar">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=150&amp;q=80" alt="Viral Son Music Desk" class="author-avatar">
                 <div class="author-info">
-                    <h4>Viral Son Audio Releases</h4>
-                    <p>Official digital distribution portal for verified artist singles, remixes, and studio stems.</p>
+                    <h4>Viral Son Music Desk</h4>
+                    <p>Covering music premieres, cinematic soundtracks, international festivals, and emerging electronic innovators.</p>
                 </div>
             </div>
 
-            <!-- Comments Section -->
-            <div class="comments-section" style="margin-top: 3rem;">
-                <h3 style="font-size: 1.4rem; color: var(--dark-blue); margin-bottom: 1.5rem;">Join the Discussion</h3>
-                <form class="comment-form" onsubmit="event.preventDefault(); alert('Thank you for contributing! Your comment has been submitted for moderation.'); this.reset();" style="background: var(--light-gray); padding: 1.8rem; border-radius: var(--radius-md);">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="form-group" style="margin: 0;">
-                            <label>Name</label>
-                            <input type="text" class="form-control" placeholder="Your Name" required>
+            <!-- Auto-Generated Media Player Widgets Engine (Video/Music Detection & Playback Controls) -->
+            <!-- Auto-Generating Visual/Audio Media Player Widgets Engine -->
+<div id="mediaWidgetsEngineWrapper" class="media-widgets-engine-wrapper" style="display: none;">
+    <!-- Injected dynamically by the Media Widgets Engine Script below -->
+</div>
+
+<script>
+(function() {
+    function initMediaWidgetsEngine() {
+        const postBody = document.querySelector('.post-body') || document.querySelector('article');
+        const targetContainer = document.getElementById('mediaWidgetsEngineWrapper');
+        if (!postBody || !targetContainer) return;
+
+        // 1. Gather all candidate links and text URLs
+        const candidateUrls = [];
+        postBody.querySelectorAll('a').forEach(a => {
+            if (a.href) candidateUrls.push(a.href);
+        });
+
+        const rawText = postBody.innerText || '';
+        const urlRegex = /https?:\/\/[^\s<>"']+/gi;
+        let match;
+        while ((match = urlRegex.exec(rawText)) !== null) {
+            candidateUrls.push(match[0].replace(/[.,;)]+$/, ''));
+        }
+
+        const uniqueUrls = Array.from(new Set(candidateUrls));
+        const detectedMedia = [];
+
+        // 2. Parse and detect media platforms (Video & Audio)
+        uniqueUrls.forEach(url => {
+            // YouTube
+            const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+            if (ytMatch) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'YouTube',
+                    icon: 'fab fa-youtube',
+                    color: '#ff0000',
+                    url: url,
+                    id: ytMatch[1],
+                    title: 'YouTube 4K Video Preview',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-player-frame mwe-video-frame">
+                                <iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1" 
+                                    title="YouTube preview player" frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Vimeo
+            const vimeoMatch = url.match(/(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|))(\d+)/i);
+            if (vimeoMatch) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Vimeo',
+                    icon: 'fab fa-vimeo-v',
+                    color: '#1ab7ea',
+                    url: url,
+                    id: vimeoMatch[1],
+                    title: 'Vimeo HD Feature Video',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-player-frame mwe-video-frame">
+                                <iframe src="https://player.vimeo.com/video/${id}?title=0&byline=0&portrait=0" 
+                                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Spotify Audio
+            const spotifyMatch = url.match(/open\.spotify\.com\/(track|album|playlist|episode)\/([a-zA-Z0-9]+)/i);
+            if (spotifyMatch || url.includes('spotify.com')) {
+                const sType = spotifyMatch ? spotifyMatch[1] : 'track';
+                const sId = spotifyMatch ? spotifyMatch[2] : '4cOdK2wGLETKBW3PvgPWqT';
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: 'Spotify',
+                    icon: 'fab fa-spotify',
+                    color: '#1db954',
+                    url: url,
+                    id: sId,
+                    title: 'Spotify Audio Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-player-frame mwe-audio-frame">
+                                <iframe src="https://open.spotify.com/embed/${sType}/${sId}?utm_source=generator&theme=0" 
+                                    width="100%" height="280" frameBorder="0" allowfullscreen="" 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Apple Music
+            if (url.includes('music.apple.com')) {
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: 'Apple Music',
+                    icon: 'fab fa-apple',
+                    color: 'var(--text-dark)',
+                    url: url,
+                    id: 'applemusic',
+                    title: 'Apple Music Audio Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-player-frame mwe-audio-frame">
+                                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" 
+                                    frameborder="0" height="280" style="width:100%;overflow:hidden;border-radius:10px;" 
+                                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
+                                    src="https://embed.music.apple.com/us/album/midnight-city/459798782?i=459798784" loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Audiomack / SoundCloud / Direct Audio Stream
+            const audioExtMatch = url.match(/\.(mp3|wav|ogg|m4a)($|\?)/i);
+            const isAudiomack = url.includes('audiomack.com');
+            const isSoundcloud = url.includes('soundcloud.com');
+            if (audioExtMatch || isAudiomack || isSoundcloud) {
+                const audioSrc = audioExtMatch ? url : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                const platformName = isAudiomack ? 'Audiomack' : (isSoundcloud ? 'SoundCloud' : 'Direct Audio Stream');
+                const platformIcon = isAudiomack ? 'fas fa-headphones' : (isSoundcloud ? 'fab fa-soundcloud' : 'fas fa-volume-up');
+                const platformColor = isAudiomack ? '#ffa200' : (isSoundcloud ? '#ff5500' : 'var(--primary-blue)');
+                
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: platformName,
+                    icon: platformIcon,
+                    color: platformColor,
+                    url: url,
+                    id: 'audio-' + Math.random().toString(36).substr(2, 6),
+                    title: platformName + ' Player',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-custom-audio-interface">
+                                <div class="mwe-audio-art">
+                                    <i class="${platformIcon}" style="font-size: 2.2rem; color: ${platformColor};"></i>
+                                </div>
+                                <div class="mwe-audio-info">
+                                    <div class="mwe-audio-title">Lossless Studio Audio Preview</div>
+                                    <div class="mwe-audio-sub">High-Fidelity Audio Preview & Playback</div>
+                                </div>
+                                <audio controls class="mwe-native-audio-player" style="width: 100%; margin-top: 10px;">
+                                    <source src="${audioSrc}" type="audio/mpeg">
+                                    Your browser does not support audio element.
+                                </audio>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // TikTok
+            const tiktokMatch = url.match(/tiktok\.com\/@([a-zA-Z0-9_.-]+)\/video\/(\d+)/i);
+            if (tiktokMatch || url.includes('tiktok.com/')) {
+                const videoId = tiktokMatch ? tiktokMatch[2] : 'video';
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'TikTok',
+                    icon: 'fab fa-tiktok',
+                    color: '#000000',
+                    url: url,
+                    id: videoId,
+                    title: 'TikTok Viral Video Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(0,0,0,0.06);">
+                                    <i class="fab fa-tiktok" style="font-size: 2.4rem; color: var(--text-dark);"></i>
+                                </div>
+                                <div class="mwe-social-desc">Watch the trending vertical video release directly on TikTok:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn btn-purple mwe-control-btn">
+                                    <i class="fas fa-play"></i> Play Video on TikTok
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Instagram
+            const instaMatch = url.match(/instagram\.com\/(?:p|reel|tv)\/([a-zA-Z0-9_-]+)/i);
+            if (instaMatch || url.includes('instagram.com/reel/')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Instagram',
+                    icon: 'fab fa-instagram',
+                    color: '#e1306c',
+                    url: url,
+                    id: instaMatch ? instaMatch[1] : 'reel',
+                    title: 'Instagram Reel Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(225, 48, 108, 0.1);">
+                                    <i class="fab fa-instagram" style="font-size: 2.4rem; color: #e1306c;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Official video clip & behind-the-scenes reel on Instagram:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff !important;">
+                                    <i class="fas fa-play"></i> Preview Reel on Instagram
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // X (Twitter)
+            const xMatch = url.match(/(?:twitter\.com|x\.com)\/([a-zA-Z0-9_]+)\/status\/(\d+)/i);
+            if (xMatch || url.includes('x.com/') || url.includes('twitter.com/')) {
+                const user = xMatch ? xMatch[1] : 'post';
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'X (Twitter)',
+                    icon: 'fab fa-x-twitter',
+                    color: 'var(--text-dark)',
+                    url: url,
+                    id: xMatch ? xMatch[2] : 'post',
+                    title: `X Video (@${user})`,
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(0,0,0,0.06);">
+                                    <i class="fab fa-x-twitter" style="font-size: 2.4rem; color: var(--text-dark);"></i>
+                                </div>
+                                <div class="mwe-social-desc">Video broadcast clip and commentary shared by @${user}:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #000; color: #fff !important;">
+                                    <i class="fab fa-x-twitter"></i> Watch Video on X
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Facebook Video
+            const fbMatch = url.match(/(?:facebook\.com\/(?:watch\/\?v=|.*\/videos\/)|fb\.watch\/)([0-9a-zA-Z_-]+)/i);
+            if (fbMatch || url.includes('facebook.com/watch') || url.includes('fb.watch')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Facebook',
+                    icon: 'fab fa-facebook-f',
+                    color: '#1877f2',
+                    url: url,
+                    id: fbMatch ? fbMatch[1] : '',
+                    title: 'Facebook Video Stream',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(24, 119, 242, 0.1);">
+                                    <i class="fab fa-facebook-f" style="font-size: 2.4rem; color: #1877f2;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Official video stream broadcast on Facebook Watch:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #1877f2; color: #fff !important;">
+                                    <i class="fas fa-play"></i> Watch on Facebook
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // LinkedIn Video
+            const lnMatch = url.match(/linkedin\.com\/(?:posts|feed\/update)\/([a-zA-Z0-9:_-]+)/i);
+            if (lnMatch || url.includes('linkedin.com/posts')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'LinkedIn',
+                    icon: 'fab fa-linkedin-in',
+                    color: '#0a66c2',
+                    url: url,
+                    id: lnMatch ? lnMatch[1] : '',
+                    title: 'LinkedIn Keynote Video',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(10, 102, 194, 0.1);">
+                                    <i class="fab fa-linkedin-in" style="font-size: 2.4rem; color: #0a66c2;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Executive keynote discussion and panel presentation:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #0a66c2; color: #fff !important;">
+                                    <i class="fas fa-play"></i> Watch on LinkedIn
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Snapchat
+            const snapMatch = url.match(/(?:story\.)?snapchat\.com\/(?:s|spotlight|p)\/([a-zA-Z0-9_-]+)/i);
+            if (snapMatch || url.includes('snapchat.com/spotlight')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Snapchat',
+                    icon: 'fab fa-snapchat',
+                    color: '#fffc00',
+                    url: url,
+                    id: snapMatch ? snapMatch[1] : '',
+                    title: 'Snapchat Spotlight Clip',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(255, 252, 0, 0.15);">
+                                    <i class="fab fa-snapchat" style="font-size: 2.4rem; color: #e6b800;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Behind-the-scenes vertical spotlight video clip on Snapchat:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #fffc00; color: #000 !important; font-weight: 700;">
+                                    <i class="fas fa-play"></i> Open in Snapchat
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+        });
+
+        // If no media links detected, keep container hidden
+        if (detectedMedia.length === 0) return;
+
+        const totalLinks = detectedMedia.length;
+        const isHorizontalScroll = totalLinks > 3;
+
+        // Build self-contained HTML & CSS
+        let layoutClass = 'mwe-layout-single';
+        if (totalLinks === 2) layoutClass = 'mwe-layout-grid-2';
+        if (totalLinks === 3) layoutClass = 'mwe-layout-grid-3';
+        if (isHorizontalScroll) layoutClass = 'mwe-layout-scrollable';
+
+        let cardsHtml = detectedMedia.map((media, index) => {
+            return `
+                <div class="mwe-widget-card" data-index="${index}">
+                    <div class="mwe-widget-header">
+                        <span class="mwe-platform-badge">
+                            <i class="${media.icon}" style="color: ${media.color}; font-size: 1.05rem;"></i>
+                            <strong>${media.platform}</strong>
+                        </span>
+                        <a href="${media.url}" target="_blank" rel="noopener noreferrer" class="mwe-external-link" title="Open source on ${media.platform}">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="mwe-widget-body">
+                        ${media.renderPlayer(media.id)}
+                    </div>
+                    <div class="mwe-widget-footer">
+                        <span class="mwe-media-title">${media.title}</span>
+                        <span class="mwe-media-type-badge">${media.type === 'video' ? '🎬 Video' : '🎵 Audio'}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        targetContainer.innerHTML = `
+            <style>
+                .media-widgets-engine-wrapper {
+                    margin: 3rem 0 2rem;
+                    padding: 2rem 0;
+                    border-top: 2px solid var(--border-color);
+                    border-bottom: 1px solid var(--border-color);
+                    background: transparent;
+                }
+                .mwe-section-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    margin-bottom: 1.4rem;
+                }
+                .mwe-title-group h3 {
+                    font-size: 1.35rem;
+                    color: var(--text-dark);
+                    display: flex;
+                    align-items: center;
+                    gap: 9px;
+                    margin-bottom: 0.2rem;
+                }
+                .mwe-title-group p {
+                    font-size: 0.88rem;
+                    color: var(--text-light);
+                    margin: 0;
+                }
+                .mwe-counter-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    background: rgba(52, 152, 219, 0.12);
+                    color: var(--primary-blue);
+                    font-size: 0.82rem;
+                    font-weight: 700;
+                }
+                .mwe-layout-single {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    max-width: 680px;
+                    margin: 0 auto;
+                }
+                .mwe-layout-grid-2 {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 1.5rem;
+                }
+                .mwe-layout-grid-3 {
+                    display: grid;
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 1.5rem;
+                }
+                .mwe-layout-scrollable {
+                    display: flex;
+                    overflow-x: auto;
+                    gap: 1.4rem;
+                    padding: 0.5rem 0.2rem 1.2rem;
+                    scroll-snap-type: x mandatory;
+                    scroll-behavior: smooth;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar {
+                    height: 8px;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar-track {
+                    background: var(--light-gray);
+                    border-radius: 4px;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar-thumb {
+                    background: var(--primary-blue);
+                    border-radius: 4px;
+                }
+                .mwe-widget-card {
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-md);
+                    overflow: hidden;
+                    box-shadow: var(--shadow-sm);
+                    display: flex;
+                    flex-direction: column;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .mwe-widget-card:hover {
+                    box-shadow: var(--shadow-md);
+                    transform: translateY(-2px);
+                }
+                .mwe-layout-scrollable .mwe-widget-card {
+                    flex: 0 0 clamp(290px, 32vw, 380px);
+                    scroll-snap-align: start;
+                }
+                .mwe-widget-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.8rem 1rem;
+                    background: var(--surface-bg);
+                    border-bottom: 1px solid var(--border-color);
+                }
+                .mwe-platform-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 0.85rem;
+                    color: var(--text-dark);
+                }
+                .mwe-external-link {
+                    color: var(--text-light);
+                    font-size: 0.85rem;
+                    padding: 4px;
+                    transition: var(--transition);
+                }
+                .mwe-external-link:hover {
+                    color: var(--primary-blue);
+                }
+                .mwe-widget-body {
+                    flex: 1;
+                    background: #000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 220px;
+                }
+                .mwe-player-frame {
+                    width: 100%;
+                    height: 100%;
+                }
+                .mwe-video-frame {
+                    position: relative;
+                    padding-bottom: 56.25%;
+                    height: 0;
+                    overflow: hidden;
+                }
+                .mwe-video-frame iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+                .mwe-audio-frame {
+                    padding: 0.5rem;
+                    background: #121212;
+                }
+                .mwe-custom-audio-interface {
+                    width: 100%;
+                    padding: 1.5rem 1.2rem;
+                    background: var(--surface-bg);
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .mwe-audio-art {
+                    margin-bottom: 0.6rem;
+                }
+                .mwe-audio-title {
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 2px;
+                }
+                .mwe-audio-sub {
+                    font-size: 0.8rem;
+                    color: var(--text-light);
+                    margin-bottom: 0.8rem;
+                }
+                .mwe-social-media-card {
+                    padding: 1.8rem 1.2rem;
+                    background: var(--surface-bg);
+                    text-align: center;
+                    width: 100%;
+                }
+                .mwe-social-icon-wrapper {
+                    width: 58px;
+                    height: 58px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 0.8rem;
+                }
+                .mwe-social-desc {
+                    font-size: 0.85rem;
+                    color: var(--text-light);
+                    margin-bottom: 1.2rem;
+                    line-height: 1.4;
+                }
+                .mwe-control-btn {
+                    padding: 8px 16px;
+                    font-size: 0.85rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .mwe-widget-footer {
+                    padding: 0.7rem 1rem;
+                    background: var(--surface-bg);
+                    border-top: 1px solid var(--border-color);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 0.8rem;
+                }
+                .mwe-media-title {
+                    font-weight: 600;
+                    color: var(--text-dark);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    max-width: 220px;
+                }
+                .mwe-media-type-badge {
+                    color: var(--text-light);
+                    font-size: 0.75rem;
+                }
+                .mwe-scroll-controls {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .mwe-nav-btn {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background: var(--surface-bg);
+                    border: 1px solid var(--border-color);
+                    color: var(--text-dark);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: var(--transition);
+                }
+                .mwe-nav-btn:hover {
+                    background: var(--primary-blue);
+                    color: #fff;
+                    border-color: var(--primary-blue);
+                }
+                .mwe-scroll-cue {
+                    font-size: 0.8rem;
+                    color: var(--text-light);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                @media (max-width: 868px) {
+                    .mwe-layout-grid-3 {
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                    }
+                }
+                @media (max-width: 576px) {
+                    .mwe-layout-grid-2,
+                    .mwe-layout-grid-3 {
+                        grid-template-columns: 1fr;
+                    }
+                    .mwe-layout-scrollable .mwe-widget-card {
+                        flex: 0 0 88%;
+                    }
+                }
+            </style>
+
+            <div class="mwe-section-header">
+                <div class="mwe-title-group">
+                    <h3><i class="fas fa-play-circle" style="color: var(--primary-blue);"></i> Interactive Media Player Widgets</h3>
+                    <p>Auto-generated audio & video preview interfaces detected from this article</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span class="mwe-counter-badge">
+                        <i class="fas fa-layer-group"></i> ${totalLinks} Media Link${totalLinks > 1 ? 's' : ''}
+                    </span>
+                    ${isHorizontalScroll ? `
+                        <div class="mwe-scroll-controls">
+                            <span class="mwe-scroll-cue"><i class="fas fa-arrows-left-right"></i> Scrollable (${totalLinks})</span>
+                            <button type="button" class="mwe-nav-btn" id="mwePrevBtn" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+                            <button type="button" class="mwe-nav-btn" id="mweNextBtn" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></button>
                         </div>
-                        <div class="form-group" style="margin: 0;">
-                            <label>Email</label>
-                            <input type="email" class="form-control" placeholder="Your Email" required>
+                    ` : ''}
+                </div>
+            </div>
+
+            <div class="${layoutClass}" id="mweContainerInner">
+                ${cardsHtml}
+            </div>
+        `;
+
+        targetContainer.style.display = 'block';
+
+        // Horizontal scroll controls if more than 3
+        if (isHorizontalScroll) {
+            const containerInner = document.getElementById('mweContainerInner');
+            const prevBtn = document.getElementById('mwePrevBtn');
+            const nextBtn = document.getElementById('mweNextBtn');
+
+            if (containerInner && prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    containerInner.scrollBy({ left: -340, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    containerInner.scrollBy({ left: 340, behavior: 'smooth' });
+                });
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMediaWidgetsEngine);
+    } else {
+        initMediaWidgetsEngine();
+    }
+})();
+</script>
+
+
+            <!-- Interactive Comments Section -->
+            <section class="comments-section" id="commentsSection">
+                <div class="comments-header">
+                    <h3 class="comments-title">
+                        <i class="far fa-comments"></i> Discussion (<span id="commentsTotalCount">0</span>)
+                    </h3>
+                    <span class="comments-subtitle">Join the conversation. Be civil and substantive.</span>
+                </div>
+
+                <!-- Comment Submission Form -->
+                <form id="commentForm" class="comment-submission-form">
+                    <h4 style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1rem;">Leave a Comment</h4>
+                    <div class="comment-form-grid">
+                        <div class="form-group">
+                            <label for="commentAuthor">Your Name <span style="color: var(--red);">*</span></label>
+                            <input type="text" id="commentAuthor" class="form-control" placeholder="e.g. Elena Rostova" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="commentEmail">Email Address <span style="color: var(--red);">*</span> <small style="font-weight: normal; color: var(--text-light);">(Kept private)</small></label>
+                            <input type="email" id="commentEmail" class="form-control" placeholder="elena@example.com" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Your Comment</label>
-                        <textarea class="form-control" placeholder="What are your thoughts on this story?" required></textarea>
+                        <label for="commentText">Your Thoughts <span style="color: var(--red);">*</span></label>
+                        <textarea id="commentText" class="form-control" placeholder="Share your perspective, critique, or inquiry regarding this story..." required rows="4"></textarea>
                     </div>
-                    <button type="submit" class="btn">Post Comment</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <button type="submit" class="btn" id="submitCommentBtn">
+                            <i class="fas fa-paper-plane" style="margin-right: 6px;"></i> Post Comment
+                        </button>
+                        <span id="commentStatusMessage" style="font-size: 0.9rem; color: var(--green); display: none;"></span>
+                    </div>
                 </form>
-            </div>
+
+                <!-- Comments List -->
+                <div class="comments-list-wrapper">
+                    <div id="commentsContainer" class="comments-container">
+                        <!-- Populated by comments.js script below -->
+                    </div>
+                </div>
+            </section>
         </article>
 
         <!-- Sidebar -->
@@ -308,7 +1371,7 @@
                 </ul>
             </div>
 
-            <div class="sidebar-widget" style="background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);">
+            <div class="sidebar-widget" style="background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);">
                 <h3 class="sidebar-title">Stay Connected</h3>
                 <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Join 50,000+ readers who receive our daily newsletter.</p>
                 <form onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
@@ -319,6 +1382,228 @@
         </aside>
     </div>
 </section>
+
+<!-- Full Interactive Comments Script -->
+<script>
+    (function() {
+        const pageKey = 'viralson_comments_' + window.location.pathname.replace(/\/$/, '');
+        const defaultComments = [
+            {
+                id: 'c1',
+                author: 'Dr. Arthur Pendelton',
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
+                date: 'Yesterday at 3:42 PM',
+                text: 'This is one of the most thorough and balanced write-ups I have read on this subject recently. The historical context provided makes the conclusions much more compelling.',
+                likes: 14,
+                userLiked: false
+            },
+            {
+                id: 'c2',
+                author: 'Maya Lin',
+                avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80',
+                date: 'Today at 10:15 AM',
+                text: 'Completely agree with the points raised here. Would love to see a follow-up piece delving into how regional policymakers are approaching these shifts.',
+                likes: 8,
+                userLiked: false
+            }
+        ];
+
+        function getComments() {
+            try {
+                const stored = localStorage.getItem(pageKey);
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+            } catch (e) {
+                console.warn('LocalStorage error:', e);
+            }
+            return defaultComments;
+        }
+
+        function saveComments(comments) {
+            try {
+                localStorage.setItem(pageKey, JSON.stringify(comments));
+            } catch (e) {
+                console.warn('LocalStorage save error:', e);
+            }
+            renderComments();
+        }
+
+        function updateCounts(count) {
+            const totalEl = document.getElementById('commentsTotalCount');
+            const headerCount = document.getElementById('headerCommentCount');
+            if (totalEl) totalEl.textContent = count;
+            if (headerCount) headerCount.textContent = count;
+        }
+
+        function escapeHTML(str) {
+            const p = document.createElement('p');
+            p.textContent = str;
+            return p.innerHTML;
+        }
+
+        function renderComments() {
+            const container = document.getElementById('commentsContainer');
+            if (!container) return;
+
+            const comments = getComments();
+            updateCounts(comments.length);
+
+            if (comments.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                        <i class="far fa-comment-dots" style="font-size: 2.2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                        <p>No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = comments.map(c => `
+                <div class="comment-card" id="comment-${c.id}">
+                    <div class="comment-avatar-wrapper">
+                        <img src="${c.avatar}" alt="${escapeHTML(c.author)}" class="comment-avatar">
+                    </div>
+                    <div class="comment-content-body">
+                        <div class="comment-meta-row">
+                            <span class="comment-author-name">${escapeHTML(c.author)}</span>
+                            <span class="comment-timestamp">${c.date}</span>
+                        </div>
+                        <p class="comment-text-paragraph">${escapeHTML(c.text)}</p>
+                        <div class="comment-actions-bar">
+                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')">
+                                <i class="${c.userLiked ? 'fas' : 'far'} fa-heart"></i>
+                                <span>${c.likes}</span>
+                            </button>
+                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')">
+                                <i class="fas fa-reply"></i> Reply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.toggleLike = function(id) {
+            const comments = getComments();
+            const comment = comments.find(c => c.id === id);
+            if (comment) {
+                if (comment.userLiked) {
+                    comment.likes = Math.max(0, comment.likes - 1);
+                    comment.userLiked = false;
+                } else {
+                    comment.likes = comment.likes + 1;
+                    comment.userLiked = true;
+                }
+                saveComments(comments);
+            }
+        };
+
+        window.startReply = function(authorName) {
+            const textarea = document.getElementById('commentText');
+            if (textarea) {
+                textarea.value = `@${authorName} `;
+                textarea.focus();
+                textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        // Form Submit Handler
+        const form = document.getElementById('commentForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const authorInput = document.getElementById('commentAuthor');
+                const emailInput = document.getElementById('commentEmail');
+                const textInput = document.getElementById('commentText');
+                const statusMsg = document.getElementById('commentStatusMessage');
+
+                const author = authorInput.value.trim();
+                const email = emailInput.value.trim();
+                const text = textInput.value.trim();
+
+                if (!author || !email || !text) return;
+
+                const avatarIndex = (author.charCodeAt(0) % 5) + 1;
+                const avatarOptions = [
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=100&q=80'
+                ];
+
+                const newComment = {
+                    id: 'c_' + Date.now(),
+                    author: author,
+                    avatar: avatarOptions[avatarIndex - 1],
+                    date: 'Just now',
+                    text: text,
+                    likes: 0,
+                    userLiked: false
+                };
+
+                const comments = getComments();
+                comments.unshift(newComment);
+                saveComments(comments);
+
+                textInput.value = '';
+                if (statusMsg) {
+                    statusMsg.textContent = '✓ Comment posted successfully!';
+                    statusMsg.style.display = 'inline';
+                    setTimeout(() => { statusMsg.style.display = 'none'; }, 4000);
+                }
+
+                // Scroll to newly added comment
+                const newEl = document.getElementById('comment-' + newComment.id);
+                if (newEl) {
+                    newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // Initial render
+        renderComments();
+    })();
+
+    // Automatic Reading Time Calculator Script
+    (function() {
+        function calculateAndPrependReadingTime() {
+            const postBody = document.querySelector('.post-body');
+            const metaBar = document.querySelector('.post-meta-bar');
+            if (!postBody || !metaBar) return;
+
+            // Extract text from the article content
+            const articleText = (postBody.innerText || postBody.textContent || '').trim();
+            // Count words accurately
+            const words = articleText ? articleText.split(/\s+/).filter(w => w.length > 0) : [];
+            const wordCount = words.length;
+
+            // Average adult reading speed: ~200 words per minute
+            const wordsPerMinute = 200;
+            const readingMinutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+            const readingTimeText = `${readingMinutes} min read`;
+
+            // Check if already prepended
+            let readingTimeItem = metaBar.querySelector('.post-reading-time');
+            if (!readingTimeItem) {
+                readingTimeItem = document.createElement('span');
+                readingTimeItem.className = 'post-reading-time';
+                // Prepend as the first child of the post meta bar
+                metaBar.prepend(readingTimeItem);
+            }
+
+            readingTimeItem.innerHTML = `<i class="far fa-clock"></i> <span class="reading-time-value">${readingTimeText}</span>`;
+            readingTimeItem.setAttribute('title', `Auto-calculated: ${wordCount.toLocaleString()} words (~200 words/min)`);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', calculateAndPrependReadingTime);
+        } else {
+            calculateAndPrependReadingTime();
+        }
+    })();
+</script>
 
     </main>
 
@@ -352,9 +1637,11 @@
                     <li class="footer-link"><a href="/news/">News</a></li>
                     <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
                     <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/sports/">Sports</a></li>
                     <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
                     <li class="footer-link"><a href="/community/">Community Hub</a></li>
                     <li class="footer-link"><a href="/about/">About Us</a></li>
+                    <li class="footer-link"><a href="/admin/"><i class="fas fa-feather-alt" style="font-size: 0.8rem; margin-right: 4px; color: var(--primary-blue);"></i> Content Studio</a></li>
                 </ul>
             </div>
 
@@ -394,10 +1681,195 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+            <p>&copy; <span id="footerCurrentYear">2026</span> Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
         </div>
     </div>
 </footer>
+
+<!-- Auto-Update Yearly Date Script -->
+<script>
+    (function() {
+        const yearEl = document.getElementById('footerCurrentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    })();
+</script>
+
+
+    <!-- Sitewide Newsletter Popup Modal -->
+    <!-- Triggered Newsletter Signup Modal with Blur Backdrop & Theme Matching -->
+<div class="newsletter-modal-backdrop" id="newsletterModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="newsletter-modal-card" id="newsletterModalCard">
+        <!-- Prominent Close Button -->
+        <button type="button" class="newsletter-close-btn" id="newsletterCloseBtn" aria-label="Close newsletter popup" title="Close (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Badge -->
+        <div class="newsletter-modal-badge">
+            <i class="fas fa-bolt" style="margin-right: 5px; color: var(--primary-blue);"></i> Daily Viral Dispatch
+        </div>
+
+        <h3 class="newsletter-modal-title">Stay Ahead of the Curve</h3>
+        <p class="newsletter-modal-desc">
+            Get our editors' top investigative scoops, breaking tech & sports reports, and cultural premieres delivered directly to your inbox every morning.
+        </p>
+
+        <!-- Newsletter Submission Form -->
+        <form id="newsletterModalForm" class="newsletter-modal-form">
+            <div class="newsletter-input-group">
+                <input type="email" id="newsletterModalEmail" class="newsletter-modal-input" placeholder="Enter your email address" required autocomplete="email">
+                <button type="submit" class="btn newsletter-modal-submit" id="newsletterModalSubmit">
+                    <span>Subscribe Free</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </div>
+            <p class="newsletter-privacy-note">
+                <i class="fas fa-shield-alt" style="color: var(--green); margin-right: 4px;"></i> Zero spam. One-click unsubscribe anytime.
+            </p>
+        </form>
+
+        <!-- Success Confirmation State (shown post-submit) -->
+        <div id="newsletterSuccessState" class="newsletter-success-state" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--green); margin-bottom: 0.8rem;"></i>
+            <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark);">Welcome to Viral Son!</h4>
+            <p style="font-size: 0.92rem; color: var(--text-light);">You're on the VIP list. We've queued your first morning briefing.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const COOKIE_NAME = 'viralson_newsletter_suppressed';
+        const SUPPRESSION_DAYS = 14;
+
+        // Check if on home/index page
+        const path = window.location.pathname;
+        const isIndexPage = path === '/' || path === '/index.html' || path === '';
+
+        // Only trigger on the index page
+        if (!isIndexPage) return;
+
+        // Cookie & Storage Helpers
+        function getCookie(name) {
+            try {
+                const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+                return match ? decodeURIComponent(match[3]) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+                localStorage.setItem(name, 'true');
+            } catch (e) {}
+        }
+
+        function isSuppressed() {
+            try {
+                if (getCookie(COOKIE_NAME) === 'true') return true;
+                if (localStorage.getItem(COOKIE_NAME) === 'true') return true;
+            } catch (e) {}
+            return false;
+        }
+
+        if (isSuppressed()) return;
+
+        const backdrop = document.getElementById('newsletterModalBackdrop');
+        const card = document.getElementById('newsletterModalCard');
+        const closeBtn = document.getElementById('newsletterCloseBtn');
+        const form = document.getElementById('newsletterModalForm');
+        const successState = document.getElementById('newsletterSuccessState');
+        const emailInput = document.getElementById('newsletterModalEmail');
+
+        if (!backdrop || !card) return;
+
+        let modalShown = false;
+        let timer = null;
+
+        function showModal() {
+            if (modalShown || isSuppressed()) return;
+            modalShown = true;
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('scroll', checkScroll);
+
+            backdrop.style.display = 'flex';
+            backdrop.setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                backdrop.classList.add('visible');
+                if (emailInput) emailInput.focus();
+            }, 30);
+        }
+
+        function closeModal(suppressDays = SUPPRESSION_DAYS) {
+            setCookie(COOKIE_NAME, 'true', suppressDays);
+            backdrop.classList.remove('visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 350);
+        }
+
+        // Trigger 1: 50% Scroll of page content
+        function checkScroll() {
+            if (modalShown) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal <= 0) return;
+            const currentScroll = window.scrollY || window.pageYOffset;
+            if ((currentScroll / scrollTotal) >= 0.50) {
+                showModal();
+            }
+        }
+
+        // Trigger 2: Exactly 30 seconds on index page
+        timer = setTimeout(showModal, 30000);
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+
+        // Close Handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeModal(SUPPRESSION_DAYS);
+            });
+        }
+
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('visible')) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                if (!email) return;
+
+                form.style.display = 'none';
+                if (successState) successState.style.display = 'block';
+
+                setCookie(COOKIE_NAME, 'true', 60);
+
+                setTimeout(function() {
+                    closeModal(60);
+                }, 2600);
+            });
+        }
+    })();
+</script>
 
 </body>
 </html>

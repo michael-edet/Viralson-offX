@@ -57,6 +57,17 @@ permalink: "/lifestyle/"
             </div>
         </article>
 
+        <!-- In-Feed Google Ads Card -->
+        <div class="infeed-grid-item" data-tags="wellness calm mindfulness sleep health">
+            {% set adType = "infeed" %}
+            {% set adBrand = "Headspace Care" %}
+            {% set adTitle = "Clinical Mindfulness and Rest Protocols for Modern Living" %}
+            {% set adDesc = "Evidence-based audio meditations, sleep casts, and cognitive stress reduction tools designed by neuroscientists." %}
+            {% set adLink = "https://headspace.com" %}
+            {% set adImage = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80" %}
+            {% include "google-ad.njk" %}
+        </div>
+
         <!-- Sleep Science -->
         <article class="post-card" data-tags="health sleep wellness science recovery">
             <div class="post-image">

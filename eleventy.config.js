@@ -2,6 +2,8 @@ export default function (eleventyConfig) {
   // Passthrough copy static assets
   eleventyConfig.addPassthroughCopy("Assets");
   eleventyConfig.addPassthroughCopy("sample");
+  eleventyConfig.addPassthroughCopy("admin/config.yml");
+  eleventyConfig.addPassthroughCopy("ads.txt");
 
   // Custom date filter
   eleventyConfig.addFilter("dateDisplay", (dateObj) => {

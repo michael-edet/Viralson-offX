@@ -21,6 +21,9 @@
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
 
+    <!-- Google AdSense Official Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.googleAdSense.clientId | default('ca-pub-9481237418920194') }}" crossorigin="anonymous"></script>
+
     <!-- Theme Initialization to prevent FOUC -->
     <script>
         (function() {
@@ -42,15 +45,69 @@
     <!-- Dynamic Header -->
     {% include "header.njk" %}
 
+    <!-- Top Leaderboard Google Ads Scene (On Every Page) -->
+    {% if not hideTopAd and page.url != '/admin/' %}
+    <div class="container ad-leaderboard-container">
+        {% set adType = "leaderboard" %}
+        {% include "google-ad.njk" %}
+    </div>
+    {% endif %}
+
     <!-- Main Content Area -->
     <main>
         {{ content | safe }}
     </main>
+
+    <!-- Pre-Footer Billboard Google Ads Scene (On Every Page) -->
+    {% if not hideBottomAd and page.url != '/admin/' %}
+    <div class="container ad-billboard-container">
+        {% set adType = "billboard" %}
+        {% include "google-ad.njk" %}
+    </div>
+    {% endif %}
 
     <!-- Dynamic Footer -->
     {% include "footer.njk" %}
 
     <!-- Sitewide Newsletter Popup Modal -->
     {% include "newsletter-modal.njk" %}
+
+    <!-- Sticky Bottom Viewport Floating Google Ad Anchor -->
+    {% if not hideAnchorAd and page.url != '/admin/' %}
+        {% set adType = "anchor" %}
+        {% include "google-ad.njk" %}
+    {% endif %}
+
+    <!-- Safe Google AdSense & Anchor Control Script -->
+    <script>
+        (function() {
+            // Dismiss anchor ad
+            window.dismissAnchorAd = function() {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) {
+                    anchor.classList.add('hidden');
+                    sessionStorage.setItem('viralson_anchor_dismissed', 'true');
+                }
+            };
+
+            // Check if dismissed in this session
+            if (sessionStorage.getItem('viralson_anchor_dismissed') === 'true') {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) anchor.classList.add('hidden');
+            }
+
+            // Safe push for Google AdSense slots without breaking if adblocker is present
+            try {
+                const adSlots = document.querySelectorAll('.adsbygoogle');
+                if (adSlots.length > 0 && window.adsbygoogle) {
+                    adSlots.forEach(() => {
+                        try {
+                            (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        } catch(e) {}
+                    });
+                }
+            } catch(e) {}
+        })();
+    </script>
 </body>
 </html>

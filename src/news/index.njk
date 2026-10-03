@@ -70,6 +70,17 @@ permalink: "/news/"
                 </article>
             </div>
 
+            <!-- In-Feed Google Ads Scene -->
+            <div style="margin: 2rem 0;">
+                {% set adType = "infeed" %}
+                {% set adBrand = "Google News Initiative" %}
+                {% set adTitle = "Empowering Independent Digital Journalism Worldwide" %}
+                {% set adDesc = "Discover cutting-edge newsroom tools, data journalism suites, and audience analytics engineered to elevate verified reporting." %}
+                {% set adLink = "https://newsinitiative.withgoogle.com" %}
+                {% set adImage = "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=600&q=80" %}
+                {% include "google-ad.njk" %}
+            </div>
+
             <!-- Additional News List Items -->
             <article class="news-card mini-news-card" data-tags="science health technology semiconductors">
                 <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Tech News" class="mini-news-img">
@@ -94,6 +105,10 @@ permalink: "/news/"
 
         <!-- Sidebar -->
         <aside class="news-sidebar">
+            <!-- Sidebar Google Ads Display Unit -->
+            {% set adType = "sidebar" %}
+            {% include "google-ad.njk" %}
+
             <div class="sidebar-widget">
                 <h3 class="sidebar-title">Trending in News</h3>
                 <ul class="trending-list">

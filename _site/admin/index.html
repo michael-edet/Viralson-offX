@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Son Content Studio & Publishing Manager</title>
+    <meta name="description" content="Next-generation Content Management Studio for Viral Son. Manage, draft, edit, and publish static stories and media.">
+    
+    <!-- Netlify Identity Widget (Requested) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Master Site Stylesheet (for accurate live preview) -->
+    <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <style>
+        :root {
+            --cms-primary: #3b82f6;
+            --cms-primary-hover: #2563eb;
+            --cms-primary-light: rgba(59, 130, 246, 0.12);
+            --cms-success: #10b981;
+            --cms-warning: #f59e0b;
+            --cms-danger: #ef4444;
+            --cms-bg: #0b0f17;
+            --cms-surface: #111827;
+            --cms-card: #182234;
+            --cms-card-hover: #1f2d44;
+            --cms-border: #24324a;
+            --cms-border-light: #2e3e5c;
+            --cms-text: #f3f4f6;
+            --cms-text-muted: #94a3b8;
+            --cms-text-subtle: #64748b;
+            --cms-code-bg: #0a0e14;
+            --cms-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --cms-font-mono: 'JetBrains Mono', monospace;
+            --cms-radius: 10px;
+            --cms-radius-lg: 16px;
+            --cms-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="light"] {
+            --cms-primary: #2563eb;
+            --cms-primary-hover: #1d4ed8;
+            --cms-primary-light: rgba(37, 99, 235, 0.1);
+            --cms-bg: #f8fafc;
+            --cms-surface: #ffffff;
+            --cms-card: #ffffff;
+            --cms-card-hover: #f1f5f9;
+            --cms-border: #e2e8f0;
+            --cms-border-light: #cbd5e1;
+            --cms-text: #0f172a;
+            --cms-text-muted: #475569;
+            --cms-text-subtle: #94a3b8;
+            --cms-code-bg: #f1f5f9;
+            --cms-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--cms-font);
+            background-color: var(--cms-bg);
+            color: var(--cms-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        /* Top CMS Header */
+        .cms-navbar {
+            background-color: var(--cms-surface);
+            border-bottom: 1px solid var(--cms-border);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .cms-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .cms-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--cms-text);
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cms-brand-badge {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #ffffff;
+            padding: 0.25rem 0.55rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .cms-version-tag {
+            font-size: 0.72rem;
+            color: var(--cms-text-subtle);
+            background: var(--cms-code-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--cms-border);
+        }
+
+        .cms-nav-tabs {
+            display: flex;
+            align-items: center;
+            background: var(--cms-code-bg);
+            padding: 0.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--cms-border);
+            gap: 0.25rem;
+        }
+
+        .cms-nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--cms-text-muted);
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.45rem 0.85rem;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.15s ease;
+        }
+
+        .cms-nav-tab:hover {
+            color: var(--cms-text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .cms-nav-tab.active {
+            background: var(--cms-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+        }
+
+        .cms-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cms-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.5rem 0.95rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: 1px solid transparent;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .cms-btn-primary {
+            background: var(--cms-primary);
+            color: #ffffff;
+            border-color: var(--cms-primary);
+        }
+
+        .cms-btn-primary:hover {
+            background: var(--cms-primary-hover);
+        }
+
+        .cms-btn-success {
+            background: #10b981;
+            color: #ffffff;
+            border-color: #10b981;
+        }
+
+        .cms-btn-success:hover {
+            background: #059669;
+        }
+
+        .cms-btn-secondary {
+            background: var(--cms-surface);
+            color: var(--cms-text);
+            border-color: var(--cms-border);
+        }
+
+        .cms-btn-secondary:hover {
+            background: var(--cms-card-hover);
+            border-color: var(--cms-border-light);
+        }
+
+        .cms-btn-outline {
+            background: transparent;
+            color: var(--cms-text);
+            border-color: var(--cms-border);
+        }
+
+        .cms-btn-outline:hover {
+            border-color: var(--cms-primary);
+            color: var(--cms-primary);
+        }
+
+        .cms-btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .cms-btn-danger:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        .cms-btn-icon {
+            padding: 0.5rem;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .cms-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .cms-badge-live {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .cms-badge-draft {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Main Container */
+        .cms-main {
+            flex: 1;
+            padding: 1.5rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Metric Highlights Bar */
+        .cms-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cms-stat-card {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius);
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cms-stat-card:hover {
+            border-color: var(--cms-primary);
+            transform: translateY(-2px);
+        }
+
+        .cms-stat-info h4 {
+            font-size: 0.76rem;
+            color: var(--cms-text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+        }
+
+        .cms-stat-info .cms-stat-num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cms-text);
+            line-height: 1;
+        }
+
+        .cms-stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        /* View: Posts Manager */
+        .cms-view-container {
+            display: block;
+        }
+
+        .cms-toolbar {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius);
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cms-search-box {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .cms-search-box i {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--cms-text-subtle);
+            font-size: 0.85rem;
+        }
+
+        .cms-search-input {
+            width: 100%;
+            background: var(--cms-code-bg);
+            border: 1px solid var(--cms-border);
+            color: var(--cms-text);
+            padding: 0.55rem 0.85rem 0.55rem 2.35rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .cms-search-input:focus {
+            border-color: var(--cms-primary);
+        }
+
+        .cms-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .cms-select {
+            background: var(--cms-code-bg);
+            border: 1px solid var(--cms-border);
+            color: var(--cms-text);
+            padding: 0.55rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .cms-select:focus {
+            border-color: var(--cms-primary);
+        }
+
+        /* Posts Table & Cards */
+        .cms-posts-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cms-post-item {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius);
+            padding: 1.25rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .cms-post-item:hover {
+            border-color: var(--cms-border-light);
+            background: var(--cms-card-hover);
+        }
+
+        .cms-post-thumb {
+            width: 110px;
+            height: 75px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--cms-code-bg);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--cms-border);
+        }
+
+        .cms-post-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cms-post-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cms-post-topline {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .cms-post-category-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .cms-post-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--cms-text);
+            margin-bottom: 0.3rem;
+            text-decoration: none;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cms-post-title:hover {
+            color: var(--cms-primary);
+        }
+
+        .cms-post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-size: 0.78rem;
+            color: var(--cms-text-subtle);
+            flex-wrap: wrap;
+        }
+
+        .cms-post-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .cms-post-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* View: Studio Editor */
+        .cms-editor-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            height: calc(100vh - 150px);
+            min-height: 700px;
+        }
+
+        .cms-editor-layout.full-editor {
+            grid-template-columns: 1fr;
+        }
+
+        .cms-editor-layout.full-editor .cms-preview-pane {
+            display: none;
+        }
+
+        .cms-editor-layout.full-preview {
+            grid-template-columns: 1fr;
+        }
+
+        .cms-editor-layout.full-preview .cms-editor-pane {
+            display: none;
+        }
+
+        .cms-editor-pane, .cms-preview-pane {
+            background: var(--cms-surface);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--cms-shadow);
+        }
+
+        .cms-pane-header {
+            padding: 0.75rem 1rem;
+            background: var(--cms-card);
+            border-bottom: 1px solid var(--cms-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .cms-pane-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cms-text);
+        }
+
+        .cms-editor-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* Form Controls */
+        .cms-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .cms-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--cms-text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cms-input, .cms-textarea {
+            width: 100%;
+            background: var(--cms-code-bg);
+            border: 1px solid var(--cms-border);
+            color: var(--cms-text);
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .cms-input:focus, .cms-textarea:focus {
+            border-color: var(--cms-primary);
+        }
+
+        .cms-input-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+        }
+
+        .cms-slug-preview {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--cms-font-mono);
+            font-size: 0.76rem;
+            color: var(--cms-text-subtle);
+            background: var(--cms-code-bg);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            border: 1px dashed var(--cms-border);
+        }
+
+        .cms-slug-input {
+            background: transparent;
+            border: none;
+            color: var(--cms-primary);
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+            flex: 1;
+        }
+
+        /* Markdown / Rich Editor Toolbar */
+        .cms-editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.45rem 0.65rem;
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-bottom: none;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .cms-tool-btn {
+            background: transparent;
+            border: none;
+            color: var(--cms-text-muted);
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.15s ease;
+        }
+
+        .cms-tool-btn:hover {
+            color: var(--cms-text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .cms-tool-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--cms-border);
+            margin: 0 0.25rem;
+        }
+
+        .cms-content-editor {
+            min-height: 280px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            font-family: var(--cms-font-mono);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .cms-editor-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--cms-text-subtle);
+            padding: 0.4rem 0.2rem;
+        }
+
+        /* Preset Stock Photos Selector */
+        .cms-curated-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .cms-curated-img-btn {
+            height: 52px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            background: var(--cms-code-bg);
+            padding: 0;
+        }
+
+        .cms-curated-img-btn:hover {
+            border-color: var(--cms-primary);
+            transform: scale(1.02);
+        }
+
+        .cms-curated-img-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cms-curated-img-btn span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.65);
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 1px 0;
+        }
+
+        /* Tags Input */
+        .cms-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            background: var(--cms-code-bg);
+            border: 1px solid var(--cms-border);
+            padding: 0.45rem;
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .cms-tag-chip {
+            background: var(--cms-primary-light);
+            color: var(--cms-primary);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .cms-tag-chip button {
+            background: transparent;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .cms-tag-chip button:hover {
+            opacity: 1;
+        }
+
+        .cms-tag-input {
+            background: transparent;
+            border: none;
+            color: var(--cms-text);
+            font-size: 0.82rem;
+            outline: none;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        /* Preview Pane Layout */
+        .cms-preview-viewport-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--cms-code-bg);
+            padding: 0.2rem;
+            border-radius: 6px;
+            border: 1px solid var(--cms-border);
+        }
+
+        .cms-viewport-btn {
+            background: transparent;
+            border: none;
+            color: var(--cms-text-subtle);
+            width: 26px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cms-viewport-btn.active {
+            background: var(--cms-card);
+            color: var(--cms-primary);
+        }
+
+        .cms-preview-tabs {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .cms-preview-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--cms-text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cms-preview-tab-btn.active {
+            background: var(--cms-primary-light);
+            color: var(--cms-primary);
+        }
+
+        .cms-preview-canvas {
+            flex: 1;
+            overflow-y: auto;
+            background: var(--cms-bg);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cms-preview-frame {
+            width: 100%;
+            transition: max-width 0.25s ease;
+            background: var(--card-bg, #1e232b);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            border: 1px solid var(--cms-border);
+        }
+
+        .cms-preview-frame.tablet {
+            max-width: 768px;
+        }
+
+        .cms-preview-frame.mobile {
+            max-width: 390px;
+            padding: 1.25rem;
+        }
+
+        /* SEO Simulator Cards */
+        .cms-seo-card {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .cms-google-serp {
+            background: #ffffff;
+            color: #1f1f1f;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.18);
+            font-family: Arial, sans-serif;
+        }
+
+        .cms-google-url {
+            font-size: 0.8rem;
+            color: #202124;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cms-google-title {
+            color: #1a0dab;
+            font-size: 1.15rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+        }
+
+        .cms-google-desc {
+            color: #4d5156;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .cms-social-card {
+            background: #000000;
+            color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2f3336;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cms-social-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: #16181c;
+        }
+
+        .cms-social-info {
+            padding: 0.75rem 1rem;
+        }
+
+        .cms-social-domain {
+            font-size: 0.75rem;
+            color: #71767b;
+            margin-bottom: 0.25rem;
+        }
+
+        .cms-social-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .cms-social-desc {
+            font-size: 0.8rem;
+            color: #71767b;
+            line-height: 1.3;
+        }
+
+        /* Code Inspector */
+        .cms-code-block {
+            background: #090d16;
+            color: #38bdf8;
+            font-family: var(--cms-font-mono);
+            font-size: 0.82rem;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            border: 1px solid var(--cms-border);
+        }
+
+        /* Decap / Netlify CMS Mode Container */
+        #decapCmsContainer {
+            width: 100%;
+            min-height: calc(100vh - 120px);
+            border-radius: var(--cms-radius);
+            overflow: hidden;
+            background: var(--cms-surface);
+        }
+
+        /* Toast Notifications */
+        .cms-toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .cms-toast {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            color: var(--cms-text);
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            animation: slideIn 0.25s ease-out;
+            min-width: 280px;
+        }
+
+        .cms-toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .cms-toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Modal */
+        .cms-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .cms-modal-backdrop.open {
+            display: flex;
+        }
+
+        .cms-modal-card {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius-lg);
+            width: 100%;
+            max-width: 520px;
+            padding: 1.5rem;
+            box-shadow: var(--cms-shadow);
+        }
+
+        .cms-modal-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .cms-modal-text {
+            font-size: 0.88rem;
+            color: var(--cms-text-muted);
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+        }
+
+        .cms-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Spinners */
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1024px) {
+            .cms-editor-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            .cms-navbar {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="cms-navbar">
+        <div class="cms-brand-group">
+            <a href="/admin/" class="cms-brand">
+                <span class="cms-brand-badge">VS</span>
+                <span>Viral Son Studio</span>
+            </a>
+            <span class="cms-version-tag"><i class="fas fa-bolt" style="color: #38bdf8;"></i> 11ty Engine</span>
+
+            <nav class="cms-nav-tabs">
+                <button type="button" class="cms-nav-tab active" id="tabPostsBtn" onclick="switchView('posts')">
+                    <i class="fas fa-layer-group"></i> All Posts
+                </button>
+                <button type="button" class="cms-nav-tab" id="tabEditorBtn" onclick="openNewPostEditor()">
+                    <i class="fas fa-feather-alt"></i> New Article
+                </button>
+                <button type="button" class="cms-nav-tab" id="tabDecapBtn" onclick="switchView('decap')">
+                    <i class="fas fa-cube"></i> Netlify CMS View
+                </button>
+            </nav>
+        </div>
+
+        <div class="cms-actions">
+            <!-- Site Rebuild Action -->
+            <button type="button" class="cms-btn cms-btn-secondary" id="rebuildBtn" onclick="triggerRebuild()" title="Recompile static site with Eleventy">
+                <i class="fas fa-sync-alt" id="rebuildIcon"></i>
+                <span id="rebuildLabel">Rebuild 11ty</span>
+            </button>
+
+            <!-- Live Site Link -->
+            <a href="/" target="_blank" class="cms-btn cms-btn-outline" title="Open public site in new tab">
+                <i class="fas fa-external-link-alt"></i> View Site
+            </a>
+
+            <!-- Theme Toggle -->
+            <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" id="themeToggleBtn" onclick="toggleCmsTheme()" title="Toggle Dark / Light Mode">
+                <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Hub -->
+    <main class="cms-main">
+
+        <!-- Highlights & Performance Bar -->
+        <section class="cms-stats-grid" id="statsBar">
+            <div class="cms-stat-card">
+                <div class="cms-stat-info">
+                    <h4>Published Articles</h4>
+                    <div class="cms-stat-num" id="statPublished">-</div>
+                </div>
+                <div class="cms-stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+            </div>
+
+            <div class="cms-stat-card">
+                <div class="cms-stat-info">
+                    <h4>Drafts & Queued</h4>
+                    <div class="cms-stat-num" id="statDrafts">-</div>
+                </div>
+                <div class="cms-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                    <i class="fas fa-edit"></i>
+                </div>
+            </div>
+
+            <div class="cms-stat-card">
+                <div class="cms-stat-info">
+                    <h4>Active Categories</h4>
+                    <div class="cms-stat-num" id="statCategories">6</div>
+                </div>
+                <div class="cms-stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+            </div>
+
+            <div class="cms-stat-card">
+                <div class="cms-stat-info">
+                    <h4>Estimated Readership</h4>
+                    <div class="cms-stat-num" id="statViews">-</div>
+                </div>
+                <div class="cms-stat-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 1: Posts Management Hub -->
+        <section id="viewPosts" class="cms-view-container">
+            <div class="cms-toolbar">
+                <div class="cms-search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="postSearchInput" class="cms-search-input" placeholder="Search articles by headline, tags, author, content..." oninput="filterPosts()">
+                </div>
+
+                <div class="cms-filters">
+                    <select id="categoryFilter" class="cms-select" onchange="filterPosts()">
+                        <option value="all">All Categories</option>
+                        <option value="News">News</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Community">Community</option>
+                    </select>
+
+                    <select id="statusFilter" class="cms-select" onchange="filterPosts()">
+                        <option value="all">All Statuses</option>
+                        <option value="published">Published Only</option>
+                        <option value="draft">Drafts Only</option>
+                    </select>
+
+                    <select id="sortFilter" class="cms-select" onchange="filterPosts()">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                    </select>
+
+                    <button type="button" class="cms-btn cms-btn-primary" onclick="openNewPostEditor()">
+                        <i class="fas fa-plus"></i> New Article
+                    </button>
+                </div>
+            </div>
+
+            <!-- Posts List Container -->
+            <div id="postsList" class="cms-posts-list">
+                <div style="text-align: center; padding: 3rem; color: var(--cms-text-subtle);">
+                    <i class="fas fa-circle-notch spin" style="font-size: 1.8rem; margin-bottom: 0.75rem;"></i>
+                    <p>Loading your articles & media...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: Interactive Live Studio Editor -->
+        <section id="viewEditor" class="cms-view-container" style="display: none;">
+            <div class="cms-editor-layout" id="editorLayout">
+                
+                <!-- Left Pane: Content & Metadata Editor -->
+                <div class="cms-editor-pane">
+                    <div class="cms-pane-header">
+                        <div class="cms-pane-title">
+                            <span id="editorModeTitle"><i class="fas fa-edit" style="color: var(--cms-primary);"></i> Edit Article</span>
+                            <span class="cms-badge cms-badge-draft" id="postStatusBadge">Draft</span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <!-- Layout width switcher -->
+                            <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="setEditorSplit('split')" title="Split View"><i class="fas fa-columns"></i></button>
+                            <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="setEditorSplit('editor')" title="Full Editor"><i class="fas fa-expand-alt"></i></button>
+                            <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="setEditorSplit('preview')" title="Full Preview"><i class="fas fa-eye"></i></button>
+
+                            <!-- Close / Back -->
+                            <button type="button" class="cms-btn cms-btn-secondary" onclick="switchView('posts')">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cms-editor-body">
+                        <!-- Headline Input -->
+                        <div class="cms-form-group">
+                            <label class="cms-label" for="postTitle">Headline Title</label>
+                            <input type="text" id="postTitle" class="cms-input cms-input-title" placeholder="Enter a compelling article headline..." oninput="handleTitleChange()">
+                            
+                            <div class="cms-slug-preview">
+                                <span>URL Permalink: /posts/</span>
+                                <input type="text" id="postSlug" class="cms-slug-input" placeholder="url-slug" oninput="updateLivePreview()">
+                                <span>/</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Template Starter -->
+                        <div class="cms-form-group">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label class="cms-label">Quick Starter Templates</label>
+                                <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">Pre-fills structured layout</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button type="button" class="cms-btn cms-btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="applyTemplate('breaking')">
+                                    <i class="fas fa-bolt" style="color: #ef4444;"></i> Breaking News
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="applyTemplate('tech')">
+                                    <i class="fas fa-microchip" style="color: #3b82f6;"></i> Tech Review
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="applyTemplate('music')">
+                                    <i class="fas fa-music" style="color: #ec4899;"></i> Music Release
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="applyTemplate('lifestyle')">
+                                    <i class="fas fa-spa" style="color: #10b981;"></i> Lifestyle Guide
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Body Editor with Rich Toolbar -->
+                        <div class="cms-form-group">
+                            <label class="cms-label">Article Body Content (Markdown & HTML)</label>
+                            
+                            <!-- Toolbar -->
+                            <div class="cms-editor-toolbar">
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('**', '**')" title="Bold"><i class="fas fa-bold"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('*', '*')" title="Italic"><i class="fas fa-italic"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('~~', '~~')" title="Strikethrough"><i class="fas fa-strikethrough"></i></button>
+                                <div class="cms-tool-divider"></div>
+                                <button type="button" class="cms-tool-btn" onclick="insertHeading(2)" title="Heading 2"><i class="fas fa-heading"></i>2</button>
+                                <button type="button" class="cms-tool-btn" onclick="insertHeading(3)" title="Heading 3"><i class="fas fa-heading"></i>3</button>
+                                <div class="cms-tool-divider"></div>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('> ', '')" title="Quote"><i class="fas fa-quote-left"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('```\n', '\n```')" title="Code Block"><i class="fas fa-code"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('- ', '')" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertSyntax('1. ', '')" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                                <div class="cms-tool-divider"></div>
+                                <button type="button" class="cms-tool-btn" onclick="insertLink()" title="Insert Link"><i class="fas fa-link"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertImagePrompt()" title="Insert Image"><i class="fas fa-image"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertCallout()" title="Callout Box"><i class="fas fa-info-circle"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="insertDivider()" title="Horizontal Line"><i class="fas fa-minus"></i></button>
+                            </div>
+
+                            <textarea id="postContent" class="cms-input cms-content-editor" placeholder="Write your story using markdown or HTML..." oninput="handleContentChange()"></textarea>
+
+                            <div class="cms-editor-status">
+                                <span id="wordCountLabel">0 words • 0 characters</span>
+                                <span id="readTimeLabel">1 min read</span>
+                            </div>
+                        </div>
+
+                        <!-- Core Article Metadata -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div class="cms-form-group">
+                                <label class="cms-label" for="postCategory">Category</label>
+                                <select id="postCategory" class="cms-select" style="width: 100%;" onchange="updateLivePreview()">
+                                    <option value="Technology">Technology</option>
+                                    <option value="News">News</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Lifestyle">Lifestyle</option>
+                                    <option value="Community">Community</option>
+                                </select>
+                            </div>
+
+                            <div class="cms-form-group">
+                                <label class="cms-label" for="postAuthor">Author Name</label>
+                                <input type="text" id="postAuthor" class="cms-input" placeholder="e.g. Alex Morgan" oninput="updateLivePreview()">
+                            </div>
+
+                            <div class="cms-form-group">
+                                <label class="cms-label" for="postDate">Publish Date</label>
+                                <input type="date" id="postDate" class="cms-input" oninput="updateLivePreview()">
+                            </div>
+
+                            <div class="cms-form-group">
+                                <label class="cms-label" for="postViews">View Count Initializer</label>
+                                <input type="text" id="postViews" class="cms-input" placeholder="e.g. 1.5K views" oninput="updateLivePreview()">
+                            </div>
+                        </div>
+
+                        <!-- Excerpt / Meta Description -->
+                        <div class="cms-form-group">
+                            <label class="cms-label" for="postExcerpt">
+                                <span>Excerpt & Meta Description</span>
+                                <span id="excerptCountLabel" style="font-weight: 400; font-size: 0.72rem;">0 / 160 chars</span>
+                            </label>
+                            <textarea id="postExcerpt" class="cms-textarea" rows="3" placeholder="Brief summary of the article for social share snippets, Google search results, and category card feeds..." oninput="handleExcerptChange()"></textarea>
+                        </div>
+
+                        <!-- Author Bio -->
+                        <div class="cms-form-group">
+                            <label class="cms-label" for="postAuthorBio">Author Biography</label>
+                            <input type="text" id="postAuthorBio" class="cms-input" placeholder="Short bio describing the author's specialty or role..." oninput="updateLivePreview()">
+                        </div>
+
+                        <!-- Featured Image & Presets -->
+                        <div class="cms-form-group">
+                            <label class="cms-label" for="postImage">Featured Hero Image URL</label>
+                            <input type="url" id="postImage" class="cms-input" placeholder="https://images.unsplash.com/photo-..." oninput="updateLivePreview()">
+                            
+                            <label class="cms-label" for="postImageCaption" style="margin-top: 0.4rem;">Image Caption</label>
+                            <input type="text" id="postImageCaption" class="cms-input" placeholder="Credit or caption for featured photo..." oninput="updateLivePreview()">
+
+                            <!-- Curated Preset Photos -->
+                            <div style="margin-top: 0.5rem;">
+                                <span style="font-size: 0.72rem; color: var(--cms-text-subtle); display: block; margin-bottom: 0.25rem;">Quick Unsplash Stock Assets:</span>
+                                <div class="cms-curated-images">
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=1200&q=80', 'AI & Neural Systems')">
+                                        <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=150&q=80" alt="Tech">
+                                        <span>AI</span>
+                                    </button>
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=1200&q=80', 'Global Climate Action')">
+                                        <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=150&q=80" alt="Climate">
+                                        <span>Climate</span>
+                                    </button>
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?auto=format&fit=crop&w=1200&q=80', 'Live Concert & Festival')">
+                                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?auto=format&fit=crop&w=150&q=80" alt="Concert">
+                                        <span>Music</span>
+                                    </button>
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80', 'Modern Smartphone Hardware')">
+                                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=150&q=80" alt="Mobile">
+                                        <span>Mobile</span>
+                                    </button>
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1200&q=80', 'Sports Stadium Championship')">
+                                        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=150&q=80" alt="Sports">
+                                        <span>Sports</span>
+                                    </button>
+                                    <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80', 'Mindful Living & Wellness')">
+                                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=150&q=80" alt="Wellness">
+                                        <span>Wellness</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags Manager -->
+                        <div class="cms-form-group">
+                            <label class="cms-label">Topic Tags</label>
+                            <div class="cms-tags-container" id="tagsContainer">
+                                <!-- Chips will be populated here -->
+                                <input type="text" id="tagInput" class="cms-tag-input" placeholder="Type tag & press Enter..." onkeydown="handleTagKeyDown(event)">
+                            </div>
+                            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.35rem;">
+                                <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">Suggested:</span>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" onclick="addTag('AI')">AI</button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" onclick="addTag('Innovation')">Innovation</button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" onclick="addTag('Trending')">Trending</button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" onclick="addTag('Music')">Music</button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" onclick="addTag('Climate')">Climate</button>
+                            </div>
+                        </div>
+
+                        <!-- Publishing Action Buttons Bar -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--cms-border); margin-top: 0.5rem; gap: 0.75rem; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <button type="button" class="cms-btn cms-btn-secondary" onclick="savePost(true)" id="saveDraftBtn">
+                                    <i class="fas fa-save"></i> Save Draft
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-danger" id="deletePostBtn" onclick="confirmDeleteCurrentPost()" style="display: none;">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </div>
+
+                            <button type="button" class="cms-btn cms-btn-success" style="padding: 0.65rem 1.4rem; font-size: 0.92rem;" onclick="savePost(false)" id="publishLiveBtn">
+                                <i class="fas fa-paper-plane"></i> Publish Live
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Pane: Live Device Preview, SEO Simulator, and Source Inspector -->
+                <div class="cms-preview-pane">
+                    <div class="cms-pane-header">
+                        <div class="cms-preview-tabs">
+                            <button type="button" class="cms-preview-tab-btn active" id="tabPrevLive" onclick="setPreviewTab('live')">
+                                <i class="fas fa-desktop"></i> Live Page
+                            </button>
+                            <button type="button" class="cms-preview-tab-btn" id="tabPrevSeo" onclick="setPreviewTab('seo')">
+                                <i class="fab fa-google"></i> SEO & Social
+                            </button>
+                            <button type="button" class="cms-preview-tab-btn" id="tabPrevRaw" onclick="setPreviewTab('raw')">
+                                <i class="fas fa-code"></i> Source Code
+                            </button>
+                        </div>
+
+                        <!-- Viewport Width Controls -->
+                        <div class="cms-preview-viewport-controls" id="viewportControls">
+                            <button type="button" class="cms-viewport-btn active" id="vpDesktop" onclick="setViewport('desktop')" title="Desktop View"><i class="fas fa-desktop"></i></button>
+                            <button type="button" class="cms-viewport-btn" id="vpTablet" onclick="setViewport('tablet')" title="Tablet View"><i class="fas fa-tablet-alt"></i></button>
+                            <button type="button" class="cms-viewport-btn" id="vpMobile" onclick="setViewport('mobile')" title="Mobile View"><i class="fas fa-mobile-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="cms-preview-canvas" id="previewCanvas">
+                        <!-- Mode 1: Live Page Layout Preview -->
+                        <div class="cms-preview-frame" id="livePreviewFrame">
+                            <!-- Breadcrumb Simulation -->
+                            <div style="font-size: 0.8rem; color: var(--text-light, #9aa2ae); margin-bottom: 1.25rem;">
+                                <span>Home</span> &gt; <span id="prevBreadcrumbCat" style="color: var(--primary-blue, #4da3ff);">Technology</span> &gt; <span id="prevBreadcrumbTitle">Title</span>
+                            </div>
+
+                            <!-- Post Header Simulation -->
+                            <div style="margin-bottom: 1.5rem;">
+                                <span class="post-category tech" id="prevCategoryPill" style="margin-bottom: 0.75rem; display: inline-block;">Technology</span>
+                                <h1 id="prevHeadline" style="font-size: 2.2rem; font-weight: 800; line-height: 1.25; margin-bottom: 0.85rem; color: var(--text-dark, #f0f3f6);">Headline Preview</h1>
+                                <p id="prevExcerpt" style="font-size: 1.15rem; color: var(--text-light, #9aa2ae); line-height: 1.5; margin-bottom: 1rem;">Article excerpt preview goes here...</p>
+
+                                <div style="display: flex; gap: 1.25rem; font-size: 0.85rem; color: var(--text-light, #9aa2ae); padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-color, #262c36); flex-wrap: wrap;">
+                                    <span><i class="far fa-user"></i> <strong id="prevAuthor" style="color: var(--text-dark, #f0f3f6);">Alex Morgan</strong></span>
+                                    <span><i class="far fa-calendar"></i> <span id="prevDate">Today</span></span>
+                                    <span><i class="far fa-clock"></i> <span id="prevReadTime">5 min read</span></span>
+                                    <span><i class="far fa-eye"></i> <span id="prevViews">1.2K views</span></span>
+                                </div>
+                            </div>
+
+                            <!-- Featured Image Preview -->
+                            <div id="prevFeaturedWrapper" style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; background: #000;">
+                                <img id="prevFeaturedImg" src="" alt="Hero" style="width: 100%; max-height: 420px; object-fit: cover; display: none;">
+                                <div id="prevFeaturedCaption" style="font-size: 0.78rem; color: var(--text-light, #9aa2ae); font-style: italic; padding: 0.5rem 0.2rem; text-align: center; display: none;"></div>
+                            </div>
+
+                            <!-- Rendered Post Body -->
+                            <div id="prevBodyContent" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-dark, #f0f3f6);">
+                                <p>Start typing in the editor on the left to see your story rendered live here in real-time...</p>
+                            </div>
+
+                            <!-- Tags Simulation -->
+                            <div id="prevTagsWrapper" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color, #262c36);">
+                                <!-- rendered tags -->
+                            </div>
+                        </div>
+
+                        <!-- Mode 2: SEO Simulator Tab -->
+                        <div id="seoPreviewTab" style="display: none; width: 100%; max-width: 720px;">
+                            <div class="cms-seo-card">
+                                <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--cms-text-subtle); margin-bottom: 0.75rem;">
+                                    <i class="fab fa-google" style="color: #4285f4;"></i> Google Search SERP Snippet Preview
+                                </h4>
+                                <div class="cms-google-serp">
+                                    <div class="cms-google-url">
+                                        <span>https://viralson.com &gt; posts &gt; <span id="seoGoogleSlug">future-of-ai</span></span>
+                                    </div>
+                                    <div class="cms-google-title" id="seoGoogleTitle">The Future of AI in Everyday Life | Viral Son</div>
+                                    <div class="cms-google-desc" id="seoGoogleDesc">How artificial intelligence and agentic workflows are transforming our daily routines, workplaces, and smart homes.</div>
+                                </div>
+                            </div>
+
+                            <div class="cms-seo-card">
+                                <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--cms-text-subtle); margin-bottom: 0.75rem;">
+                                    <i class="fab fa-x-twitter"></i> Social Media OpenGraph Share Card Preview
+                                </h4>
+                                <div class="cms-social-card">
+                                    <img id="seoSocialImg" class="cms-social-img" src="" alt="Card">
+                                    <div class="cms-social-info">
+                                        <div class="cms-social-domain">viralson.com</div>
+                                        <div class="cms-social-title" id="seoSocialTitle">Post Title</div>
+                                        <div class="cms-social-desc" id="seoSocialDesc">Post excerpt...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mode 3: Raw Code Tab -->
+                        <div id="rawCodeTab" style="display: none; width: 100%; max-width: 900px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <h4 style="font-size: 0.85rem; color: var(--cms-text-subtle);">Target File: src/posts/<span id="rawSlugName">slug</span>.njk</h4>
+                                <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="copyRawCode()">
+                                    <i class="far fa-copy"></i> Copy Source
+                                </button>
+                            </div>
+                            <pre class="cms-code-block" id="rawCodeContent"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: Netlify CMS / Decap CMS Standard Integration View -->
+        <section id="viewDecap" class="cms-view-container" style="display: none;">
+            <div style="background: var(--cms-card); border: 1px solid var(--cms-border); border-radius: var(--cms-radius); padding: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+                    <div>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-cube" style="color: var(--cms-primary);"></i> Netlify CMS & Decap Identity Mode
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--cms-text-muted); max-width: 800px; line-height: 1.5;">
+                            This view runs the classic Netlify CMS / Decap widget with Git Gateway and Netlify Identity support, reading directly from <code>admin/config.yml</code>. You can switch back to the modern Visual Studio anytime using the top navigation bar.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="cms-btn cms-btn-secondary" onclick="netlifyIdentity.open()">
+                            <i class="fas fa-user-lock"></i> Netlify Identity Login
+                        </button>
+                        <button type="button" class="cms-btn cms-btn-primary" onclick="switchView('posts')">
+                            <i class="fas fa-arrow-left"></i> Return to Studio
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nc-root"></div>
+        </section>
+
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="cms-modal-backdrop" id="deleteModal">
+        <div class="cms-modal-card">
+            <h3 class="cms-modal-title"><i class="fas fa-exclamation-triangle" style="color: #ef4444; margin-right: 0.5rem;"></i> Delete Article?</h3>
+            <p class="cms-modal-text">Are you sure you want to permanently remove <strong id="deleteModalPostTitle">this article</strong>? The file will be removed from <code>src/posts/</code> and the static search index will be regenerated.</p>
+            <div class="cms-modal-actions">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="cms-btn cms-btn-danger" id="confirmDeleteBtn" onclick="executeDeletePost()">Yes, Delete Article</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="cms-toast-container" id="toastContainer"></div>
+
+    <!-- Decap CMS Core Script -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- Studio Application Logic -->
+    <script>
+        // State
+        let allPosts = [];
+        let currentPost = null;
+        let originalSlug = null;
+        let isEditing = false;
+        let tagsList = [];
+        let postToDeleteSlug = null;
+
+        // Initialize CMS
+        document.addEventListener('DOMContentLoaded', () => {
+            initNetlifyIdentity();
+            loadStats();
+            loadPosts();
+            setupTheme();
+        });
+
+        // --- Netlify Identity Support ---
+        function initNetlifyIdentity() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on('init', user => {
+                    if (!user) {
+                        window.netlifyIdentity.on('login', () => {
+                            document.location.reload();
+                        });
+                    }
+                });
+            }
+        }
+
+        // --- Theme Toggle ---
+        function setupTheme() {
+            const savedTheme = localStorage.getItem('viralson_cms_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleCmsTheme() {
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', current);
+            localStorage.setItem('viralson_cms_theme', current);
+            updateThemeIcon(current);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            if (icon) {
+                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+
+        // --- View Switching ---
+        function switchView(viewName) {
+            document.getElementById('viewPosts').style.display = viewName === 'posts' ? 'block' : 'none';
+            document.getElementById('viewEditor').style.display = viewName === 'editor' ? 'block' : 'none';
+            document.getElementById('viewDecap').style.display = viewName === 'decap' ? 'block' : 'none';
+
+            document.getElementById('tabPostsBtn').classList.toggle('active', viewName === 'posts');
+            document.getElementById('tabEditorBtn').classList.toggle('active', viewName === 'editor');
+            document.getElementById('tabDecapBtn').classList.toggle('active', viewName === 'decap');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Load CMS Stats ---
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                if (res.ok) {
+                    const stats = await res.json();
+                    document.getElementById('statPublished').textContent = stats.publishedCount || 0;
+                    document.getElementById('statDrafts').textContent = stats.draftsCount || 0;
+                    document.getElementById('statCategories').textContent = Object.keys(stats.categories || {}).length || 6;
+                    
+                    const views = stats.totalViews || 0;
+                    document.getElementById('statViews').textContent = views > 1000 ? (views / 1000).toFixed(1) + 'K' : views;
+                }
+            } catch (err) {
+                console.warn('Could not fetch stats:', err);
+            }
+        }
+
+        // --- Load Posts ---
+        async function loadPosts() {
+            const listEl = document.getElementById('postsList');
+            try {
+                const res = await fetch('/api/posts');
+                if (res.ok) {
+                    allPosts = await res.json();
+                    renderPosts(allPosts);
+                } else {
+                    listEl.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: var(--cms-danger);">
+                            <i class="fas fa-exclamation-circle" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <p>Failed to load posts from server API.</p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                listEl.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--cms-danger);">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <p>Error connecting to CMS backend: ${escapeHtml(err.message)}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Render Posts ---
+        function renderPosts(posts) {
+            const listEl = document.getElementById('postsList');
+            if (!posts || posts.length === 0) {
+                listEl.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; background: var(--cms-card); border-radius: var(--cms-radius); border: 1px solid var(--cms-border);">
+                        <i class="far fa-newspaper" style="font-size: 2.2rem; color: var(--cms-text-subtle); margin-bottom: 0.75rem;"></i>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">No Articles Found</h3>
+                        <p style="color: var(--cms-text-muted); font-size: 0.88rem; margin-bottom: 1rem;">No posts matched your current search filters.</p>
+                        <button type="button" class="cms-btn cms-btn-primary" onclick="openNewPostEditor()">Create First Article</button>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = posts.map(post => {
+                const isDraft = !!post.draft;
+                const catClass = (post.categoryClass || 'news').toLowerCase();
+                const defaultThumb = 'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=200&q=80';
+                const imgSrc = post.image || defaultThumb;
+
+                return `
+                    <div class="cms-post-item" data-slug="${post.slug}">
+                        <div class="cms-post-thumb">
+                            <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(post.title)}" onerror="this.src='${defaultThumb}'">
+                        </div>
+
+                        <div class="cms-post-info">
+                            <div class="cms-post-topline">
+                                <span class="cms-post-category-tag post-category ${catClass}">${escapeHtml(post.category || 'News')}</span>
+                                <span class="cms-badge ${isDraft ? 'cms-badge-draft' : 'cms-badge-live'}">${isDraft ? 'Draft' : 'Live Published'}</span>
+                                <span style="font-size: 0.75rem; color: var(--cms-text-subtle);">${escapeHtml(post.date || 'Undated')}</span>
+                            </div>
+
+                            <a href="javascript:void(0)" class="cms-post-title" onclick="editPostBySlug('${post.slug}')" title="Edit this post">
+                                ${escapeHtml(post.title)}
+                            </a>
+
+                            <div class="cms-post-meta">
+                                <span><i class="far fa-user"></i> ${escapeHtml(post.author || 'Editorial')}</span>
+                                <span><i class="far fa-clock"></i> ${escapeHtml(post.readTime || '4 min read')}</span>
+                                <span><i class="far fa-eye"></i> ${escapeHtml(post.views || '1.2K views')}</span>
+                                <span><i class="fas fa-file-alt"></i> ${post.wordCount || 0} words</span>
+                            </div>
+                        </div>
+
+                        <div class="cms-post-actions">
+                            <button type="button" class="cms-btn cms-btn-primary" onclick="editPostBySlug('${post.slug}')" title="Edit in Studio">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <a href="/posts/${post.slug}/" target="_blank" class="cms-btn cms-btn-outline cms-btn-icon" title="View live page">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            <button type="button" class="cms-btn cms-btn-secondary cms-btn-icon" onclick="duplicatePost('${post.slug}')" title="Duplicate as new draft">
+                                <i class="far fa-clone"></i>
+                            </button>
+                            <button type="button" class="cms-btn cms-btn-danger cms-btn-icon" onclick="promptDeletePost('${post.slug}', '${escapeHtml(post.title.replace(/'/g, "\\'"))}')" title="Delete post">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Filter & Search Posts ---
+        function filterPosts() {
+            const query = (document.getElementById('postSearchInput').value || '').toLowerCase().trim();
+            const category = document.getElementById('categoryFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+
+            let filtered = allPosts.filter(post => {
+                const matchesQuery = !query || 
+                    (post.title || '').toLowerCase().includes(query) ||
+                    (post.excerpt || '').toLowerCase().includes(query) ||
+                    (post.author || '').toLowerCase().includes(query) ||
+                    (post.tags || []).some(t => String(t).toLowerCase().includes(query));
+
+                const matchesCat = category === 'all' || (post.category || '').toLowerCase() === category.toLowerCase();
+                const matchesStatus = status === 'all' || 
+                    (status === 'published' && !post.draft) || 
+                    (status === 'draft' && !!post.draft);
+
+                return matchesQuery && matchesCat && matchesStatus;
+            });
+
+            // Sort
+            if (sort === 'date-desc') {
+                filtered.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+            } else if (sort === 'date-asc') {
+                filtered.sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0));
+            } else if (sort === 'title-asc') {
+                filtered.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+            }
+
+            renderPosts(filtered);
+        }
+
+        // --- Open New Post Editor ---
+        function openNewPostEditor() {
+            isEditing = false;
+            originalSlug = null;
+            currentPost = {
+                title: '',
+                slug: '',
+                category: 'Technology',
+                author: 'Viral Son Editorial',
+                authorBio: 'Senior Technology and Cultural Analyst covering digital futures and modern innovation.',
+                date: new Date().toISOString().split('T')[0],
+                views: '1.4K views',
+                excerpt: '',
+                content: `<p>Introduce your story here with a strong opening paragraph that hooks the reader...</p>\n\n<h2>The Core Breakthrough</h2>\n<p>Detail the key insights, facts, or technical perspectives that make this topic important.</p>\n\n<blockquote>"True innovation occurs when technological power aligns harmoniously with genuine human need."<br><br><strong>— Viral Son Editorial</strong></blockquote>\n\n<h2>Looking Ahead</h2>\n<p>Conclude with future implications and key takeaways for your readership.</p>`,
+                image: 'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=1200&q=80',
+                imageCaption: 'Digital innovation and generative systems expanding creative workflows',
+                tags: ['Innovation', 'Technology', 'Trending'],
+                draft: false
+            };
+
+            populateEditorForm(currentPost);
+            document.getElementById('editorModeTitle').innerHTML = '<i class="fas fa-plus-circle" style="color: var(--cms-success);"></i> Create New Article';
+            document.getElementById('deletePostBtn').style.display = 'none';
+            switchView('editor');
+            updateLivePreview();
+        }
+
+        // --- Edit Existing Post ---
+        async function editPostBySlug(slug) {
+            try {
+                const res = await fetch(`/api/posts/${slug}`);
+                if (res.ok) {
+                    currentPost = await res.json();
+                    isEditing = true;
+                    originalSlug = slug;
+
+                    populateEditorForm(currentPost);
+                    document.getElementById('editorModeTitle').innerHTML = `<i class="fas fa-edit" style="color: var(--cms-primary);"></i> Edit Article: <span style="font-weight:400;">${escapeHtml(currentPost.title)}</span>`;
+                    document.getElementById('deletePostBtn').style.display = 'inline-flex';
+                    switchView('editor');
+                    updateLivePreview();
+                } else {
+                    showToast('Failed to load article data', 'error');
+                }
+            } catch (err) {
+                showToast('Error loading article: ' + err.message, 'error');
+            }
+        }
+
+        // --- Populate Editor Form ---
+        function populateEditorForm(post) {
+            document.getElementById('postTitle').value = post.title || '';
+            document.getElementById('postSlug').value = post.slug || '';
+            document.getElementById('postCategory').value = post.category || 'Technology';
+            document.getElementById('postAuthor').value = post.author || 'Viral Son Editorial';
+            document.getElementById('postAuthorBio').value = post.authorBio || '';
+            document.getElementById('postDate').value = post.date || new Date().toISOString().split('T')[0];
+            document.getElementById('postViews').value = post.views || '1.4K views';
+            document.getElementById('postExcerpt').value = post.excerpt || '';
+            document.getElementById('postContent').value = post.content || '';
+            document.getElementById('postImage').value = post.image || '';
+            document.getElementById('postImageCaption').value = post.imageCaption || '';
+
+            // Status Badge
+            const statusBadge = document.getElementById('postStatusBadge');
+            if (post.draft) {
+                statusBadge.className = 'cms-badge cms-badge-draft';
+                statusBadge.textContent = 'Draft';
+            } else {
+                statusBadge.className = 'cms-badge cms-badge-live';
+                statusBadge.textContent = 'Published';
+            }
+
+            // Tags
+            tagsList = Array.isArray(post.tags) ? [...post.tags] : ['Trending'];
+            renderTags();
+            updateWordCount();
+        }
+
+        // --- Slugify helper ---
+        function slugifyText(text) {
+            return String(text || '')
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function handleTitleChange() {
+            const title = document.getElementById('postTitle').value;
+            if (!isEditing || !document.getElementById('postSlug').value) {
+                document.getElementById('postSlug').value = slugifyText(title);
+            }
+            updateLivePreview();
+        }
+
+        function handleExcerptChange() {
+            const text = document.getElementById('postExcerpt').value;
+            document.getElementById('excerptCountLabel').textContent = `${text.length} / 160 chars`;
+            updateLivePreview();
+        }
+
+        function handleContentChange() {
+            updateWordCount();
+            updateLivePreview();
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('postContent').value || '';
+            const words = text.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+            const chars = text.length;
+            const readTime = Math.max(1, Math.ceil(words / 200)) + ' min read';
+
+            document.getElementById('wordCountLabel').textContent = `${words} words • ${chars} characters`;
+            document.getElementById('readTimeLabel').textContent = readTime;
+        }
+
+        // --- Tags UI ---
+        function renderTags() {
+            const container = document.getElementById('tagsContainer');
+            const input = document.getElementById('tagInput');
+            
+            // Remove existing chips
+            container.querySelectorAll('.cms-tag-chip').forEach(el => el.remove());
+
+            // Insert chips before input
+            tagsList.forEach((tag, idx) => {
+                const chip = document.createElement('span');
+                chip.className = 'cms-tag-chip';
+                chip.innerHTML = `${escapeHtml(tag)} <button type="button" onclick="removeTag(${idx})">&times;</button>`;
+                container.insertBefore(chip, input);
+            });
+
+            updateLivePreview();
+        }
+
+        function addTag(tagText) {
+            const clean = String(tagText || '').trim().replace(/^#/, '');
+            if (clean && !tagsList.includes(clean)) {
+                tagsList.push(clean);
+                renderTags();
+            }
+        }
+
+        function removeTag(index) {
+            tagsList.splice(index, 1);
+            renderTags();
+        }
+
+        function handleTagKeyDown(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault();
+                const val = e.target.value.trim();
+                if (val) {
+                    addTag(val);
+                    e.target.value = '';
+                }
+            } else if (e.key === 'Backspace' && !e.target.value && tagsList.length > 0) {
+                removeTag(tagsList.length - 1);
+            }
+        }
+
+        // --- Unsplash Curated Asset Selection ---
+        function selectCuratedImage(url, caption) {
+            document.getElementById('postImage').value = url;
+            document.getElementById('postImageCaption').value = caption || '';
+            updateLivePreview();
+            showToast('Featured hero image set!', 'success');
+        }
+
+        // --- Syntax Inserter Helpers ---
+        function insertSyntax(before, after) {
+            const textarea = document.getElementById('postContent');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end) || 'Text here';
+            
+            const replacement = before + selected + after;
+            textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+            textarea.focus();
+            textarea.setSelectionRange(start + before.length, start + before.length + selected.length);
+            handleContentChange();
+        }
+
+        function insertHeading(level) {
+            const hashes = '#'.repeat(level) + ' ';
+            insertSyntax(hashes, '');
+        }
+
+        function insertLink() {
+            const url = prompt('Enter destination URL:', 'https://');
+            if (url) {
+                insertSyntax('[', `](${url})`);
+            }
+        }
+
+        function insertImagePrompt() {
+            const url = prompt('Enter Image URL:', 'https://images.unsplash.com/...');
+            if (url) {
+                const alt = prompt('Enter Image Alt Description:', 'Illustration photo') || 'Image';
+                insertSyntax(`![${alt}](`, `${url})`);
+            }
+        }
+
+        function insertCallout() {
+            const content = prompt('Enter callout key takeaway:', 'Crucial insight for our readers');
+            if (content) {
+                insertSyntax(`<div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 6px; margin: 1.5rem 0;">\n<strong>Editorial Note:</strong> ${content}\n</div>\n`, '');
+            }
+        }
+
+        function insertDivider() {
+            insertSyntax('\n\n---\n\n', '');
+        }
+
+        // --- Templates ---
+        function applyTemplate(type) {
+            const textarea = document.getElementById('postContent');
+            if (textarea.value.trim().length > 50) {
+                if (!confirm('Apply this template? It will replace the current draft body.')) return;
+            }
+
+            if (type === 'breaking') {
+                document.getElementById('postCategory').value = 'News';
+                textarea.value = `<p><strong>BREAKING HEADLINE —</strong> In an unprecedented development announced this morning, key international institutions have declared a major policy shift.</p>\n\n<h2>What Happened Today</h2>\n<p>Summarize the confirmed facts, immediate ramifications, and core actors involved in the announcement.</p>\n\n<ul>\n<li><strong>Initial Milestone:</strong> The first verified dispatch occurred at daybreak.</li>\n<li><strong>Market Reaction:</strong> Stakeholders and industry observers report immediate surges in digital attention.</li>\n<li><strong>Official Response:</strong> A spokesperson released an official statement confirming active regulatory compliance.</li>\n</ul>\n\n<blockquote>"We are witnessing a defining shift in our approach to this challenge."<br><br><strong>— Special Correspondent</strong></blockquote>\n\n<h2>What Happens Next</h2>\n<p>Stay tuned to Viral Son as our reporters receive further updates on this developing situation.</p>`;
+            } else if (type === 'tech') {
+                document.getElementById('postCategory').value = 'Technology';
+                textarea.value = `<p>Silicon Valley and global hardware manufacturers are locked in an intensive race to deliver next-generation architectures that balance computational density with consumer battery longevity.</p>\n\n<h2>Architecture & Breakthrough Benchmarks</h2>\n<p>Review the technical specifications, architectural improvements, and benchmark figures that set this hardware or model apart from preceding iterations.</p>\n\n<table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">\n<thead><tr style="border-bottom: 2px solid var(--border-color); text-align: left;"><th>Specification</th><th>Preceding Generation</th><th>New Architecture</th></tr></thead>\n<tbody>\n<tr style="border-bottom: 1px solid var(--border-color);"><td>Processing Throughput</td><td>14.2 TOPS</td><td><strong>45 TOPS</strong></td></tr>\n<tr style="border-bottom: 1px solid var(--border-color);"><td>Thermal Dissipation</td><td>18W TDP</td><td><strong>11W TDP</strong></td></tr>\n</tbody>\n</table>\n\n<h2>The Developer Verdict</h2>\n<p>Conclude with whether this upgrade warrants early adoption by creative professionals and software developers.</p>`;
+            } else if (type === 'music') {
+                document.getElementById('postCategory').value = 'Entertainment';
+                textarea.value = `<p>Following months of cryptic studio teasers and viral audio snippets, the anticipated sonic collaboration has arrived across all streaming and lossless audio outlets.</p>\n\n<h2>Sonic Production & Arrangement</h2>\n<p>The record bridges analog warmth with crisp 96kHz digital engineering, anchored by soaring vocal dynamics and hypnotic polyrhythmic percussion.</p>\n\n<blockquote>"We wanted to capture the electric feeling of late-night highway drives through rain-soaked neon skylines."<br><br><strong>— Featured Artist</strong></blockquote>\n\n<h2>Release Formats & Spatial Audio</h2>\n<p>Available immediately in Dolby Atmos spatial audio, 24-bit studio FLAC master, and limited-edition 180g colored vinyl editions.</p>`;
+            } else if (type === 'lifestyle') {
+                document.getElementById('postCategory').value = 'Lifestyle';
+                textarea.value = `<p>In our hyper-connected digital landscape, finding intentional cognitive stillness requires cultivating rigorous boundary protocols rather than relying solely on ephemeral willpower.</p>\n\n<h2>The Science of Attention Restoration</h2>\n<p>Cognitive psychology indicates that continuous context-switching depletes our executive prefrontal function. Here is how modern practitioners are regaining deep focus.</p>\n\n<ol>\n<li><strong>The First 90 Minutes:</strong> Keep morning devices in airplane mode until key strategic goals are mapped.</li>\n<li><strong>Physical Analog Buffers:</strong> Shift brainstorming and planning to archival paper notebooks.</li>\n<li><strong>Evening Screen Tapering:</strong> Protect melatonin synthesis by dimming artificial ambient lighting after dusk.</li>\n</ol>\n\n<h2>Building Sustainable Habits</h2>\n<p>Sustainable wellness is not about drastic asceticism, but compounding incremental rituals that support your long-term creative vitality.</p>`;
+            }
+
+            handleContentChange();
+            showToast(`Loaded ${type.toUpperCase()} template!`, 'success');
+        }
+
+        // --- Live Preview Renderer ---
+        function updateLivePreview() {
+            const title = document.getElementById('postTitle').value || 'Headline Preview';
+            const slug = document.getElementById('postSlug').value || 'your-slug';
+            const category = document.getElementById('postCategory').value || 'Technology';
+            const author = document.getElementById('postAuthor').value || 'Viral Son Editorial';
+            const date = document.getElementById('postDate').value || new Date().toISOString().split('T')[0];
+            const views = document.getElementById('postViews').value || '1.2K views';
+            const excerpt = document.getElementById('postExcerpt').value || 'Article excerpt summary goes here...';
+            const rawBody = document.getElementById('postContent').value || '';
+            const image = document.getElementById('postImage').value || '';
+            const caption = document.getElementById('postImageCaption').value || '';
+
+            // Compute reading time
+            const words = rawBody.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+            const readTime = Math.max(1, Math.ceil(words / 200)) + ' min read';
+
+            // Category style class mapping
+            const catClassMap = {
+                'news': 'news',
+                'technology': 'tech',
+                'entertainment': 'ent',
+                'sports': 'sports',
+                'lifestyle': 'lifestyle',
+                'community': 'community'
+            };
+            const catClass = catClassMap[category.toLowerCase()] || 'news';
+
+            // 1. Live Article Elements
+            document.getElementById('prevBreadcrumbCat').textContent = category;
+            document.getElementById('prevBreadcrumbTitle').textContent = title;
+            document.getElementById('prevCategoryPill').className = `post-category ${catClass}`;
+            document.getElementById('prevCategoryPill').textContent = category;
+            document.getElementById('prevHeadline').textContent = title;
+            document.getElementById('prevExcerpt').textContent = excerpt;
+            document.getElementById('prevAuthor').textContent = author;
+            document.getElementById('prevDate').textContent = date;
+            document.getElementById('prevReadTime').textContent = readTime;
+            document.getElementById('prevViews').textContent = views;
+
+            // Featured Image
+            const imgEl = document.getElementById('prevFeaturedImg');
+            const capEl = document.getElementById('prevFeaturedCaption');
+            if (image) {
+                imgEl.src = image;
+                imgEl.style.display = 'block';
+                if (caption) {
+                    capEl.textContent = caption;
+                    capEl.style.display = 'block';
+                } else {
+                    capEl.style.display = 'none';
+                }
+            } else {
+                imgEl.style.display = 'none';
+                capEl.style.display = 'none';
+            }
+
+            // Body Markdown / HTML parse
+            document.getElementById('prevBodyContent').innerHTML = parseSimpleMarkdown(rawBody);
+
+            // Tags
+            const tagsWrapper = document.getElementById('prevTagsWrapper');
+            tagsWrapper.innerHTML = tagsList.map(t => `<span class="search-category-pill" style="margin-right: 0.35rem;">#${escapeHtml(t)}</span>`).join('');
+
+            // 2. SEO Simulator Elements
+            document.getElementById('seoGoogleSlug').textContent = slug;
+            document.getElementById('seoGoogleTitle').textContent = `${title} | Viral Son`;
+            document.getElementById('seoGoogleDesc').textContent = excerpt;
+
+            document.getElementById('seoSocialTitle').textContent = title;
+            document.getElementById('seoSocialDesc').textContent = excerpt;
+            const socImg = document.getElementById('seoSocialImg');
+            if (image) {
+                socImg.src = image;
+                socImg.style.display = 'block';
+            } else {
+                socImg.src = 'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=600&q=80';
+            }
+
+            // 3. Raw Code Inspector
+            document.getElementById('rawSlugName').textContent = slug;
+            const rawCode = generateRawNjk(slug, title, category, catClass, author, date, readTime, views, excerpt, image, caption, tagsList, rawBody);
+            document.getElementById('rawCodeContent').textContent = rawCode;
+        }
+
+        // --- Raw Eleventy Template Generator ---
+        function generateRawNjk(slug, title, category, catClass, author, date, readTime, views, excerpt, image, caption, tags, body) {
+            const authorBio = document.getElementById('postAuthorBio').value || '';
+            const draft = document.getElementById('postStatusBadge').textContent === 'Draft';
+            const catUrl = `/${category.toLowerCase()}/`;
+
+            return `---
+layout: layouts/post.njk
+title: "${title.replace(/"/g, '\\"')}"
+description: "${excerpt.replace(/"/g, '\\"')}"
+excerpt: "${excerpt.replace(/"/g, '\\"')}"
+category: "${category}"
+categoryUrl: "${catUrl}"
+categoryClass: "${catClass}"
+author: "${author}"
+authorBio: "${authorBio.replace(/"/g, '\\"')}"
+date: ${date}
+readTime: "${readTime}"
+views: "${views}"
+image: "${image}"
+imageCaption: "${caption.replace(/"/g, '\\"')}"
+tags: [${tags.map(t => `"${t}"`).join(', ')}]
+permalink: "/posts/${slug}/"
+draft: ${draft}
+---
+
+${body}`;
+        }
+
+        function copyRawCode() {
+            const code = document.getElementById('rawCodeContent').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('Raw template source copied to clipboard!', 'success');
+            });
+        }
+
+        // --- Markdown parser ---
+        function parseSimpleMarkdown(md) {
+            if (!md) return '';
+            let html = md;
+
+            // Replace Headings
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+            // Bold & Italic
+            html = html.replace(/\*\*\*(.*?)\*\*\*/gim, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+            html = html.replace(/~~(.*?)~~/gim, '<del>$1</del>');
+
+            // Blockquotes
+            html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+            // Code blocks
+            html = html.replace(/```([\s\S]*?)```/gim, '<pre style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0;"><code>$1</code></pre>');
+
+            // Links
+            html = html.replace(/\[([^\[]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" style="color: var(--primary-blue);">$1</a>');
+
+            // Images
+            html = html.replace(/!\[([^\[]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;">');
+
+            // Paragraphs
+            const parts = html.split(/\n{2,}/);
+            html = parts.map(p => {
+                p = p.trim();
+                if (!p) return '';
+                if (p.startsWith('<h') || p.startsWith('<blockquote') || p.startsWith('<pre') || p.startsWith('<ul') || p.startsWith('<ol') || p.startsWith('<table') || p.startsWith('<div') || p.startsWith('<p')) {
+                    return p;
+                }
+                return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+            }).join('\n');
+
+            return html;
+        }
+
+        // --- Save / Publish Article ---
+        async function savePost(asDraft) {
+            const title = document.getElementById('postTitle').value.trim();
+            if (!title) {
+                showToast('Article headline title is required.', 'error');
+                document.getElementById('postTitle').focus();
+                return;
+            }
+
+            const slug = slugifyText(document.getElementById('postSlug').value || title);
+            const category = document.getElementById('postCategory').value;
+            const author = document.getElementById('postAuthor').value;
+            const authorBio = document.getElementById('postAuthorBio').value;
+            const date = document.getElementById('postDate').value;
+            const views = document.getElementById('postViews').value;
+            const excerpt = document.getElementById('postExcerpt').value;
+            const content = document.getElementById('postContent').value;
+            const image = document.getElementById('postImage').value;
+            const imageCaption = document.getElementById('postImageCaption').value;
+
+            const payload = {
+                title,
+                slug,
+                category,
+                author,
+                authorBio,
+                date,
+                views,
+                excerpt,
+                description: excerpt,
+                content,
+                image,
+                imageCaption,
+                tags: tagsList,
+                draft: !!asDraft
+            };
+
+            const publishBtn = document.getElementById('publishLiveBtn');
+            const draftBtn = document.getElementById('saveDraftBtn');
+            const originalPubText = publishBtn.innerHTML;
+            const originalDraftText = draftBtn.innerHTML;
+
+            if (asDraft) {
+                draftBtn.innerHTML = '<i class="fas fa-spinner spin"></i> Saving...';
+            } else {
+                publishBtn.innerHTML = '<i class="fas fa-spinner spin"></i> Compiling & Publishing...';
+            }
+
+            try {
+                let url = '/api/posts';
+                let method = 'POST';
+
+                if (isEditing && originalSlug) {
+                    url = `/api/posts/${originalSlug}`;
+                    method = 'PUT';
+                }
+
+                const res = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    isEditing = true;
+                    originalSlug = result.slug;
+                    document.getElementById('postSlug').value = result.slug;
+
+                    const statusBadge = document.getElementById('postStatusBadge');
+                    statusBadge.className = asDraft ? 'cms-badge cms-badge-draft' : 'cms-badge-live';
+                    statusBadge.textContent = asDraft ? 'Draft' : 'Published';
+
+                    showToast(
+                        asDraft ? 'Draft saved to repository.' : '🚀 Article published live! Rebuild finished.', 
+                        'success', 
+                        result.url
+                    );
+
+                    // Reload stats and posts list in background
+                    loadStats();
+                    loadPosts();
+                } else {
+                    showToast('Failed to save article: ' + (result.error || result.details || 'Unknown server error'), 'error');
+                }
+            } catch (err) {
+                showToast('Publishing error: ' + err.message, 'error');
+            } finally {
+                publishBtn.innerHTML = originalPubText;
+                draftBtn.innerHTML = originalDraftText;
+            }
+        }
+
+        // --- Duplicate Post ---
+        async function duplicatePost(slug) {
+            try {
+                const res = await fetch(`/api/posts/${slug}`);
+                if (res.ok) {
+                    const post = await res.json();
+                    isEditing = false;
+                    originalSlug = null;
+                    post.title = `${post.title} (Copy)`;
+                    post.slug = `${post.slug}-copy`;
+                    post.draft = true;
+                    post.date = new Date().toISOString().split('T')[0];
+
+                    populateEditorForm(post);
+                    document.getElementById('editorModeTitle').innerHTML = '<i class="fas fa-clone" style="color: var(--cms-primary);"></i> Duplicated Article Draft';
+                    document.getElementById('deletePostBtn').style.display = 'none';
+                    switchView('editor');
+                    updateLivePreview();
+                    showToast('Post cloned as draft. Review and publish when ready!', 'success');
+                }
+            } catch (e) {
+                showToast('Could not duplicate post: ' + e.message, 'error');
+            }
+        }
+
+        // --- Delete Article Flow ---
+        function promptDeletePost(slug, title) {
+            postToDeleteSlug = slug;
+            document.getElementById('deleteModalPostTitle').textContent = `"${title}"`;
+            document.getElementById('deleteModal').classList.add('open');
+        }
+
+        function confirmDeleteCurrentPost() {
+            if (originalSlug) {
+                promptDeletePost(originalSlug, document.getElementById('postTitle').value || originalSlug);
+            }
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('open');
+            postToDeleteSlug = null;
+        }
+
+        async function executeDeletePost() {
+            if (!postToDeleteSlug) return;
+            const btn = document.getElementById('confirmDeleteBtn');
+            btn.innerHTML = '<i class="fas fa-spinner spin"></i> Deleting...';
+
+            try {
+                const res = await fetch(`/api/posts/${postToDeleteSlug}`, { method: 'DELETE' });
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    showToast('Article deleted and site recompiled.', 'success');
+                    closeDeleteModal();
+                    if (isEditing && originalSlug === postToDeleteSlug) {
+                        switchView('posts');
+                    }
+                    loadStats();
+                    loadPosts();
+                } else {
+                    showToast('Could not delete: ' + (result.error || 'Unknown error'), 'error');
+                }
+            } catch (err) {
+                showToast('Delete error: ' + err.message, 'error');
+            } finally {
+                btn.innerHTML = 'Yes, Delete Article';
+            }
+        }
+
+        // --- Trigger Rebuild ---
+        async function triggerRebuild() {
+            const icon = document.getElementById('rebuildIcon');
+            const label = document.getElementById('rebuildLabel');
+            icon.className = 'fas fa-sync-alt spin';
+            label.textContent = 'Compiling...';
+
+            try {
+                const res = await fetch('/api/rebuild', { method: 'POST' });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    showToast('Eleventy rebuild completed cleanly!', 'success');
+                } else {
+                    showToast('Rebuild finished with warnings.', 'error');
+                }
+            } catch (err) {
+                showToast('Rebuild failed: ' + err.message, 'error');
+            } finally {
+                icon.className = 'fas fa-sync-alt';
+                label.textContent = 'Rebuild 11ty';
+            }
+        }
+
+        // --- Split View / Viewport Switchers ---
+        function setEditorSplit(mode) {
+            const layout = document.getElementById('editorLayout');
+            layout.className = 'cms-editor-layout';
+            if (mode === 'editor') layout.classList.add('full-editor');
+            if (mode === 'preview') layout.classList.add('full-preview');
+        }
+
+        function setViewport(device) {
+            const frame = document.getElementById('livePreviewFrame');
+            frame.className = 'cms-preview-frame';
+            if (device === 'tablet') frame.classList.add('tablet');
+            if (device === 'mobile') frame.classList.add('mobile');
+
+            document.getElementById('vpDesktop').classList.toggle('active', device === 'desktop');
+            document.getElementById('vpTablet').classList.toggle('active', device === 'tablet');
+            document.getElementById('vpMobile').classList.toggle('active', device === 'mobile');
+        }
+
+        function setPreviewTab(tab) {
+            document.getElementById('livePreviewFrame').style.display = tab === 'live' ? 'block' : 'none';
+            document.getElementById('seoPreviewTab').style.display = tab === 'seo' ? 'block' : 'none';
+            document.getElementById('rawCodeTab').style.display = tab === 'raw' ? 'block' : 'none';
+
+            document.getElementById('viewportControls').style.display = tab === 'live' ? 'flex' : 'none';
+
+            document.getElementById('tabPrevLive').classList.toggle('active', tab === 'live');
+            document.getElementById('tabPrevSeo').classList.toggle('active', tab === 'seo');
+            document.getElementById('tabPrevRaw').classList.toggle('active', tab === 'raw');
+        }
+
+        // --- Toast System ---
+        function showToast(message, type = 'info', link = null) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `cms-toast ${type}`;
+
+            let icon = 'fas fa-info-circle';
+            if (type === 'success') icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-triangle';
+
+            let linkHtml = link ? `<a href="${link}" target="_blank" style="margin-left:auto; color: var(--cms-primary); font-weight:700; text-decoration:underline;">View Live &rarr;</a>` : '';
+
+            toast.innerHTML = `
+                <i class="${icon}" style="color: ${type === 'success' ? '#10b981' : (type === 'error' ? '#ef4444' : '#3b82f6')}"></i>
+                <div style="flex:1;">${escapeHtml(message)}</div>
+                ${linkHtml}
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, link ? 6000 : 3500);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const p = document.createElement('p');
+            p.textContent = str;
+            return p.innerHTML;
+        }
+    </script>
+</body>
+</html>

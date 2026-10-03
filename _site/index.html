@@ -18,8 +18,22 @@
     
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <!-- Theme Initialization to prevent FOUC -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('viralson_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
-<body>
+<body class="">
     <!-- Global Reusable Page Loader -->
     <!-- Reusable Page Loader Component -->
 <div class="page-loader" id="pageLoader">
@@ -51,44 +65,281 @@
 
 
     <!-- Dynamic Header -->
-    <!-- Dynamic Header Component -->
+    <!-- Header Component with Search, Dark Mode & Navigation -->
 <header>
     <div class="container header-container">
         <a href="/" class="logo">
             <div class="logo-icon">VS</div>
             <div class="logo-text">Viral Son</div>
         </a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-wrapper">
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/" class="nav-link active">Home</a></li>
                 <li><a href="/news/" class="nav-link ">News</a></li>
                 <li><a href="/entertainment/" class="nav-link ">Entertainment</a></li>
                 <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/sports/" class="nav-link ">Sports</a></li>
                 <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
                 <li><a href="/community/" class="nav-link ">Community</a></li>
                 <li><a href="/about/" class="nav-link ">About</a></li>
             </ul>
         </nav>
+
+        <!-- Header Actions: Search, Dark Mode, Mobile Toggle -->
+        <div class="header-actions">
+            <!-- Studio CMS Button -->
+            <a href="/admin/" class="action-btn studio-trigger" aria-label="Open Content Management Studio" title="Open Content Publishing Studio" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dark); background: var(--light-blue); padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.82rem; border: 1px solid rgba(52, 152, 219, 0.25);">
+                <i class="fas fa-feather-alt" style="color: var(--primary-blue);"></i>
+                <span class="studio-label">CMS Studio</span>
+            </a>
+
+            <!-- Search Button -->
+            <button class="action-btn search-trigger" id="searchOpenBtn" aria-label="Open search dialog" title="Search site (Press /)">
+                <i class="fas fa-search"></i>
+                <span class="search-hint">Search...</span>
+            </button>
+
+            <!-- Dark Mode Toggle Button -->
+            <button class="action-btn theme-toggle" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
     </div>
 </header>
 
+<!-- Site-Wide Search Modal Overlay -->
+<div class="search-modal-backdrop" id="searchModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="search-modal-card">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-input-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search news, tech, music, guides, topics..." autocomplete="off">
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search input" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+            <button type="button" id="searchCloseBtn" class="search-close-btn" aria-label="Close search">
+                <span class="esc-badge">ESC</span>
+            </button>
+        </div>
+
+        <div class="search-results-container">
+            <div id="searchResultsSummary" class="search-summary" style="display: none;"></div>
+            <ul id="searchResultsList" class="search-results-list"></ul>
+            <div id="searchEmptyState" class="search-empty-state">
+                <i class="fas fa-search" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.8rem; opacity: 0.6;"></i>
+                <p>Type keywords to search across articles, audio downloads, and topic hubs.</p>
+                <div class="search-quick-tags">
+                    <span>Popular:</span>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Climate')">Climate</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('AI')">AI</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Phone')">Phone</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Music')">Music</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Productivity')">Productivity</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Header Navigation, Search, and Dark Mode Logic
     (function() {
-        const btn = document.getElementById('mobileMenuBtn');
-        const menu = document.getElementById('navMenu');
-        if (btn && menu) {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menu.classList.toggle('active');
+        // --- 1. Dark Mode Functionality ---
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeBtn.setAttribute('title', 'Switch to light mode');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeBtn.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeIcon(currentTheme);
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('viralson_theme', newTheme);
+                updateThemeIcon(newTheme);
             });
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('header')) {
-                    menu.classList.remove('active');
+        }
+
+        // --- 2. Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileBtn && navMenu) {
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'fas fa-times';
+                } else {
+                    menuIcon.className = 'fas fa-bars';
                 }
             });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    navMenu.classList.remove('active');
+                    if (menuIcon) menuIcon.className = 'fas fa-bars';
+                }
+            });
+        }
+
+        // --- 3. Site-Wide Search Functionality ---
+        const searchModal = document.getElementById('searchModal');
+        const searchOpenBtn = document.getElementById('searchOpenBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const resultsList = document.getElementById('searchResultsList');
+        const resultsSummary = document.getElementById('searchResultsSummary');
+        const emptyState = document.getElementById('searchEmptyState');
+
+        let searchData = [];
+        let dataFetched = false;
+
+        async function fetchSearchIndex() {
+            if (dataFetched) return;
+            try {
+                const res = await fetch('/search-index.json');
+                if (res.ok) {
+                    searchData = await res.json();
+                    dataFetched = true;
+                }
+            } catch (err) {
+                console.warn('Could not load search index:', err);
+            }
+        }
+
+        function openSearch() {
+            fetchSearchIndex();
+            searchModal.classList.add('open');
+            searchModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => searchInput.focus(), 50);
+        }
+
+        function closeSearch() {
+            searchModal.classList.remove('open');
+            searchModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        if (searchOpenBtn) searchOpenBtn.addEventListener('click', openSearch);
+        if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+
+        // Click outside modal card to close
+        searchModal.addEventListener('click', function(e) {
+            if (e.target === searchModal) {
+                closeSearch();
+            }
+        });
+
+        // Keyboard shortcuts: '/' or 'Cmd/Ctrl+K' to open, ESC to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchModal.classList.contains('open')) {
+                closeSearch();
+            } else if ((e.key === '/' || (e.ctrlKey && e.key === 'k') || (e.metaKey && e.key === 'k')) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                e.preventDefault();
+                openSearch();
+            }
+        });
+
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchClearBtn.style.display = 'none';
+                executeSearch('');
+                searchInput.focus();
+            });
+        }
+
+        window.quickSearch = function(term) {
+            searchInput.value = term;
+            searchClearBtn.style.display = 'block';
+            executeSearch(term);
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                searchClearBtn.style.display = query.length > 0 ? 'block' : 'none';
+                executeSearch(query);
+            });
+        }
+
+        function executeSearch(query) {
+            if (!query || query.length < 2) {
+                resultsList.innerHTML = '';
+                resultsSummary.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            const qLower = query.toLowerCase();
+            const matches = searchData.filter(item => {
+                const inTitle = item.title.toLowerCase().includes(qLower);
+                const inExcerpt = (item.excerpt || '').toLowerCase().includes(qLower);
+                const inCategory = (item.category || '').toLowerCase().includes(qLower);
+                const inTags = (item.tags || []).some(t => t.toLowerCase().includes(qLower));
+                return inTitle || inExcerpt || inCategory || inTags;
+            });
+
+            emptyState.style.display = 'none';
+            resultsSummary.style.display = 'block';
+            resultsSummary.innerHTML = `Found <strong>${matches.length}</strong> result${matches.length === 1 ? '' : 's'} for "<strong>${escapeHtml(query)}</strong>"`;
+
+            if (matches.length === 0) {
+                resultsList.innerHTML = `
+                    <li class="search-no-results">
+                        <i class="far fa-frown" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-light);"></i>
+                        <p>No matches found. Try searching for "climate", "foldable", "music", or "AI".</p>
+                    </li>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = matches.map(item => `
+                <li class="search-result-item">
+                    <a href="${item.url}" class="search-result-link">
+                        <div class="search-result-meta">
+                            <span class="search-category-pill">${item.category}</span>
+                            <span class="search-result-date">${item.date || ''}</span>
+                        </div>
+                        <h4 class="search-result-title">${highlightMatch(item.title, query)}</h4>
+                        <p class="search-result-excerpt">${highlightMatch(item.excerpt || '', query)}</p>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlightMatch(text, query) {
+            if (!text || !query) return escapeHtml(text || '');
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return escaped.replace(regex, '<mark class="search-highlight">$1</mark>');
         }
     })();
 </script>
@@ -206,7 +457,7 @@
                 </div>
 
                 <!-- Secondary Cards Grid -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="two-col-grid">
                     <div class="news-card">
                         <div class="news-image" style="height: 160px;">
                             <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=600&q=80" alt="Smartphone tech">
@@ -323,11 +574,11 @@
 </section>
 
 <!-- Community Showcase Section -->
-<section style="padding: 4rem 0; background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%); border-top: 1px solid var(--border-color);">
-    <div class="container" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center;">
+<section style="padding: 4rem 0; background: linear-gradient(135deg, var(--light-blue) 0%, var(--surface-bg) 100%); border-top: 1px solid var(--border-color);">
+    <div class="container split-feature-layout">
         <div>
-            <span class="post-category" style="background: #e8eaf6; color: #3f51b5; margin-bottom: 1rem;">Collaborative Hub</span>
-            <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 1.2rem;">Be Part of the Conversation</h2>
+            <span class="post-category" style="background: rgba(63, 81, 181, 0.15); color: #3f51b5; margin-bottom: 1rem;">Collaborative Hub</span>
+            <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); color: var(--dark-blue); margin-bottom: 1.2rem;">Be Part of the Conversation</h2>
             <p style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1.5rem;">Join a community of thought leaders, indie writers, and curious readers sharing perspectives on tomorrow's world.</p>
             <ul style="list-style: none; margin-bottom: 2rem;">
                 <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; font-size: 1.05rem;"><i class="fas fa-check-circle" style="color: var(--green);"></i> Exclusive member articles & early preview downloads</li>
@@ -336,7 +587,7 @@
             </ul>
             <a href="/community/" class="btn">Explore Community</a>
         </div>
-        <div style="background: var(--white); padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+        <div style="background: var(--card-bg); padding: 2.2rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
             <h3 style="font-size: 1.4rem; color: var(--dark-blue); margin-bottom: 0.5rem;">Send Us a Message</h3>
             <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.5rem;">Have a story pitch, question, or feedback for the editors?</p>
             <form onsubmit="event.preventDefault(); alert('Message sent successfully! Our editorial desk will reply shortly.'); this.reset();">
@@ -390,9 +641,11 @@
                     <li class="footer-link"><a href="/news/">News</a></li>
                     <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
                     <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/sports/">Sports</a></li>
                     <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
                     <li class="footer-link"><a href="/community/">Community Hub</a></li>
                     <li class="footer-link"><a href="/about/">About Us</a></li>
+                    <li class="footer-link"><a href="/admin/"><i class="fas fa-feather-alt" style="font-size: 0.8rem; margin-right: 4px; color: var(--primary-blue);"></i> Content Studio</a></li>
                 </ul>
             </div>
 
@@ -432,10 +685,195 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+            <p>&copy; <span id="footerCurrentYear">2026</span> Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
         </div>
     </div>
 </footer>
+
+<!-- Auto-Update Yearly Date Script -->
+<script>
+    (function() {
+        const yearEl = document.getElementById('footerCurrentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    })();
+</script>
+
+
+    <!-- Sitewide Newsletter Popup Modal -->
+    <!-- Triggered Newsletter Signup Modal with Blur Backdrop & Theme Matching -->
+<div class="newsletter-modal-backdrop" id="newsletterModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="newsletter-modal-card" id="newsletterModalCard">
+        <!-- Prominent Close Button -->
+        <button type="button" class="newsletter-close-btn" id="newsletterCloseBtn" aria-label="Close newsletter popup" title="Close (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Badge -->
+        <div class="newsletter-modal-badge">
+            <i class="fas fa-bolt" style="margin-right: 5px; color: var(--primary-blue);"></i> Daily Viral Dispatch
+        </div>
+
+        <h3 class="newsletter-modal-title">Stay Ahead of the Curve</h3>
+        <p class="newsletter-modal-desc">
+            Get our editors' top investigative scoops, breaking tech & sports reports, and cultural premieres delivered directly to your inbox every morning.
+        </p>
+
+        <!-- Newsletter Submission Form -->
+        <form id="newsletterModalForm" class="newsletter-modal-form">
+            <div class="newsletter-input-group">
+                <input type="email" id="newsletterModalEmail" class="newsletter-modal-input" placeholder="Enter your email address" required autocomplete="email">
+                <button type="submit" class="btn newsletter-modal-submit" id="newsletterModalSubmit">
+                    <span>Subscribe Free</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </div>
+            <p class="newsletter-privacy-note">
+                <i class="fas fa-shield-alt" style="color: var(--green); margin-right: 4px;"></i> Zero spam. One-click unsubscribe anytime.
+            </p>
+        </form>
+
+        <!-- Success Confirmation State (shown post-submit) -->
+        <div id="newsletterSuccessState" class="newsletter-success-state" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--green); margin-bottom: 0.8rem;"></i>
+            <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark);">Welcome to Viral Son!</h4>
+            <p style="font-size: 0.92rem; color: var(--text-light);">You're on the VIP list. We've queued your first morning briefing.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const COOKIE_NAME = 'viralson_newsletter_suppressed';
+        const SUPPRESSION_DAYS = 14;
+
+        // Check if on home/index page
+        const path = window.location.pathname;
+        const isIndexPage = path === '/' || path === '/index.html' || path === '';
+
+        // Only trigger on the index page
+        if (!isIndexPage) return;
+
+        // Cookie & Storage Helpers
+        function getCookie(name) {
+            try {
+                const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+                return match ? decodeURIComponent(match[3]) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+                localStorage.setItem(name, 'true');
+            } catch (e) {}
+        }
+
+        function isSuppressed() {
+            try {
+                if (getCookie(COOKIE_NAME) === 'true') return true;
+                if (localStorage.getItem(COOKIE_NAME) === 'true') return true;
+            } catch (e) {}
+            return false;
+        }
+
+        if (isSuppressed()) return;
+
+        const backdrop = document.getElementById('newsletterModalBackdrop');
+        const card = document.getElementById('newsletterModalCard');
+        const closeBtn = document.getElementById('newsletterCloseBtn');
+        const form = document.getElementById('newsletterModalForm');
+        const successState = document.getElementById('newsletterSuccessState');
+        const emailInput = document.getElementById('newsletterModalEmail');
+
+        if (!backdrop || !card) return;
+
+        let modalShown = false;
+        let timer = null;
+
+        function showModal() {
+            if (modalShown || isSuppressed()) return;
+            modalShown = true;
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('scroll', checkScroll);
+
+            backdrop.style.display = 'flex';
+            backdrop.setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                backdrop.classList.add('visible');
+                if (emailInput) emailInput.focus();
+            }, 30);
+        }
+
+        function closeModal(suppressDays = SUPPRESSION_DAYS) {
+            setCookie(COOKIE_NAME, 'true', suppressDays);
+            backdrop.classList.remove('visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 350);
+        }
+
+        // Trigger 1: 50% Scroll of page content
+        function checkScroll() {
+            if (modalShown) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal <= 0) return;
+            const currentScroll = window.scrollY || window.pageYOffset;
+            if ((currentScroll / scrollTotal) >= 0.50) {
+                showModal();
+            }
+        }
+
+        // Trigger 2: Exactly 30 seconds on index page
+        timer = setTimeout(showModal, 30000);
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+
+        // Close Handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeModal(SUPPRESSION_DAYS);
+            });
+        }
+
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('visible')) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                if (!email) return;
+
+                form.style.display = 'none';
+                if (successState) successState.style.display = 'block';
+
+                setCookie(COOKIE_NAME, 'true', 60);
+
+                setTimeout(function() {
+                    closeModal(60);
+                }, 2600);
+            });
+        }
+    })();
+</script>
 
 </body>
 </html>

@@ -2286,3 +2286,579 @@ footer {
         align-items: flex-start;
     }
 }
+
+/* ==========================================================================
+   Google Ads Scenes & AdSense Responsive Styles
+   ========================================================================== */
+
+.google-ad-wrapper {
+    margin: 2rem auto;
+    position: relative;
+    max-width: 100%;
+    clear: both;
+}
+
+.google-ad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.68rem;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.ad-label {
+    font-weight: 700;
+    opacity: 0.85;
+}
+
+.adchoices-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.68rem;
+    transition: color 0.15s ease;
+}
+
+.adchoices-link:hover {
+    color: var(--primary-blue);
+}
+
+.ad-creative-scene {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ad-creative-scene:hover {
+    border-color: rgba(52, 152, 219, 0.4);
+    box-shadow: var(--shadow-sm);
+}
+
+/* 1. Leaderboard Scene (728x90 / 970x90) */
+.leaderboard-wrapper {
+    max-width: 1100px;
+    margin: 1.5rem auto 1rem auto;
+    padding: 0 1rem;
+}
+
+.leaderboard-scene {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(52, 152, 219, 0.08) 100%);
+    border-left: 4px solid var(--primary-blue);
+    min-height: 90px;
+}
+
+.ad-scene-brand {
+    flex: 1;
+}
+
+.ad-badge-google {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    background: rgba(52, 152, 219, 0.12);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.02em;
+}
+
+.ad-scene-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+}
+
+.ad-scene-desc {
+    font-size: 0.84rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.ad-scene-cta {
+    flex-shrink: 0;
+}
+
+.ad-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary-blue);
+    color: #ffffff !important;
+    padding: 0.6rem 1.15rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+}
+
+.ad-cta-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.ad-cta-btn.small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.78rem;
+}
+
+/* 2. Sidebar Ad Unit (300x250 / 300x600) */
+.sidebar-ad-wrapper {
+    margin: 1.5rem 0;
+}
+
+.sidebar-scene {
+    background: var(--card-bg);
+}
+
+.ad-scene-media {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    background: #000000;
+}
+
+.ad-scene-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-scene:hover .ad-scene-media img {
+    transform: scale(1.04);
+}
+
+.ad-sponsored-pill {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.ad-scene-content {
+    padding: 1.25rem;
+}
+
+.ad-scene-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.ad-price-tag {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+/* 3. In-Article Ad Unit */
+.inarticle-ad-wrapper {
+    margin: 2.5rem 0;
+    border-top: 1px dashed var(--border-color);
+    border-bottom: 1px dashed var(--border-color);
+    padding: 1rem 0;
+}
+
+.inarticle-scene {
+    background: var(--surface-bg);
+    padding: 1.25rem;
+}
+
+.inarticle-grid {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.inarticle-thumbnail {
+    height: 140px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.inarticle-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ad-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 0.4rem;
+}
+
+/* 4. In-Feed Native Card Unit */
+.infeed-ad-wrapper {
+    margin: 1.5rem 0;
+    height: 100%;
+}
+
+.ad-infeed-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.ad-infeed-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-blue);
+}
+
+.ad-infeed-image {
+    position: relative;
+    height: 200px;
+    background: #000;
+}
+
+.ad-infeed-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ad-sponsored-flag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ad-infeed-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ad-infeed-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.ad-source-brand {
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+.ad-infeed-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+}
+
+.ad-infeed-title a {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.ad-infeed-title a:hover {
+    color: var(--primary-blue);
+}
+
+.ad-infeed-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.ad-infeed-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    font-size: 0.8rem;
+}
+
+.ad-infeed-btn {
+    color: var(--primary-blue);
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ad-infeed-btn:hover {
+    text-decoration: underline;
+}
+
+/* 5. Pre-Footer Billboard (970x250) */
+.billboard-wrapper {
+    max-width: 1200px;
+    margin: 3.5rem auto 1.5rem auto;
+    padding: 0 1rem;
+}
+
+.billboard-scene {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(26, 188, 156, 0.08) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+}
+
+.billboard-scene-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.billboard-text {
+    flex: 1;
+    min-width: 280px;
+}
+
+.billboard-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.billboard-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.billboard-desc {
+    font-size: 0.92rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    max-width: 680px;
+}
+
+.billboard-features {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.82rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    flex-wrap: wrap;
+}
+
+.billboard-features i {
+    color: var(--teal);
+    margin-right: 0.35rem;
+}
+
+.billboard-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.billboard-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: #ffffff !important;
+    padding: 0.85rem 1.6rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(26, 188, 156, 0.35);
+    transition: all 0.2s ease;
+}
+
+.billboard-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 188, 156, 0.45);
+}
+
+.billboard-disclaimer {
+    font-size: 0.72rem;
+    color: var(--text-light);
+}
+
+/* 6. Sticky Bottom Viewport Floating Anchor Ad */
+.google-ad-anchor-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    background: var(--surface-bg);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.google-ad-anchor-container.hidden {
+    transform: translateY(110%);
+}
+
+.google-ad-anchor-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.anchor-ad-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.anchor-ad-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(0, 0, 0, 0.08);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.anchor-ad-text {
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.anchor-ad-cta {
+    background: var(--primary-blue);
+    color: #ffffff !important;
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+}
+
+.anchor-ad-cta:hover {
+    opacity: 0.9;
+}
+
+.anchor-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.anchor-close-btn:hover {
+    color: var(--text-dark);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 768px) {
+    .leaderboard-scene {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    .inarticle-grid {
+        grid-template-columns: 1fr;
+    }
+    .inarticle-thumbnail {
+        height: 180px;
+    }
+    .billboard-scene {
+        padding: 1.25rem;
+    }
+    .billboard-scene-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+    .anchor-ad-text {
+        font-size: 0.76rem;
+    }
+}
+
