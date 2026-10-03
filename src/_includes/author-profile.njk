@@ -1,0 +1,109 @@
+{# Reusable Author Profile Section Component #}
+{% set currentAuthorName = author | default("Viral Son Staff") %}
+{% set authorProfile = authors[currentAuthorName] if authors and authors[currentAuthorName] else (authors['default'] if authors else null) %}
+
+{% set finalAuthorName = author | default(authorProfile.name if authorProfile else "Viral Son Editorial") %}
+{% set finalAuthorRole = authorRole | default(authorProfile.role if authorProfile else "Editorial Contributor") %}
+{% set finalAuthorDesk = authorDesk | default(authorProfile.desk if authorProfile else "Viral Son Newsroom") %}
+{% set finalAuthorAvatar = authorAvatar | default(authorProfile.avatar if authorProfile else "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80") %}
+{% set finalAuthorBio = authorBio | default(authorProfile.bio if authorProfile else "Senior contributor covering cultural movements, technology breakthroughs, and global stories for Viral Son.") %}
+
+{# Social Link Resolution #}
+{% set socialTwitter = authorTwitter | default(authorProfile.social.twitter if authorProfile and authorProfile.social else null) %}
+{% set socialLinkedin = authorLinkedin | default(authorProfile.social.linkedin if authorProfile and authorProfile.social else null) %}
+{% set socialWebsite = authorWebsite | default(authorProfile.social.website if authorProfile and authorProfile.social else null) %}
+{% set socialGithub = authorGithub | default(authorProfile.social.github if authorProfile and authorProfile.social else null) %}
+{% set socialInstagram = authorInstagram | default(authorProfile.social.instagram if authorProfile and authorProfile.social else null) %}
+{% set socialEmail = authorEmail | default(authorProfile.social.email if authorProfile and authorProfile.social else null) %}
+
+<section class="author-profile-card" aria-label="Author Profile: {{ finalAuthorName }}">
+    <div class="author-profile-inner">
+        <!-- Author Avatar & Status Badge -->
+        <div class="author-profile-media">
+            <div class="author-avatar-wrapper">
+                <img 
+                    src="{{ finalAuthorAvatar }}" 
+                    alt="{{ finalAuthorName }}" 
+                    class="author-profile-img" 
+                    loading="lazy"
+                    width="96" 
+                    height="96"
+                    onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'"
+                >
+                <span class="author-verified-badge" title="Verified Editorial Staff" aria-label="Verified staff badge">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Author Biography & Metadata -->
+        <div class="author-profile-content">
+            <div class="author-profile-header">
+                <div class="author-identity">
+                    <span class="author-kicker">Written By</span>
+                    <h3 class="author-name">{{ finalAuthorName }}</h3>
+                    <div class="author-credentials">
+                        <span class="author-role">{{ finalAuthorRole }}</span>
+                        {% if finalAuthorDesk %}
+                        <span class="author-separator" aria-hidden="true">&middot;</span>
+                        <span class="author-desk"><i class="fas fa-map-marker-alt" style="font-size: 0.72rem; margin-right: 3px; opacity: 0.8;"></i>{{ finalAuthorDesk }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Social Follow Icons Row -->
+                <div class="author-social-links" aria-label="Connect with {{ finalAuthorName }}">
+                    {% if socialTwitter %}
+                    <a href="{{ socialTwitter }}" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Follow {{ finalAuthorName }} on X (Twitter)" aria-label="Twitter profile">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if socialLinkedin %}
+                    <a href="{{ socialLinkedin }}" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Connect with {{ finalAuthorName }} on LinkedIn" aria-label="LinkedIn profile">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if socialWebsite %}
+                    <a href="{{ socialWebsite }}" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Visit {{ finalAuthorName }}'s personal site" aria-label="Personal website">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if socialGithub %}
+                    <a href="{{ socialGithub }}" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="View {{ finalAuthorName }} on GitHub" aria-label="GitHub profile">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if socialInstagram %}
+                    <a href="{{ socialInstagram }}" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Follow {{ finalAuthorName }} on Instagram" aria-label="Instagram profile">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if socialEmail %}
+                    <a href="mailto:{{ socialEmail }}" class="author-social-btn" title="Email {{ finalAuthorName }}" aria-label="Send email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Author Bio Paragraph -->
+            <p class="author-bio-text">{{ finalAuthorBio }}</p>
+
+            <!-- Author Card Bottom Actions / Attribution -->
+            <div class="author-profile-footer">
+                <span class="author-articles-meta">
+                    <i class="far fa-newspaper" style="margin-right: 4px;"></i> Contributor to Viral Son Editorial
+                </span>
+                <a href="/about/" class="author-desk-link">
+                    <span>About Viral Son Newsroom</span>
+                    <i class="fas fa-arrow-right" style="font-size: 0.72rem; margin-left: 4px;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

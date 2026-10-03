@@ -1338,10 +1338,68 @@ eleventyExcludeFromCollections: true
                             </div>
                         </div>
 
+                        <!-- AI Taxonomy & Tagging Assistant Panel -->
+                        <div id="aiTaxonomyPanel" style="display: none; background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.28); border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem; position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                            <strong style="font-size: 0.92rem; color: var(--cms-text);">AI Category & Tag Recommendations</strong>
+                                            <span class="cms-badge" id="aiTaxonomySourceBadge" style="font-size: 0.68rem; background: rgba(139, 92, 246, 0.2); color: #8b5cf6; padding: 0.15rem 0.5rem; border-radius: 4px;">Gemini 3.8 Flash</span>
+                                        </div>
+                                        <span style="font-size: 0.75rem; color: var(--cms-text-subtle);">Based on deep semantic analysis of title and article content</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <button type="button" class="cms-btn cms-btn-primary" style="font-size: 0.76rem; padding: 0.3rem 0.75rem; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); border: none;" onclick="applyAllAITaxonomy()" id="applyAllAIBtn">
+                                        <i class="fas fa-check-double"></i> Apply All
+                                    </button>
+                                    <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.85rem; padding: 0.25rem 0.55rem;" onclick="closeAITaxonomyPanel()" title="Dismiss AI suggestions">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- AI Reasoning Note -->
+                            <p id="aiTaxonomyReason" style="font-size: 0.82rem; color: var(--cms-text-muted); margin: 0 0 0.85rem 0; line-height: 1.5; font-style: italic;"></p>
+
+                            <!-- Suggested Category Section -->
+                            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.85rem; padding-bottom: 0.75rem; border-bottom: 1px dashed rgba(139, 92, 246, 0.25);">
+                                <span style="font-size: 0.78rem; font-weight: 600; color: var(--cms-text-subtle);">Recommended Category:</span>
+                                <button type="button" class="cms-btn cms-btn-primary" id="aiPrimaryCategoryBtn" style="font-size: 0.78rem; padding: 0.28rem 0.75rem;" onclick="applyAICategory(this.dataset.cat)">
+                                    <i class="fas fa-folder"></i> <span id="aiPrimaryCatLabel">Technology</span> <span style="font-size: 0.7rem; opacity: 0.85; margin-left: 4px;">(Apply)</span>
+                                </button>
+                                <div id="aiAlternativeCategories" style="display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                                    <!-- Alternative category chips -->
+                                </div>
+                            </div>
+
+                            <!-- Suggested Tags Section -->
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--cms-text-subtle);">Suggested Topic Tags (Click any to add to post):</span>
+                                    <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="addAllAITags()">
+                                        <i class="fas fa-plus"></i> Add All Tags
+                                    </button>
+                                </div>
+                                <div id="aiSuggestedTagsContainer" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                                    <!-- Suggested tag buttons inserted dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Core Article Metadata -->
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                             <div class="cms-form-group">
-                                <label class="cms-label" for="postCategory">Category</label>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                    <label class="cms-label" for="postCategory" style="margin-bottom: 0;">Category</label>
+                                    <button type="button" class="cms-btn" id="aiTaxonomyBtn" onclick="requestAITaxonomySuggestions()" title="Analyze post content and suggest appropriate category & tags with AI" style="font-size: 0.72rem; padding: 0.2rem 0.55rem; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); border: none; color: #fff; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25);">
+                                        <i class="fas fa-magic"></i> AI Suggest
+                                    </button>
+                                </div>
                                 <select id="postCategory" class="cms-select" style="width: 100%;" onchange="updateLivePreview()">
                                     <option value="Technology">Technology</option>
                                     <option value="News">News</option>
@@ -1425,7 +1483,12 @@ eleventyExcludeFromCollections: true
 
                         <!-- Tags Manager -->
                         <div class="cms-form-group">
-                            <label class="cms-label">Topic Tags</label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" style="margin-bottom: 0;">Topic Tags</label>
+                                <button type="button" class="cms-btn cms-btn-outline" onclick="requestAITaxonomySuggestions()" style="font-size: 0.72rem; padding: 0.18rem 0.5rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+                                    <i class="fas fa-magic" style="color: #8b5cf6;"></i> AI Suggest Tags
+                                </button>
+                            </div>
                             <div class="cms-tags-container" id="tagsContainer">
                                 <!-- Chips will be populated here -->
                                 <input type="text" id="tagInput" class="cms-tag-input" placeholder="Type tag & press Enter..." onkeydown="handleTagKeyDown(event)">
@@ -1520,6 +1583,41 @@ eleventyExcludeFromCollections: true
                             <!-- Tags Simulation -->
                             <div id="prevTagsWrapper" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color, #262c36);">
                                 <!-- rendered tags -->
+                            </div>
+
+                            <!-- Reusable Author Profile Live Preview -->
+                            <div id="prevAuthorProfileWrapper" class="author-profile-card" style="margin-top: 2rem; background: var(--cms-card); border-color: var(--cms-border);">
+                                <div class="author-profile-inner">
+                                    <div class="author-profile-media">
+                                        <div class="author-avatar-wrapper">
+                                            <img id="prevAuthorAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Author" class="author-profile-img" style="border-color: var(--cms-primary);">
+                                            <span class="author-verified-badge" style="background: var(--cms-primary); border-color: var(--cms-card);"><i class="fas fa-check"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="author-profile-content">
+                                        <div class="author-profile-header">
+                                            <div class="author-identity">
+                                                <span class="author-kicker" style="color: var(--cms-primary);">Written By</span>
+                                                <h3 class="author-name" id="prevAuthorCardName" style="color: var(--cms-text);">Alex Morgan</h3>
+                                                <div class="author-credentials">
+                                                    <span class="author-role" id="prevAuthorCardRole" style="color: var(--cms-text-muted);">Editorial Contributor</span>
+                                                    <span class="author-separator" aria-hidden="true">&middot;</span>
+                                                    <span class="author-desk" style="color: var(--cms-text-subtle);"><i class="fas fa-map-marker-alt" style="font-size: 0.72rem; margin-right: 3px;"></i>Viral Son Newsroom</span>
+                                                </div>
+                                            </div>
+                                            <div class="author-social-links">
+                                                <a href="https://twitter.com/viralson_mag" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                                                <a href="https://linkedin.com" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="https://viralson.com" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="Website"><i class="fas fa-globe"></i></a>
+                                            </div>
+                                        </div>
+                                        <p class="author-bio-text" id="prevAuthorCardBio" style="color: var(--cms-text-muted); font-size: 0.92rem; line-height: 1.6;">Author biography...</p>
+                                        <div class="author-profile-footer" style="border-top-color: var(--cms-border);">
+                                            <span class="author-articles-meta" style="color: var(--cms-text-subtle);"><i class="far fa-newspaper" style="margin-right: 4px;"></i> Contributor to Viral Son Editorial</span>
+                                            <span class="author-desk-link" style="color: var(--cms-primary);"><span>Verified Editorial Desk</span></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -2078,6 +2176,191 @@ eleventyExcludeFromCollections: true
             }
         }
 
+        // ==========================================================================
+        // AI TAXONOMY & TAGGING ASSISTANT (Gemini 3.8 Flash + Semantic Engine)
+        // ==========================================================================
+        let latestAISuggestions = null;
+
+        async function requestAITaxonomySuggestions() {
+            const title = (document.getElementById('postTitle')?.value || '').trim();
+            const content = (document.getElementById('postContent')?.value || '').trim();
+            const excerpt = (document.getElementById('postExcerpt')?.value || '').trim();
+            const currentCategory = document.getElementById('postCategory')?.value || '';
+
+            if (!title && !content && !excerpt) {
+                showToast('Please enter an article title or write some body text first so the AI can analyze your post.', 'warning');
+                return;
+            }
+
+            const btn = document.getElementById('aiTaxonomyBtn');
+            const origHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+                btn.disabled = true;
+            }
+
+            try {
+                showToast('AI analyzing article themes and taxonomy...', 'info');
+                const resp = await fetch('/api/ai/suggest-tags-categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, excerpt, currentCategory })
+                });
+
+                if (!resp.ok) {
+                    const err = await resp.json();
+                    throw new Error(err.error || 'Failed to retrieve AI suggestions');
+                }
+
+                const data = await resp.json();
+                latestAISuggestions = data;
+                renderAITaxonomySuggestions(data);
+                showToast(`AI recommended category: ${data.category} and ${data.tags.length} topic tags!`, 'success');
+            } catch (err) {
+                console.error('AI Taxonomy suggestion error:', err);
+                showToast(`AI analysis note: ${err.message}`, 'error');
+            } finally {
+                if (btn) {
+                    btn.innerHTML = origHtml;
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        function renderAITaxonomySuggestions(data) {
+            const panel = document.getElementById('aiTaxonomyPanel');
+            if (!panel) return;
+
+            // Update badge source
+            const sourceBadge = document.getElementById('aiTaxonomySourceBadge');
+            if (sourceBadge) {
+                sourceBadge.textContent = data.source === 'gemini-ai' ? 'Gemini 3.8 Flash' : 'Semantic Engine';
+            }
+
+            // Reasoning note
+            const reasonEl = document.getElementById('aiTaxonomyReason');
+            if (reasonEl) {
+                reasonEl.textContent = data.categoryReason || `Classified based on key article themes.`;
+            }
+
+            // Primary recommended category
+            const primaryBtn = document.getElementById('aiPrimaryCategoryBtn');
+            const primaryLabel = document.getElementById('aiPrimaryCatLabel');
+            if (primaryBtn && primaryLabel) {
+                primaryLabel.textContent = data.category;
+                primaryBtn.dataset.cat = data.category;
+                
+                const currentCat = document.getElementById('postCategory')?.value;
+                if (currentCat === data.category) {
+                    primaryBtn.style.opacity = '0.85';
+                    primaryBtn.title = 'Category already applied';
+                } else {
+                    primaryBtn.style.opacity = '1';
+                }
+            }
+
+            // Alternative categories
+            const altContainer = document.getElementById('aiAlternativeCategories');
+            if (altContainer) {
+                if (data.alternativeCategories && data.alternativeCategories.length > 0) {
+                    altContainer.innerHTML = '<span style="font-size: 0.72rem; color: var(--cms-text-subtle); margin-left: 0.35rem;">Alternatives:</span>' +
+                        data.alternativeCategories.map(cat => `
+                            <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" onclick="applyAICategory('${escapeHtml(cat)}')">
+                                ${escapeHtml(cat)}
+                            </button>
+                        `).join('');
+                } else {
+                    altContainer.innerHTML = '';
+                }
+            }
+
+            // Render suggested tags
+            renderAISuggestedTags(data.tags || []);
+
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function renderAISuggestedTags(tags) {
+            const container = document.getElementById('aiSuggestedTagsContainer');
+            if (!container) return;
+
+            if (!tags || tags.length === 0) {
+                container.innerHTML = '<span style="font-size: 0.75rem; color: var(--cms-text-subtle);">No specific tags suggested.</span>';
+                return;
+            }
+
+            container.innerHTML = tags.map(tag => {
+                const isAdded = tagsList.includes(tag);
+                return `
+                    <button type="button" class="cms-btn ${isAdded ? 'cms-btn-secondary' : 'cms-btn-outline'}" 
+                        style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem;" 
+                        onclick="toggleAITag('${escapeHtml(tag)}', this)"
+                        title="${isAdded ? 'Tag already added (click to remove)' : 'Click to add tag to post'}">
+                        <i class="fas ${isAdded ? 'fa-check' : 'fa-plus'}" style="${isAdded ? 'color: #10b981;' : ''}"></i>
+                        <span>#${escapeHtml(tag)}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleAITag(tag, btnEl) {
+            const clean = String(tag || '').trim().replace(/^#/, '');
+            const idx = tagsList.indexOf(clean);
+            if (idx === -1) {
+                addTag(clean);
+                showToast(`Added tag #${clean}`, 'success');
+            } else {
+                removeTag(idx);
+                showToast(`Removed tag #${clean}`, 'info');
+            }
+            if (latestAISuggestions && latestAISuggestions.tags) {
+                renderAISuggestedTags(latestAISuggestions.tags);
+            }
+        }
+
+        function applyAICategory(category) {
+            if (!category) return;
+            const select = document.getElementById('postCategory');
+            if (select) {
+                select.value = category;
+                updateLivePreview();
+                if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
+                showToast(`Applied category: ${category}`, 'success');
+                if (latestAISuggestions) renderAITaxonomySuggestions(latestAISuggestions);
+            }
+        }
+
+        function addAllAITags() {
+            if (!latestAISuggestions || !latestAISuggestions.tags) return;
+            let addedCount = 0;
+            latestAISuggestions.tags.forEach(tag => {
+                const clean = String(tag || '').trim().replace(/^#/, '');
+                if (clean && !tagsList.includes(clean)) {
+                    tagsList.push(clean);
+                    addedCount++;
+                }
+            });
+            renderTags();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
+            renderAISuggestedTags(latestAISuggestions.tags);
+            showToast(`Added ${addedCount} tags to post!`, 'success');
+        }
+
+        function applyAllAITaxonomy() {
+            if (!latestAISuggestions) return;
+            if (latestAISuggestions.category) {
+                applyAICategory(latestAISuggestions.category);
+            }
+            addAllAITags();
+            showToast('All AI category and tag suggestions applied!', 'success');
+        }
+
+        function closeAITaxonomyPanel() {
+            const panel = document.getElementById('aiTaxonomyPanel');
+            if (panel) panel.style.display = 'none';
+        }
+
         // --- Unsplash Curated Asset Selection ---
         function selectCuratedImage(url, caption) {
             document.getElementById('postImage').value = url;
@@ -2221,6 +2504,15 @@ eleventyExcludeFromCollections: true
             // Tags
             const tagsWrapper = document.getElementById('prevTagsWrapper');
             tagsWrapper.innerHTML = tagsList.map(t => `<span class="search-category-pill" style="margin-right: 0.35rem;">#${escapeHtml(t)}</span>`).join('');
+
+            // Author Profile Card Preview
+            const authorCardName = document.getElementById('prevAuthorCardName');
+            const authorCardBio = document.getElementById('prevAuthorCardBio');
+            const authorCardRole = document.getElementById('prevAuthorCardRole');
+            const authorBioInput = (document.getElementById('postAuthorBio')?.value || '').trim();
+            if (authorCardName) authorCardName.textContent = author || 'Viral Son Editorial';
+            if (authorCardBio) authorCardBio.textContent = authorBioInput || 'Senior contributor covering cultural movements, technology breakthroughs, and global stories for Viral Son.';
+            if (authorCardRole) authorCardRole.textContent = `${category} Contributor`;
 
             // 2. SEO Simulator Elements
             document.getElementById('seoGoogleSlug').textContent = slug;

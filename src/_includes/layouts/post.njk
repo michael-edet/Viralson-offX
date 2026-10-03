@@ -84,14 +84,8 @@ isPost: true
                 </div>
             </div>
 
-            <!-- Author Box -->
-            <div class="author-box">
-                <img src="{{ authorAvatar | default('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80') }}" alt="{{ author }}" class="author-avatar">
-                <div class="author-info">
-                    <h4>{{ author | default("Viral Son Staff Writer") }}</h4>
-                    <p>{{ authorBio | default("Senior writer covering culture, global developments, technology innovations, and emerging viral trends across digital media.") }}</p>
-                </div>
-            </div>
+            <!-- Reusable Author Profile Section -->
+            {% include "author-profile.njk" %}
 
             <!-- Auto-Generated Media Player Widgets Engine (Video/Music Detection & Playback Controls) -->
             {% include "media-widgets-engine.njk" %}

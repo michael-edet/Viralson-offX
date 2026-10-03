@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import fs, { existsSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { execSync } from 'child_process';
 import { load as yamlLoad, dump as yamlDump } from 'js-yaml';
+import { GoogleGenAI } from '@google/genai';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -563,6 +564,173 @@ app.post('/api/settings/ads', (req, res) => {
   } catch (err) {
     console.error('Error updating ad settings:', err);
     res.status(500).json({ error: 'Failed to save ad settings', details: err.message });
+  }
+});
+
+// Helper: Semantic Taxonomy Extraction Fallback Engine
+function generateLocalTaxonomySuggestions(title, content, excerpt, currentCategory) {
+  const combinedText = `${title} ${excerpt} ${content}`.toLowerCase();
+  
+  const categoryKeywords = {
+    Technology: ['ai', 'artificial intelligence', 'machine learning', 'tech', 'software', 'hardware', 'code', 'coding', 'app', 'apps', 'robot', 'robotics', 'digital', 'algorithm', 'foldable', 'device', 'phone', 'computer', 'computing', 'cyber', 'data', 'cloud', 'internet', 'neural', 'developer', 'silicon'],
+    Entertainment: ['music', 'song', 'album', 'festival', 'artist', 'cinema', 'movie', 'film', 'actor', 'hollywood', 'streaming', 'soundtrack', 'concert', 'gaming', 'entertainment', 'performance', 'tv', 'series', 'drama', 'theatre', 'band', 'tune'],
+    Sports: ['match', 'football', 'soccer', 'basketball', 'sport', 'sports', 'athlete', 'olympics', 'champion', 'league', 'tournament', 'coach', 'stadium', 'score', 'goal', 'race', 'fitness', 'athletic', 'pitch'],
+    Lifestyle: ['lifestyle', 'minimalism', 'minimalist', 'habit', 'wellness', 'health', 'sleep', 'mindfulness', 'meditation', 'routine', 'mental', 'nutrition', 'interior', 'home', 'living', 'productivity', 'travel', 'fashion', 'balance', 'calm'],
+    News: ['summit', 'climate', 'global', 'government', 'world', 'politics', 'policy', 'economy', 'economic', 'market', 'inflation', 'election', 'international', 'crisis', 'leaders', 'investigation', 'treaty', 'accord', 'report'],
+    Community: ['community', 'voices', 'local', 'discussion', 'neighborhood', 'volunteer', 'residents', 'dialogue', 'society', 'public', 'civic', 'hub']
+  };
+
+  let bestCategory = 'Technology';
+  let bestScore = -1;
+  const scores = {};
+
+  for (const [cat, keywords] of Object.entries(categoryKeywords)) {
+    let score = 0;
+    for (const kw of keywords) {
+      const regex = new RegExp(`\\b${kw}\\b`, 'gi');
+      const matches = combinedText.match(regex);
+      if (matches) {
+        score += matches.length * (kw.length > 5 ? 2 : 1);
+      }
+    }
+    if (currentCategory && currentCategory.toLowerCase() === cat.toLowerCase()) {
+      score += 2;
+    }
+    scores[cat] = score;
+    if (score > bestScore) {
+      bestScore = score;
+      bestCategory = cat;
+    }
+  }
+
+  const sortedCategories = Object.keys(scores)
+    .filter(c => c !== bestCategory && scores[c] > 0)
+    .sort((a, b) => scores[b] - scores[a])
+    .slice(0, 2);
+
+  const stopWords = new Set(['the', 'and', 'for', 'that', 'this', 'with', 'from', 'have', 'more', 'about', 'will', 'your', 'their', 'which', 'been', 'what', 'into', 'some', 'these', 'could', 'them', 'other', 'than', 'then', 'also', 'such', 'when', 'after', 'where', 'over', 'both', 'between', 'article', 'everyday', 'making', 'getting', 'around', 'first', 'wave', 'post', 'blog']);
+  
+  const words = combinedText.match(/[a-z]{4,}/g) || [];
+  const freq = {};
+  for (const w of words) {
+    if (!stopWords.has(w)) {
+      freq[w] = (freq[w] || 0) + 1;
+    }
+  }
+
+  const candidateTags = [];
+  if (/(\bai\b|artificial intelligence|machine learning|neural)/i.test(combinedText)) candidateTags.push('ArtificialIntelligence', 'MachineLearning', 'FutureTech');
+  if (/(\bclimate\b|environment|summit|carbon|energy)/i.test(combinedText)) candidateTags.push('ClimateChange', 'Sustainability', 'GlobalAffairs');
+  if (/(\bphone\b|foldable|screen|hardware|gadget)/i.test(combinedText)) candidateTags.push('Gadgets', 'MobileTech', 'Innovation');
+  if (/(\bmusic\b|festival|lineup|soundtrack|album)/i.test(combinedText)) candidateTags.push('MusicCulture', 'Festivals', 'Soundtrack');
+  if (/(\bminimalism\b|simplif|habit|clutter|mindful)/i.test(combinedText)) candidateTags.push('Minimalism', 'MindfulLiving', 'Productivity');
+  if (/(\bsleep\b|circadian|health|wellness)/i.test(combinedText)) candidateTags.push('Wellness', 'SleepScience', 'Health');
+  if (/(\bfootball\b|soccer|match|tactics)/i.test(combinedText)) candidateTags.push('Football', 'MatchAnalysis', 'Sports');
+
+  const topWords = Object.keys(freq).sort((a, b) => freq[b] - freq[a]).slice(0, 8);
+  for (const tw of topWords) {
+    const capitalized = tw.charAt(0).toUpperCase() + tw.slice(1);
+    if (!candidateTags.includes(capitalized) && candidateTags.length < 7) {
+      candidateTags.push(capitalized);
+    }
+  }
+
+  if (candidateTags.length < 3) {
+    candidateTags.push(bestCategory, 'Trending', 'ViralSon');
+  }
+
+  return {
+    category: bestCategory,
+    categoryReason: `Classified as ${bestCategory} based on frequent key topics and context.`,
+    alternativeCategories: sortedCategories.length > 0 ? sortedCategories : ['News'],
+    tags: Array.from(new Set(candidateTags)).slice(0, 6),
+    keyThemes: candidateTags.slice(0, 3)
+  };
+}
+
+// 10. POST /api/ai/suggest-tags-categories - Suggest appropriate tags & category for post
+app.post('/api/ai/suggest-tags-categories', async (req, res) => {
+  try {
+    const { title = '', content = '', excerpt = '', currentCategory = '' } = req.body;
+    const cleanContent = String(content || '').replace(/<[^>]+>/g, ' ').trim();
+
+    if (!title && !cleanContent && !excerpt) {
+      return res.status(400).json({ error: 'Please enter a title or write some content to analyze.' });
+    }
+
+    // Try Gemini API first
+    let geminiSucceeded = false;
+    let geminiResult = null;
+
+    try {
+      const ai = new GoogleGenAI({});
+      const prompt = `You are the lead editor and taxonomy director for "Viral Son", a modern digital publication.
+Analyze the following article and recommend the best primary category and appropriate tags.
+
+ALLOWED PRIMARY CATEGORIES (choose exactly ONE):
+- "Technology"
+- "News"
+- "Entertainment"
+- "Lifestyle"
+- "Sports"
+- "Community"
+
+Article Title: "${title || 'Untitled'}"
+Excerpt: "${excerpt || ''}"
+Article Content:
+${cleanContent.slice(0, 3500)}
+
+Respond strictly in valid JSON format:
+{
+  "category": "Technology",
+  "categoryReason": "Brief explanation why this fits best",
+  "alternativeCategories": ["News"],
+  "tags": ["TagOne", "TagTwo", "TagThree", "TagFour", "TagFive"],
+  "keyThemes": ["Theme One", "Theme Two"]
+}`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json'
+        }
+      });
+
+      if (response && response.text) {
+        const parsed = JSON.parse(response.text);
+        if (parsed.category) {
+          geminiResult = {
+            success: true,
+            source: 'gemini-ai',
+            model: 'gemini-3.8-flash',
+            category: parsed.category,
+            categoryReason: parsed.categoryReason || `Classified as ${parsed.category}.`,
+            alternativeCategories: Array.isArray(parsed.alternativeCategories) ? parsed.alternativeCategories : [],
+            tags: Array.isArray(parsed.tags) ? parsed.tags.map(t => String(t).replace(/^#/, '').trim()).filter(Boolean) : [],
+            keyThemes: Array.isArray(parsed.keyThemes) ? parsed.keyThemes : []
+          };
+          geminiSucceeded = true;
+        }
+      }
+    } catch (geminiError) {
+      console.warn('[Viral Son AI] Gemini API note, using semantic fallback:', geminiError.message);
+    }
+
+    if (geminiSucceeded && geminiResult) {
+      return res.json(geminiResult);
+    }
+
+    // Semantic taxonomy fallback
+    const fallback = generateLocalTaxonomySuggestions(title, cleanContent, excerpt, currentCategory);
+    return res.json({
+      success: true,
+      source: 'semantic-engine',
+      ...fallback
+    });
+  } catch (err) {
+    console.error('[Viral Son AI] Error suggesting taxonomy:', err);
+    res.status(500).json({ error: 'Failed to generate suggestions', details: err.message });
   }
 });
 

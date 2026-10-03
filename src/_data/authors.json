@@ -1,0 +1,144 @@
+{
+  "Alex Morgan": {
+    "name": "Alex Morgan",
+    "role": "Senior Technology & AI Editor",
+    "desk": "San Francisco, CA",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+    "bio": "Specialized in generative intelligence, robotics, and human-computer interfaces. Former software engineer and contributor to open-source agentic workflows.",
+    "social": {
+      "twitter": "https://twitter.com/alexmorgan_tech",
+      "linkedin": "https://linkedin.com/in/alexmorgan-tech",
+      "website": "https://alexmorgan.dev",
+      "github": "https://github.com/alexmorgan"
+    }
+  },
+  "Daniel Okafor": {
+    "name": "Daniel Okafor",
+    "role": "Global Affairs & Environmental Correspondent",
+    "desk": "Nairobi & Geneva",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+    "bio": "Covering international climate summits, renewable energy transitions, and cross-border environmental governance across emerging economies.",
+    "social": {
+      "twitter": "https://twitter.com/daniel_okafor",
+      "linkedin": "https://linkedin.com/in/danielokafor-policy",
+      "website": "https://danielokafor.earth"
+    }
+  },
+  "David Kim": {
+    "name": "David Kim",
+    "role": "Consumer Tech & Hardware Analyst",
+    "desk": "Seoul & Los Angeles",
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+    "bio": "Hands-on reviewer and analyst tracking foldable displays, silicon architectures, mobile performance benchmarks, and next-gen gadgets.",
+    "social": {
+      "twitter": "https://twitter.com/davidkim_hardware",
+      "linkedin": "https://linkedin.com/in/davidkim-tech",
+      "website": "https://davidkimreviews.com"
+    }
+  },
+  "Dr. Maya Patel": {
+    "name": "Dr. Maya Patel",
+    "role": "Health, Neuroscience & Wellness Writer",
+    "desk": "Boston, MA",
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+    "bio": "Neuroscientist and science communicator investigating circadian biology, sleep architecture, and sustainable lifestyle adaptations in modern digital work.",
+    "social": {
+      "twitter": "https://twitter.com/drmayapatel",
+      "linkedin": "https://linkedin.com/in/drmayapatel",
+      "website": "https://mayapatelscience.org"
+    }
+  },
+  "Julian Reed": {
+    "name": "Julian Reed",
+    "role": "Sports Culture & Match Columnist",
+    "desk": "Manchester, UK",
+    "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+    "bio": "Covering European football tactical developments, major sports analytics, and the emotional drama of matchday athletics.",
+    "social": {
+      "twitter": "https://twitter.com/julianreed_sport",
+      "linkedin": "https://linkedin.com/in/julianreed-journalism"
+    }
+  },
+  "Marcus Rivera": {
+    "name": "Marcus Rivera",
+    "role": "Productivity & Mindful Living Author",
+    "desk": "Austin, TX",
+    "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80",
+    "bio": "Author and researcher exploring intentional minimalism, habit systems, deep work routines, and the philosophy of quiet focus.",
+    "social": {
+      "twitter": "https://twitter.com/marcusrivera_life",
+      "linkedin": "https://linkedin.com/in/marcusrivera",
+      "website": "https://marcusrivera.com"
+    }
+  },
+  "Michael Chen": {
+    "name": "Michael Chen",
+    "role": "Contemporary Culture & Entertainment Critic",
+    "desk": "New York, NY",
+    "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+    "bio": "Writing on music festivals, streaming industry economics, indie cinema, and digital subcultures shaping pop culture.",
+    "social": {
+      "twitter": "https://twitter.com/michaelchen_critic",
+      "linkedin": "https://linkedin.com/in/michaelchen-culture",
+      "website": "https://chenculture.net"
+    }
+  },
+  "Sarah Jenkins": {
+    "name": "Sarah Jenkins",
+    "role": "Lifestyle & Design Columnist",
+    "desk": "London, UK",
+    "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
+    "bio": "Exploring sustainable home environments, intentional consumer habits, modern interior architecture, and everyday wellness.",
+    "social": {
+      "twitter": "https://twitter.com/sarahjenkins_life",
+      "instagram": "https://instagram.com/sarahjenkins_living",
+      "linkedin": "https://linkedin.com/in/sarahjenkins-editor"
+    }
+  },
+  "Viral Son Editorial": {
+    "name": "Viral Son Editorial",
+    "role": "Staff Editorial Collective",
+    "desk": "Central Editorial Desk",
+    "avatar": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=300&q=80",
+    "bio": "The collective voice of the Viral Son newsroom, providing aggregated reporting, verified dispatch summaries, and comprehensive investigative coverage across global culture and technology.",
+    "social": {
+      "twitter": "https://twitter.com/viralson_mag",
+      "linkedin": "https://linkedin.com/company/viralson",
+      "website": "https://viralson.com"
+    }
+  },
+  "Viral Son Music Desk": {
+    "name": "Viral Son Music Desk",
+    "role": "Music & Audio Curation Team",
+    "desk": "Sound Lab",
+    "avatar": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80",
+    "bio": "Curating sonic breakthroughs, spatial audio releases, emerging producers, and lossless listening experiences across all digital and vinyl releases.",
+    "social": {
+      "twitter": "https://twitter.com/viralson_music",
+      "website": "https://viralson.com/download/music/"
+    }
+  },
+  "Viral Son Staff": {
+    "name": "Viral Son Staff",
+    "role": "Editorial Newsroom Desk",
+    "desk": "Global Newsroom",
+    "avatar": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=300&q=80",
+    "bio": "Delivering timely updates, curated briefings, and verified reporting on culture, technology, sports, and community discussions.",
+    "social": {
+      "twitter": "https://twitter.com/viralson_mag",
+      "website": "https://viralson.com"
+    }
+  },
+  "default": {
+    "name": "Viral Son Editorial Team",
+    "role": "Editorial Contributor",
+    "desk": "Viral Son Newsroom",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+    "bio": "Writer and cultural analyst covering emerging stories, technological innovation, and societal trends across digital media.",
+    "social": {
+      "twitter": "https://twitter.com/viralson_mag",
+      "linkedin": "https://linkedin.com/company/viralson",
+      "website": "https://viralson.com"
+    }
+  }
+}
