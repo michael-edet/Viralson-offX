@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revolutionary Foldable Phone Breaks New Ground in Mobile Technology | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --green: #2ecc71;
+            --orange: #e67e22;
+            --red: #e74c3c;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-green {
+            background-color: var(--green);
+        }
+
+        .btn-green:hover {
+            background-color: #27ae60;
+        }
+
+        /* Page Loader Styles */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .vs-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .line {
+            height: 8px;
+            width: 200px;
+            border-radius: 4px;
+            background-color: #e8f4fc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #3498db,
+                #3498db 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 0.2s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 0.4s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Breaking News Banner */
+        .breaking-news {
+            background-color: var(--red);
+            color: var(--white);
+            padding: 0.5rem 0;
+            font-weight: 600;
+            overflow: hidden;
+        }
+
+        .breaking-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .breaking-label {
+            background-color: var(--white);
+            color: var(--red);
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .breaking-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .breaking-text-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: var(--light-gray);
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--medium-gray);
+        }
+
+        .breadcrumb-link {
+            color: var(--primary-blue);
+        }
+
+        .breadcrumb-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Post Content */
+        .post-content {
+            padding: 3rem 0;
+        }
+
+        .post-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .post-excerpt {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .post-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-featured-image {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .post-featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-source {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            border-top-left-radius: 4px;
+        }
+
+        .post-body {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .post-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .post-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--dark-blue);
+        }
+
+        .post-body blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .post-body ul, .post-body ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .post-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .fact-box {
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--green);
+        }
+
+        .fact-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        /* Post Actions */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin: 2.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--medium-gray);
+            border-bottom: 1px solid var(--medium-gray);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .social-share {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        .twitter {
+            background-color: #1da1f2;
+        }
+
+        .linkedin {
+            background-color: #0077b5;
+        }
+
+        .whatsapp {
+            background-color: #25d366;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: var(--medium-gray);
+        }
+
+        /* Author Bio */
+        .author-bio {
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        .author-role {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin: 3rem 0;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .comments-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .comments-list {
+            margin-bottom: 2.5rem;
+        }
+
+        .comment {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .comment-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-meta h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .comment-reply {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .comment-reply:hover {
+            text-decoration: underline;
+        }
+
+        .comment-body {
+            line-height: 1.6;
+        }
+
+        .comment-form {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Sidebar */
+        .post-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .trending-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #888;
+            gap: 0.5rem;
+        }
+
+        .related-posts {
+            list-style: none;
+        }
+
+        .related-post {
+            display: flex;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .related-post:last-child {
+            border-bottom: none;
+        }
+
+        .related-image {
+            width: 80px;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-content {
+            flex: 1;
+        }
+
+        .related-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .related-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--light-blue);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form-horizontal {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .post-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .post-actions {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .author-bio {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .newsletter-form-horizontal {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+
+            .post-meta {
+                gap: 1rem;
+            }
+
+            .social-share span {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .breaking-container {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .breaking-label {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="vs-logo">VS</div>
+        <div class="loading-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="entertainment.html" class="nav-link">Entertainment</a></li>
+                <li><a href="technology.html" class="nav-link active">Technology</a></li>
+                <li><a href="lifestyle.html" class="nav-link">Lifestyle</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Breaking News Banner -->
+    <section class="breaking-news">
+        <div class="container breaking-container">
+            <div class="breaking-label">BREAKING</div>
+            <div class="breaking-text">
+                <div class="breaking-text-content">Tech Giant announces revolutionary foldable smartphone with unprecedented durability and innovative features</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Home</a></li>
+                <li class="breadcrumb-item"><a href="technology.html" class="breadcrumb-link">Technology</a></li>
+                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Mobile Tech</a></li>
+                <li class="breadcrumb-item">Foldable Phone</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container post-container">
+            <div class="post-main">
+                <article class="post-article">
+                    <header class="post-header">
+                        <span class="post-category">Technology & Innovation</span>
+                        <h1 class="post-title">Revolutionary Foldable Phone Breaks New Ground in Mobile Technology</h1>
+                        <p class="post-excerpt">Tech Giant's latest innovation features a revolutionary hinge mechanism, unprecedented durability, and a suite of productivity features that could redefine how we use smartphones.</p>
+                        <div class="post-meta">
+                            <div class="post-meta-item">
+                                <i class="far fa-user" aria-hidden="true"></i>
+                                <span>By Alex Rodriguez</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-calendar" aria-hidden="true"></i>
+                                <span>June 25, 2023</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-clock" aria-hidden="true"></i>
+                                <span>8 min read</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-eye" aria-hidden="true"></i>
+                                <span>32.7K views</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="post-featured-image">
+                        <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Tech Giant's new foldable smartphone showing both folded and unfolded states">
+                        <div class="image-source">Source: Tech Giant Press Release</div>
+                    </div>
+
+                    <div class="post-body">
+                        <p>In what industry analysts are calling a "quantum leap" for mobile technology, Tech Giant has unveiled its latest foldable smartphone that addresses the key limitations of previous generations while introducing groundbreaking new features.</p>
+
+                        <p>The device, officially named the "Flex Pro," was revealed at a high-profile launch event in San Francisco yesterday, showcasing innovations that could potentially reshape the smartphone market and accelerate the adoption of foldable devices.</p>
+
+                        <h2>The Revolutionary Hinge Mechanism</h2>
+                        <p>At the heart of the Flex Pro's innovation is its completely redesigned hinge mechanism. Unlike previous foldable devices that used complex systems of gears and springs, the Flex Pro employs a proprietary "liquid metal" hinge that provides unprecedented smoothness and durability.</p>
+
+                        <blockquote>
+                            "We've essentially solved the durability issues that plagued earlier foldable devices. Our testing shows the Flex Pro can withstand over 500,000 folds without any degradation in performance." — Dr. Elena Chen, Chief Technology Officer at Tech Giant
+                        </blockquote>
+
+                        <p>The hinge design allows the phone to fold completely flat without any gap, eliminating the dust and debris issues that affected previous models. It also enables multiple folding angles, transforming the device into its own stand for media consumption or video calls.</p>
+
+                        <h2>Display Breakthroughs</h2>
+                        <p>The Flex Pro features what Tech Giant is calling the "most durable foldable display ever created." The 8.2-inch OLED panel when unfolded uses a new type of ultra-thin glass with a proprietary polymer coating that's 3x more scratch-resistant than previous generations.</p>
+
+                        <ul>
+                            <li><strong>Unprecedented Durability:</strong> The display can withstand pressure of up to 5kg without damage</li>
+                            <li><strong>Reduced Crease:</strong> New manufacturing process minimizes the visible crease by 70% compared to competitors</li>
+                            <li><strong>Adaptive Refresh Rate:</strong> 1-144Hz variable refresh rate for optimal battery life and smoothness</li>
+                            <li><strong>Peak Brightness:</strong> 2000 nits peak brightness for excellent outdoor visibility</li>
+                        </ul>
+
+                        <div class="fact-box">
+                            <div class="fact-title">Market Impact</div>
+                            <p>Industry analysts project that the Flex Pro could capture 15-20% of the premium smartphone market within its first year, potentially generating over $8 billion in revenue for Tech Giant.</p>
+                        </div>
+
+                        <h2>Software Innovations</h2>
+                        <p>Beyond hardware improvements, the Flex Pro introduces a suite of software features specifically designed for the foldable form factor:</p>
+
+                        <h3>Multi-Active Windows</h3>
+                        <p>Users can run up to four applications simultaneously in resizable windows, with intelligent memory management that prioritizes active applications.</p>
+
+                        <h3>App Continuity</h3>
+                        <p>Seamlessly transition applications between folded and unfolded states without interruption or reloading.</p>
+
+                        <h3>Flex Mode+</h3>
+                        <p>Automatically adapts the interface based on the phone's folding angle, providing optimized layouts for different use cases like video calls, typing, or media consumption.</p>
+
+                        <h2>Performance and Battery Life</h2>
+                        <p>Powered by the latest Snapdragon 8 Gen 3 processor and 16GB of LPDDR5X RAM, the Flex Pro delivers desktop-class performance. The dual-battery system provides all-day battery life even with heavy usage of the large display.</p>
+
+                        <p>Key specifications include:</p>
+
+                        <ul>
+                            <li>Snapdragon 8 Gen 3 processor with dedicated AI processing unit</li>
+                            <li>16GB LPDDR5X RAM + 512GB/1TB UFS 4.0 storage options</li>
+                            <li>4800mAh dual-battery system with 65W wired and 50W wireless charging</li>
+                            <li>Triple camera system with 200MP main sensor, 12MP ultrawide, and 10MP telephoto with 3x optical zoom</li>
+                            <li>Under-display fingerprint sensor and facial recognition</li>
+                        </ul>
+
+                        <h2>Pricing and Availability</h2>
+                        <p>The Flex Pro will be available in three colors: Cosmic Black, Lunar Silver, and Forest Green. Pricing starts at $1,799 for the 512GB model and $1,999 for the 1TB variant.</p>
+
+                        <p>Pre-orders begin on July 15, with first shipments expected by August 1. The device will be available through Tech Giant's website, authorized retailers, and major carriers.</p>
+
+                        <h2>Industry Reactions</h2>
+                        <p>Early reactions from industry experts have been overwhelmingly positive:</p>
+
+                        <p><strong>Tech Analysts:</strong> Most analysts agree that the Flex Pro represents a significant step forward for foldable technology, potentially making it mainstream rather than a niche product.</p>
+
+                        <p><strong>Competitors:</strong> While competitors have remained mostly silent, industry insiders suggest other manufacturers are accelerating their own foldable development programs in response.</p>
+
+                        <p><strong>Early Adopters:</strong> Tech enthusiasts who were able to handle the device at the launch event praised the build quality and the reduced crease visibility.</p>
+
+                        <h2>The Future of Foldables</h2>
+                        <p>With the Flex Pro, Tech Giant has not only released a compelling product but has potentially validated the foldable form factor for the mass market. The improvements in durability, display technology, and software integration address the primary concerns that have limited adoption of previous foldable devices.</p>
+
+                        <p>As Dr. Chen noted in her closing remarks, "We're not just building a better foldable phone. We're building the foundation for the next decade of mobile computing."</p>
+
+                        <p>With pre-orders opening soon and industry buzz at an all-time high, all eyes will be on the Flex Pro to see if it can deliver on its ambitious promises and finally bring foldable technology into the mainstream.</p>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="social-share">
+                            <span>Share this article:</span>
+                            <a href="#" class="share-btn facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-btn twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-btn linkedin" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="share-btn whatsapp" aria-label="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <div class="post-tags">
+                            <a href="#" class="tag">Foldable Phone</a>
+                            <a href="#" class="tag">Mobile Technology</a>
+                            <a href="#" class="tag">Tech Giant</a>
+                            <a href="#" class="tag">Innovation</a>
+                            <a href="#" class="tag">Smartphone</a>
+                        </div>
+                    </div>
+
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Alex Rodriguez - Senior Technology Editor">
+                        </div>
+                        <div class="author-info">
+                            <h3>Alex Rodriguez</h3>
+                            <div class="author-role">Senior Technology Editor</div>
+                            <p>Alex has been covering the technology industry for over 15 years, with a focus on mobile devices and emerging technologies. He has tested and reviewed hundreds of smartphones and has been following the foldable technology space since its inception.</p>
+                        </div>
+                    </div>
+
+                    <section class="comments-section">
+                        <div class="comments-header">
+                            <h3 class="comments-count">47 Comments</h3>
+                            <button class="btn btn-green">Add Comment</button>
+                        </div>
+
+                        <div class="comments-list">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <div class="comment-author">
+                                        <div class="comment-avatar">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Michael Tan">
+                                        </div>
+                                        <div class="comment-meta">
+                                            <h4>Michael Tan</h4>
+                                            <div class="comment-date">June 26, 2023 at 11:20 AM</div>
+                                        </div>
+                                    </div>
+                                    <button class="comment-reply">Reply</button>
+                                </div>
+                                <div class="comment-body">
+                                    <p>Finally, a foldable that addresses the durability concerns! I've been hesitant to jump on the foldable bandwagon because of the issues with previous generations, but this one looks promising. The hinge mechanism sounds like a real breakthrough.</p>
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <div class="comment-author">
+                                        <div class="comment-avatar">
+                                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Sarah Kim">
+                                        </div>
+                                        <div class="comment-meta">
+                                            <h4>Sarah Kim</h4>
+                                            <div class="comment-date">June 25, 2023 at 9:45 PM</div>
+                                        </div>
+                                    </div>
+                                    <button class="comment-reply">Reply</button>
+                                </div>
+                                <div class="comment-body">
+                                    <p>I appreciate the focus on software optimization. Too many foldables have great hardware but lack the software to make the form factor truly useful. The Multi-Active Windows feature could be a game-changer for productivity.</p>
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <div class="comment-author">
+                                        <div class="comment-avatar">
+                                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="David Park">
+                                        </div>
+                                        <div class="comment-meta">
+                                            <h4>David Park</h4>
+                                            <div class="comment-date">June 25, 2023 at 7:30 PM</div>
+                                        </div>
+                                    </div>
+                                    <button class="comment-reply">Reply</button>
+                                </div>
+                                <div class="comment-body">
+                                    <p>The price is still a barrier for most consumers, but if the durability claims hold up, it might be worth the investment for power users. I'm curious to see real-world battery life tests with the large display.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-form">
+                            <h3>Leave a Comment</h3>
+                            <form id="commentForm">
+                                <div class="form-group">
+                                    <label for="comment-name">Name</label>
+                                    <input type="text" id="comment-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment-email">Email</label>
+                                    <input type="email" id="comment-email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment-message">Comment</label>
+                                    <textarea id="comment-message" class="form-control" required></textarea>
+                                </div>
+                                <button type="submit" class="btn">Post Comment</button>
+                            </form>
+                        </div>
+                    </section>
+                </article>
+            </div>
+
+            <div class="post-sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Trending in Technology</h3>
+                    <ul class="trending-list">
+                        <li class="trending-item">
+                            <h4 class="trending-title">AI Assistant Revolution: How ChatGPT is Changing Everything</h4>
+                            <div class="trending-meta">
+                                <span>Artificial Intelligence</span>
+                                <span>•</span>
+                                <span>24K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Quantum Computing Breakthrough Announced</h4>
+                            <div class="trending-meta">
+                                <span>Computing</span>
+                                <span>•</span>
+                                <span>18K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">The Future of Electric Vehicles: Solid-State Batteries</h4>
+                            <div class="trending-meta">
+                                <span>Tech Innovation</span>
+                                <span>•</span>
+                                <span>15K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Metaverse: Hype or Next Computing Platform?</h4>
+                            <div class="trending-meta">
+                                <span>Virtual Reality</span>
+                                <span>•</span>
+                                <span>12K views</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Related Articles</h3>
+                    <ul class="related-posts">
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Foldable Display">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">The Evolution of Foldable Display Technology</h4>
+                                <div class="related-date">June 18, 2023</div>
+                            </div>
+                        </li>
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Smartphone Market">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">Smartphone Market Trends 2023: What to Expect</h4>
+                                <div class="related-date">June 12, 2023</div>
+                            </div>
+                        </li>
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="AI in Mobile">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">How AI is Transforming Mobile Photography</h4>
+                                <div class="related-date">June 8, 2023</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Tech Newsletter</h3>
+                    <p>Get the latest technology news and reviews delivered to your inbox weekly.</p>
+                    <form class="newsletter-form" id="sidebarNewsletter">
+                        <input type="email" class="form-control" placeholder="Your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Weekly Tech Digest</h2>
+            <p>Subscribe to receive our curated selection of technology articles and product reviews every Monday.</p>
+            <form class="newsletter-form-horizontal" id="mainNewsletter">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending news, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html">Home</a></li>
+                        <li class="footer-link"><a href="about.html">About Us</a></li>
+                        <li class="footer-link"><a href="news.html">News</a></li>
+                        <li class="footer-link"><a href="entertainment.html">Entertainment</a></li>
+                        <li class="footer-link"><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Technology Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Mobile Tech</a></li>
+                        <li class="footer-link"><a href="#">Artificial Intelligence</a></li>
+                        <li class="footer-link"><a href="#">Gaming</a></li>
+                        <li class="footer-link"><a href="#">Software</a></li>
+                        <li class="footer-link"><a href="#">Hardware</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Email: tech@viralson.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 News Street, Digital City</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Loader Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            const body = document.body;
+            
+            // Add loading class to body to prevent scrolling
+            body.classList.add('loading');
+            
+            // Hide loader when everything is loaded
+            window.addEventListener('load', function() {
+                // Minimum display time (2 seconds) for better UX
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Remove from DOM after transition
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            });
+            
+            // Fallback: hide loader after 5 seconds max even if load event doesn't fire
+            setTimeout(function() {
+                if (pageLoader.style.display !== 'none') {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.header-container')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                });
+            });
+        }
+        
+        // Comment form submission
+        const commentForm = document.getElementById('commentForm');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('comment-name').value;
+                const email = document.getElementById('comment-email').value;
+                const message = document.getElementById('comment-message').value;
+                
+                if (name && email && message) {
+                    alert('Thank you for your comment! It will be reviewed before publishing.');
+                    this.reset();
+                } else {
+                    alert('Please fill in all fields before submitting your comment.');
+                }
+            });
+        }
+
+        // Newsletter form submission
+        const sidebarNewsletter = document.getElementById('sidebarNewsletter');
+        const mainNewsletter = document.getElementById('mainNewsletter');
+        
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            if (email) {
+                alert(`Thank you for subscribing to our tech digest with: ${email}`);
+                this.querySelector('input[type="email"]').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+        
+        if (sidebarNewsletter) {
+            sidebarNewsletter.addEventListener('submit', handleNewsletterSubmit);
+        }
+        
+        if (mainNewsletter) {
+            mainNewsletter.addEventListener('submit', handleNewsletterSubmit);
+        }
+
+        // Reply button functionality
+        const replyButtons = document.querySelectorAll('.comment-reply');
+        replyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const commentAuthor = this.closest('.comment').querySelector('h4').textContent;
+                const commentForm = document.querySelector('.comment-form form');
+                const textarea = commentForm.querySelector('textarea');
+                textarea.value = `@${commentAuthor} `;
+                textarea.focus();
+                
+                // Scroll to comment form
+                commentForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Add Comment button functionality
+        const addCommentBtn = document.querySelector('.comments-header .btn');
+        if (addCommentBtn) {
+            addCommentBtn.addEventListener('click', function() {
+                document.querySelector('.comment-form').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    </script>
+</body>
+</html>

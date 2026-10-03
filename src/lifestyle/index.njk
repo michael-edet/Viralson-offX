@@ -1,0 +1,110 @@
+---
+layout: layouts/base.njk
+title: "Lifestyle & Wellness | Viral Son"
+description: "Cultivate mindful productivity, intentional living, wellness routines, and balanced habits."
+currentCategory: "lifestyle"
+category: "Lifestyle"
+permalink: "/lifestyle/"
+---
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category life" style="margin-bottom: 0.8rem;">Mindful Living</span>
+        <h1>Lifestyle & Wellness</h1>
+        <p>Curated guides on mindful minimalism, sustainable habits, sleep science, mental resilience, and peak productivity.</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Category Filter Pills with Auto-Selection Tags -->
+    <div class="filter-pills" id="lifeFilterPills">
+        <span class="filter-pill active" data-tag="all">All Lifestyle</span>
+        <span class="filter-pill" data-tag="productivity">Productivity</span>
+        <span class="filter-pill" data-tag="mindfulness">Mindfulness & Minimalism</span>
+        <span class="filter-pill" data-tag="health">Health & Sleep</span>
+        <span class="filter-pill" data-tag="travel">Travel & Living</span>
+    </div>
+
+    <!-- Featured Post -->
+    <article class="news-card featured" data-tags="mindfulness minimalism living habits wellness" style="margin-bottom: 3rem;">
+        <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80" alt="Minimalist living room">
+        </div>
+        <div class="news-content">
+            <span class="post-category life">Minimalism</span>
+            <h2 class="news-title"><a href="/posts/minimalism-lifestyle/">Minimalism: How Simplifying Your Life Can Lead to Happiness</a></h2>
+            <p class="news-date">June 16, 2026 • By Sarah Jenkins • 5 min read</p>
+            <p style="color: var(--text-light); margin-bottom: 1.2rem;">Decluttering physical and digital spaces isn't just aesthetic—it fundamentally lowers cognitive load, improves decision-making, and brings tranquility.</p>
+            <a href="/posts/minimalism-lifestyle/" class="btn">Read Lifestyle Guide</a>
+        </div>
+    </article>
+
+    <div class="posts-grid">
+        <!-- Productivity Habits -->
+        <article class="post-card" data-tags="productivity focus habits career work">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Productivity Desk">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Productivity</span>
+                <h3 class="post-title"><a href="/posts/productive-habits/">10 Habits of Highly Productive People</a></h3>
+                <p class="post-excerpt">Discover the daily routines that high achievers swear by to protect focus and maximize creative output.</p>
+                <div class="post-meta">
+                    <span>June 12, 2026</span>
+                    <a href="/posts/productive-habits/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Sleep Science -->
+        <article class="post-card" data-tags="health sleep wellness science recovery">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Restful Sleep Bedroom">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Health & Science</span>
+                <h3 class="post-title"><a href="/posts/better-sleep-science/">The Science Behind Better Sleep</a></h3>
+                <p class="post-excerpt">Understanding sleep architecture, circadian rhythm biology, and actionable evening routines for deep rest.</p>
+                <div class="post-meta">
+                    <span>June 10, 2026</span>
+                    <a href="/posts/better-sleep-science/" style="color: var(--primary-blue); font-weight: 600;">Explore Protocol &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Mindfulness & Digital Detox -->
+        <article class="post-card" data-tags="mindfulness meditation wellness mental-health">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80" alt="Nature meditation">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Mindfulness</span>
+                <h3 class="post-title"><a href="/posts/minimalism-lifestyle/">The 48-Hour Digital Sabbath Guide</a></h3>
+                <p class="post-excerpt">How taking scheduled weekly breaks from notification feeds rewires dopamine pathways and restores creative spark.</p>
+                <div class="post-meta">
+                    <span>June 6, 2026</span>
+                    <a href="/posts/minimalism-lifestyle/" style="color: var(--primary-blue); font-weight: 600;">Start Detox &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Travel & Intentional Living -->
+        <article class="post-card" data-tags="travel living culture exploration sustainable">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80" alt="Travel luggage suitcase">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Travel & Living</span>
+                <h3 class="post-title"><a href="/posts/productive-habits/">Slow Travel: Exploring Less, Connecting More</a></h3>
+                <p class="post-excerpt">Why immersive month-long residency stays beat whistle-stop tourism for cultural appreciation and remote work harmony.</p>
+                <div class="post-meta">
+                    <span>June 3, 2026</span>
+                    <a href="/posts/productive-habits/" style="color: var(--primary-blue); font-weight: 600;">Read Travel Log &rarr;</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+{% include "category-filter-script.njk" %}

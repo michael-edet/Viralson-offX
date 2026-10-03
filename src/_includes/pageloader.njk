@@ -1,0 +1,27 @@
+<!-- Reusable Page Loader Component -->
+<div class="page-loader" id="pageLoader">
+    <div class="vs-logo">VS</div>
+    <div class="loading-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<script>
+    // Smooth loader disappearance on page ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loader.classList.add('hidden');
+                }, 300);
+            });
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 2500);
+        }
+    });
+</script>

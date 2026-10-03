@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Son | Modern Blogging Platform</title>
+    <meta name="description" content="Viral Son is a modern blogging platform for trending news, entertainment, technology, lifestyle, and community discussions.">
+    <meta property="og:title" content="Viral Son | Modern Blogging Platform">
+    <meta property="og:description" content="Viral Son is a modern blogging platform for trending news, entertainment, technology, lifestyle, and community discussions.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/Assets/pageloader/pageloader.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-gray);
+        }
+
+        .hero-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Featured Posts */
+        .featured-posts {
+            padding: 4rem 0;
+            background-color: var(--white);
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .post-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* News Section */
+        .news {
+            padding: 4rem 0;
+            background-color: var(--light-gray);
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .news-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .news-card.large {
+            grid-column: 1 / -1;
+            display: flex;
+        }
+
+        .news-card.large .news-image {
+            flex: 1;
+            height: 250px;
+        }
+
+        .news-card.large .news-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .news-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 1rem;
+        }
+
+        .news-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .news-date {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-sidebar {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .trending-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Entertainment Section */
+        .entertainment {
+            padding: 4rem 0;
+            background-color: var(--white);
+        }
+
+        .entertainment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .entertainment-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .entertainment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .entertainment-image {
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .entertainment-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .entertainment-card:hover .entertainment-image img {
+            transform: scale(1.05);
+        }
+
+        .entertainment-content {
+            padding: 1rem;
+        }
+
+        .entertainment-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        /* Community Section */
+        .community {
+            padding: 4rem 0;
+            background-color: var(--light-blue);
+        }
+
+        .community-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .community-content {
+            padding-right: 2rem;
+        }
+
+        .community-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .community-text {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .community-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .community-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .community-feature i {
+            color: var(--primary-blue);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .community-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+            }
+            
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .community-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .news-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-card.large {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="/index.html" class="nav-link">Home</a></li>
+                <li><a href="/Assets/page/subpage/news.html" class="nav-link">News</a></li>
+                <li><a href="/Assets/page/subpage/entertainment.html" class="nav-link">Entertainment</a></li>
+                <li><a href="/Assets/page/subpage/technology.html" class="nav-link">Technology</a></li>
+                <li><a href="/Assets/page/subpage/lifestyle.html" class="nav-link">Lifestyle</a></li>
+                <li><a href="/Assets/page/subpage/community.html" class="nav-link">Community</a></li>
+                <li><a href="/Assets/page/subpage/about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Discover What's Trending Worldwide</h1>
+                <p class="hero-subtitle">Your go-to source for viral news, entertainment, and community discussions.</p>
+                <a href="#" class="btn">Explore Latest Posts</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Viral Son Blog">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts Section -->
+    <section class="featured-posts">
+        <div class="container">
+            <h2 class="section-title">Featured Posts</h2>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Post Image">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">Technology</span>
+                        <h3 class="post-title">The Future of AI in Everyday Life</h3>
+                        <p class="post-excerpt">How artificial intelligence is transforming our daily routines and what to expect in the coming years.</p>
+                        <div class="post-meta">
+                            <span>June 15, 2023</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Post Image">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">Lifestyle</span>
+                        <h3 class="post-title">10 Habits of Highly Productive People</h3>
+                        <p class="post-excerpt">Discover the daily routines that successful individuals swear by to maximize their productivity.</p>
+                        <div class="post-meta">
+                            <span>June 12, 2023</span>
+                            <span>4 min read</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Post Image">
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">Health</span>
+                        <h3 class="post-title">The Science Behind Better Sleep</h3>
+                        <p class="post-excerpt">Understanding the latest research on sleep and practical tips for improving your sleep quality.</p>
+                        <div class="post-meta">
+                            <span>June 10, 2023</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news">
+        <div class="container">
+            <h2 class="section-title">Latest News</h2>
+            <div class="news-container">
+                <div class="news-main">
+                    <div class="news-card large">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="News Image">
+                        </div>
+                        <div class="news-content">
+                            <span class="post-category">Breaking News</span>
+                            <h3 class="news-title">Global Summit Addresses Climate Change Solutions</h3>
+                            <p class="news-date">June 18, 2023</p>
+                            <p>World leaders gather to discuss actionable plans for reducing carbon emissions and protecting biodiversity.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Read More</a>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="News Image">
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">Tech Giant Announces Revolutionary Smartphone</h3>
+                            <p class="news-date">June 17, 2023</p>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="News Image">
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">Stock Markets Reach All-Time High</h3>
+                            <p class="news-date">June 16, 2023</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-sidebar">
+                    <h3 class="sidebar-title">Trending Now</h3>
+                    <ul class="trending-list">
+                        <li class="trending-item">
+                            <h4 class="trending-title">New Study Reveals Benefits of Mediterranean Diet</h4>
+                            <div class="trending-meta">
+                                <span>Health</span>
+                                <span>•</span>
+                                <span>2.5K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Space Mission Discovers Water on Mars</h4>
+                            <div class="trending-meta">
+                                <span>Science</span>
+                                <span>•</span>
+                                <span>1.8K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Film Festival Announces 2023 Winners</h4>
+                            <div class="trending-meta">
+                                <span>Entertainment</span>
+                                <span>•</span>
+                                <span>1.5K views</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Remote Work Trends for 2023</h4>
+                            <div class="trending-meta">
+                                <span>Business</span>
+                                <span>•</span>
+                                <span>1.2K views</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Entertainment Section -->
+    <section class="entertainment">
+        <div class="container">
+            <h2 class="section-title">Entertainment</h2>
+            <div class="entertainment-grid">
+                <div class="entertainment-card">
+                    <div class="entertainment-image">
+                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Entertainment Image">
+                    </div>
+                    <div class="entertainment-content">
+                        <h3 class="entertainment-title">Summer Music Festival Lineup Revealed</h3>
+                        <div class="post-meta">
+                            <span>June 14, 2023</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="entertainment-card">
+                    <div class="entertainment-image">
+                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Entertainment Image">
+                    </div>
+                    <div class="entertainment-content">
+                        <h3 class="entertainment-title">Critics Praise New Sci-Fi Blockbuster</h3>
+                        <div class="post-meta">
+                            <span>June 13, 2023</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="entertainment-card">
+                    <div class="entertainment-image">
+                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Entertainment Image">
+                    </div>
+                    <div class="entertainment-content">
+                        <h3 class="entertainment-title">TV Series Finale Breaks Streaming Records</h3>
+                        <div class="post-meta">
+                            <span>June 11, 2023</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="entertainment-card">
+                    <div class="entertainment-image">
+                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Entertainment Image">
+                    </div>
+                    <div class="entertainment-content">
+                        <h3 class="entertainment-title">Award-Winning Author Releases New Novel</h3>
+                        <div class="post-meta">
+                            <span>June 9, 2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community">
+        <div class="container community-container">
+            <div class="community-content">
+                <h2 class="community-title">Join Our Community</h2>
+                <p class="community-text">Connect with like-minded individuals, share your thoughts, and participate in engaging discussions.</p>
+                <ul class="community-features">
+                    <li class="community-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Exclusive content and early access to articles</span>
+                    </li>
+                    <li class="community-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Participate in polls and surveys</span>
+                    </li>
+                    <li class="community-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Connect with writers and experts</span>
+                    </li>
+                    <li class="community-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Join topic-specific discussion groups</span>
+                    </li>
+                </ul>
+                <a href="#" class="btn">Sign Up Now</a>
+            </div>
+            <div class="community-form">
+                <h3>Get in Touch</h3>
+                <p>Have questions or suggestions? We'd love to hear from you.</p>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Your Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending news, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Home</a></li>
+                        <li class="footer-link"><a href="#">About Us</a></li>
+                        <li class="footer-link"><a href="#">News</a></li>
+                        <li class="footer-link"><a href="#">Entertainment</a></li>
+                        <li class="footer-link"><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Technology</a></li>
+                        <li class="footer-link"><a href="#">Health</a></li>
+                        <li class="footer-link"><a href="#">Lifestyle</a></li>
+                        <li class="footer-link"><a href="#">Business</a></li>
+                        <li class="footer-link"><a href="#">Science</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Subscribe</h3>
+                    <p>Stay updated with our latest news and articles.</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                        </div>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-container')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+    <script src="/Assets/pageloader/pageloader.js"></script>
+</body>
+</html>

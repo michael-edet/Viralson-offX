@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Page Loader Styles */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .vs-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .line {
+            height: 8px;
+            width: 200px;
+            border-radius: 4px;
+            background-color: #e8f4fc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #3498db,
+                #3498db 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 0.2s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 0.4s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            max-width: 600px;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .news-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .news-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .news-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .trending-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .category-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-name {
+            font-weight: 500;
+        }
+
+        .category-count {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--light-blue);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+
+        .pagination-list {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-item:hover {
+            background-color: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .pagination-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .pagination-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="vs-logo">VS</div>
+        <div class="loading-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="news.html" class="nav-link active">News</a></li>
+                <li><a href="entertainment.html" class="nav-link">Entertainment</a></li>
+                <li><a href="technology.html" class="nav-link">Technology</a></li>
+                <li><a href="lifestyle.html" class="nav-link">Lifestyle</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Latest News</h1>
+            <p>Stay updated with the most recent and trending news from around the world.</p>
+        </div>
+    </section>
+
+    <!-- News Content -->
+    <section class="news-content">
+        <div class="container">
+            <div class="news-grid">
+                <div class="news-main">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Breaking News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Breaking News</span>
+                            <h2 class="news-title">Global Summit Addresses Climate Change Solutions</h2>
+                            <p class="news-excerpt">World leaders gather to discuss actionable plans for reducing carbon emissions and protecting biodiversity. The summit focuses on implementing renewable energy solutions and creating sustainable economic models.</p>
+                            <div class="news-meta">
+                                <span>June 18, 2023</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Tech News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Technology</span>
+                            <h2 class="news-title">Tech Giant Announces Revolutionary Smartphone</h2>
+                            <p class="news-excerpt">The latest smartphone features groundbreaking AI capabilities and an innovative foldable design. Industry experts are calling it the most significant advancement in mobile technology in years.</p>
+                            <div class="news-meta">
+                                <span>June 17, 2023</span>
+                                <span>4 min read</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Business News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Business</span>
+                            <h2 class="news-title">Stock Markets Reach All-Time High</h2>
+                            <p class="news-excerpt">Global stock markets surged to record levels as economic recovery continues to outpace expectations. Analysts point to strong corporate earnings and positive economic indicators.</p>
+                            <div class="news-meta">
+                                <span>June 16, 2023</span>
+                                <span>3 min read</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Health News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Health</span>
+                            <h2 class="news-title">Breakthrough in Cancer Research Shows Promise</h2>
+                            <p class="news-excerpt">Scientists have discovered a new approach to targeting cancer cells that could lead to more effective treatments with fewer side effects. Clinical trials are expected to begin next year.</p>
+                            <div class="news-meta">
+                                <span>June 15, 2023</span>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-sidebar">
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Trending Now</h3>
+                        <ul class="trending-list">
+                            <li class="trending-item">
+                                <h4 class="trending-title">New Study Reveals Benefits of Mediterranean Diet</h4>
+                                <div class="trending-meta">
+                                    <span>Health</span>
+                                    <span>•</span>
+                                    <span>2.5K views</span>
+                                </div>
+                            </li>
+                            <li class="trending-item">
+                                <h4 class="trending-title">Space Mission Discovers Water on Mars</h4>
+                                <div class="trending-meta">
+                                    <span>Science</span>
+                                    <span>•</span>
+                                    <span>1.8K views</span>
+                                </div>
+                            </li>
+                            <li class="trending-item">
+                                <h4 class="trending-title">Film Festival Announces 2023 Winners</h4>
+                                <div class="trending-meta">
+                                    <span>Entertainment</span>
+                                    <span>•</span>
+                                    <span>1.5K views</span>
+                                </div>
+                            </li>
+                            <li class="trending-item">
+                                <h4 class="trending-title">Remote Work Trends for 2023</h4>
+                                <div class="trending-meta">
+                                    <span>Business</span>
+                                    <span>•</span>
+                                    <span>1.2K views</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">News Categories</h3>
+                        <ul class="categories-list">
+                            <li class="category-item">
+                                <span class="category-name">Technology</span>
+                                <span class="category-count">24</span>
+                            </li>
+                            <li class="category-item">
+                                <span class="category-name">Business</span>
+                                <span class="category-count">18</span>
+                            </li>
+                            <li class="category-item">
+                                <span class="category-name">Health</span>
+                                <span class="category-count">15</span>
+                            </li>
+                            <li class="category-item">
+                                <span class="category-name">Science</span>
+                                <span class="category-count">12</span>
+                            </li>
+                            <li class="category-item">
+                                <span class="category-name">Entertainment</span>
+                                <span class="category-count">21</span>
+                            </li>
+                            <li class="category-item">
+                                <span class="category-name">Sports</span>
+                                <span class="category-count">14</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Stay Updated</h3>
+                        <p>Get the latest news delivered directly to your inbox.</p>
+                        <form class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Your email address">
+                            <button type="submit" class="newsletter-btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <ul class="pagination-list">
+                    <li class="pagination-item active">1</li>
+                    <li class="pagination-item">2</li>
+                    <li class="pagination-item">3</li>
+                    <li class="pagination-item">4</li>
+                    <li class="pagination-item">5</li>
+                    <li class="pagination-item">Next</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Stay updated with the latest news, trends, and insights from Viral Son.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending news, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html">Home</a></li>
+                        <li class="footer-link"><a href="about.html">About Us</a></li>
+                        <li class="footer-link"><a href="news.html">News</a></li>
+                        <li class="footer-link"><a href="entertainment.html">Entertainment</a></li>
+                        <li class="footer-link"><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Technology</a></li>
+                        <li class="footer-link"><a href="#">Health</a></li>
+                        <li class="footer-link"><a href="#">Lifestyle</a></li>
+                        <li class="footer-link"><a href="#">Business</a></li>
+                        <li class="footer-link"><a href="#">Science</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@viralson.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 Media Street, Digital City</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Loader Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            const body = document.body;
+            
+            // Add loading class to body to prevent scrolling
+            body.classList.add('loading');
+            
+            // Hide loader when everything is loaded
+            window.addEventListener('load', function() {
+                // Minimum display time (2 seconds) for better UX
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Remove from DOM after transition
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            });
+            
+            // Fallback: hide loader after 5 seconds max even if load event doesn't fire
+            setTimeout(function() {
+                if (pageLoader.style.display !== 'none') {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-container')) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Newsletter form submission
+        const newsletterForms = document.querySelectorAll('.newsletter-form');
+        newsletterForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                if (email) {
+                    alert(`Thank you for subscribing with: ${email}`);
+                    this.querySelector('input[type="email"]').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

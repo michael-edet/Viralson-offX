@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download "Midnight Dreams" by Alex Parker | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --green: #2ecc71;
+            --orange: #e67e22;
+            --purple: #9b59b6;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-green {
+            background-color: var(--green);
+        }
+
+        .btn-green:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-purple {
+            background-color: var(--purple);
+        }
+
+        .btn-purple:hover {
+            background-color: #8e44ad;
+        }
+
+        /* Page Loader Styles */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .vs-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .line {
+            height: 8px;
+            width: 200px;
+            border-radius: 4px;
+            background-color: #e8f4fc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #3498db,
+                #3498db 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 0.2s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 0.4s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Track Download Section */
+        .track-download {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+
+        .track-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .track-artwork {
+            text-align: center;
+            position: relative;
+        }
+
+        .album-cover {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .album-cover:hover {
+            transform: scale(1.02);
+        }
+
+        .track-info {
+            padding: 1.5rem;
+        }
+
+        .track-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+            line-height: 1.2;
+        }
+
+        .track-artist {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .track-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .track-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-options {
+            margin: 2rem 0;
+        }
+
+        .download-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .quality-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quality-option {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quality-option:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        .quality-option.selected {
+            border-color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .quality-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .quality-details {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .track-details {
+            margin: 2rem 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .details-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .detail-label {
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        /* Related Tracks */
+        .related-tracks {
+            padding: 3rem 0;
+            background-color: var(--white);
+        }
+
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .track-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .track-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .track-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .track-card:hover .track-card-image img {
+            transform: scale(1.05);
+        }
+
+        .track-card-content {
+            padding: 1rem;
+        }
+
+        .track-card-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .track-card-artist {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .track-card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--light-blue);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form-horizontal {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .track-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form-horizontal {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .track-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .quality-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="vs-logo">VS</div>
+        <div class="loading-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="music.html" class="nav-link active">Music</a></li>
+                <li><a href="videos.html" class="nav-link">Videos</a></li>
+                <li><a href="artists.html" class="nav-link">Artists</a></li>
+                <li><a href="charts.html" class="nav-link">Charts</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Track Download Section -->
+    <section class="track-download">
+        <div class="container track-container">
+            <div class="track-artwork">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Midnight Dreams Album Cover" class="album-cover">
+            </div>
+            <div class="track-info">
+                <h1 class="track-title">Midnight Dreams</h1>
+                <div class="track-artist">Alex Parker</div>
+                
+                <div class="track-meta">
+                    <div class="track-meta-item">
+                        <i class="far fa-clock"></i>
+                        <span>3:45</span>
+                    </div>
+                    <div class="track-meta-item">
+                        <i class="far fa-calendar"></i>
+                        <span>June 15, 2023</span>
+                    </div>
+                    <div class="track-meta-item">
+                        <i class="far fa-eye"></i>
+                        <span>125K views</span>
+                    </div>
+                    <div class="track-meta-item">
+                        <i class="far fa-heart"></i>
+                        <span>24K likes</span>
+                    </div>
+                </div>
+
+                <div class="audio-player">
+                    <audio controls style="width: 100%;">
+                        <source src="#" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <div class="download-options">
+                    <h3 class="download-title">Download Options</h3>
+                    <div class="quality-options">
+                        <div class="quality-option selected" data-quality="high">
+                            <div class="quality-name">High Quality</div>
+                            <div class="quality-details">320 kbps • 8.9 MB</div>
+                        </div>
+                        <div class="quality-option" data-quality="medium">
+                            <div class="quality-name">Medium Quality</div>
+                            <div class="quality-details">192 kbps • 5.4 MB</div>
+                        </div>
+                        <div class="quality-option" data-quality="low">
+                            <div class="quality-name">Standard Quality</div>
+                            <div class="quality-details">128 kbps • 3.6 MB</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-green download-btn">
+                        <i class="fas fa-download"></i> Download Now
+                    </button>
+                </div>
+
+                <div class="track-details">
+                    <h3 class="details-title">Track Details</h3>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Genre:</span>
+                            <span class="detail-value">Electronic / Chillout</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">BPM:</span>
+                            <span class="detail-value">110</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Key:</span>
+                            <span class="detail-value">C Minor</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Album:</span>
+                            <span class="detail-value">Urban Nights</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Label:</span>
+                            <span class="detail-value">Viral Son Records</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">License:</span>
+                            <span class="detail-value">Royalty Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tracks Section -->
+    <section class="related-tracks">
+        <div class="container">
+            <h2 class="section-title">You Might Also Like</h2>
+            <div class="tracks-grid">
+                <div class="track-card">
+                    <div class="track-card-image">
+                        <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Track Cover">
+                    </div>
+                    <div class="track-card-content">
+                        <h3 class="track-card-title">City Lights</h3>
+                        <div class="track-card-artist">Sophie Miles</div>
+                        <div class="track-card-meta">
+                            <span>3:22</span>
+                            <span>18K downloads</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-card">
+                    <div class="track-card-image">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Track Cover">
+                    </div>
+                    <div class="track-card-content">
+                        <h3 class="track-card-title">Neon Pulse</h3>
+                        <div class="track-card-artist">DJ Nova</div>
+                        <div class="track-card-meta">
+                            <span>4:15</span>
+                            <span>22K downloads</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-card">
+                    <div class="track-card-image">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Track Cover">
+                    </div>
+                    <div class="track-card-content">
+                        <h3 class="track-card-title">Echoes</h3>
+                        <div class="track-card-artist">Maya Chen</div>
+                        <div class="track-card-meta">
+                            <span>3:58</span>
+                            <span>15K downloads</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-card">
+                    <div class="track-card-image">
+                        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Track Cover">
+                    </div>
+                    <div class="track-card-content">
+                        <h3 class="track-card-title">Summer Breeze</h3>
+                        <div class="track-card-artist">Coastal Waves</div>
+                        <div class="track-card-meta">
+                            <span>3:40</span>
+                            <span>19K downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Weekly Music Digest</h2>
+            <p>Subscribe to receive our curated selection of new music releases and exclusive tracks every Friday.</p>
+            <form class="newsletter-form-horizontal" id="mainNewsletter">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending music, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html">Home</a></li>
+                        <li class="footer-link"><a href="about.html">About Us</a></li>
+                        <li class="footer-link"><a href="music.html">Music</a></li>
+                        <li class="footer-link"><a href="videos.html">Videos</a></li>
+                        <li class="footer-link"><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Music Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Electronic</a></li>
+                        <li class="footer-link"><a href="#">Hip Hop</a></li>
+                        <li class="footer-link"><a href="#">Pop</a></li>
+                        <li class="footer-link"><a href="#">Rock</a></li>
+                        <li class="footer-link"><a href="#">Jazz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Email: music@viralson.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 Music Street, Digital City</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Loader Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            const body = document.body;
+            
+            // Add loading class to body to prevent scrolling
+            body.classList.add('loading');
+            
+            // Hide loader when everything is loaded
+            window.addEventListener('load', function() {
+                // Minimum display time (2 seconds) for better UX
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Remove from DOM after transition
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            });
+            
+            // Fallback: hide loader after 5 seconds max even if load event doesn't fire
+            setTimeout(function() {
+                if (pageLoader.style.display !== 'none') {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.header-container')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                });
+            });
+        }
+
+        // Quality selection functionality
+        const qualityOptions = document.querySelectorAll('.quality-option');
+        let selectedQuality = 'high';
+        
+        qualityOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                qualityOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Update selected quality
+                selectedQuality = this.getAttribute('data-quality');
+                
+                // Update download button text
+                const downloadBtn = document.querySelector('.download-btn');
+                downloadBtn.innerHTML = `<i class="fas fa-download"></i> Download (${selectedQuality.toUpperCase()})`;
+            });
+        });
+
+        // Download button functionality
+        const downloadBtn = document.querySelector('.download-btn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function() {
+                alert(`Your download for "Midnight Dreams" in ${selectedQuality.toUpperCase()} quality will begin shortly. Thank you for using Viral Son!`);
+                
+                // In a real implementation, this would trigger the actual download
+                // For demo purposes, we'll just show a success message
+                
+                // Simulate download starting after a short delay
+                setTimeout(() => {
+                    const successMessage = document.createElement('div');
+                    successMessage.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background-color: var(--green);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 4px;
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                        z-index: 10000;
+                        font-weight: 600;
+                    `;
+                    successMessage.textContent = 'Download started successfully!';
+                    document.body.appendChild(successMessage);
+                    
+                    // Remove message after 3 seconds
+                    setTimeout(() => {
+                        document.body.removeChild(successMessage);
+                    }, 3000);
+                }, 1000);
+            });
+        }
+
+        // Newsletter form submission
+        const mainNewsletter = document.getElementById('mainNewsletter');
+        
+        if (mainNewsletter) {
+            mainNewsletter.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                if (email) {
+                    alert(`Thank you for subscribing to our music digest with: ${email}`);
+                    this.querySelector('input[type="email"]').value = '';
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

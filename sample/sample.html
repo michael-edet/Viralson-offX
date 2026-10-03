@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Son | Modern Blogging</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 22px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--dark-blue);
+        }
+        
+        /* Featured Section */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-blue);
+            display: inline-block;
+            color: var(--text-dark);
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .featured-main {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .featured-main img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 20px;
+        }
+        
+        .featured-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .featured-content p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary-blue);
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover {
+            transform: translateX(5px);
+        }
+        
+        .featured-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .featured-side-item {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .featured-side-item img {
+            width: 120px;
+            height: 100px;
+            object-fit: cover;
+        }
+        
+        .featured-side-content {
+            padding: 15px;
+        }
+        
+        .featured-side-content h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        /* Categories Section */
+        .categories {
+            margin-bottom: 50px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .category-tab {
+            padding: 10px 20px;
+            background-color: var(--light-blue);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .category-tab:hover:not(.active) {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+        }
+        
+        .category-content {
+            display: none;
+        }
+        
+        .category-content.active {
+            display: block;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .article-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-category {
+            display: inline-block;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .article-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .article-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            background-color: var(--light-blue);
+            padding: 50px 0;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 15px;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            color: var(--text-light);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--dark-blue);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 400px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-form button {
+                border-radius: 30px;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 350px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-circle">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Lifestyle</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Stay Informed with the Latest Trends</h1>
+                <p>Discover breaking news, entertainment updates, and insightful articles from around the world.</p>
+                <a href="#" class="cta-button">Explore Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Featured Section -->
+        <section class="featured">
+            <h2 class="section-title">Featured Stories</h2>
+            <div class="featured-grid">
+                <div class="featured-main">
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Featured Article">
+                    <div class="featured-content">
+                        <h3>The Future of Digital Entertainment in a Post-Pandemic World</h3>
+                        <p>How streaming services and content creators are adapting to changing consumer behaviors and what we can expect in the coming years.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="featured-sidebar">
+                    <div class="featured-side-item">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 1">
+                        <div class="featured-side-content">
+                            <h4>Tech Giants Announce New Sustainability Initiatives</h4>
+                            <a href="#" class="read-more">Read →</a>
+                        </div>
+                    </div>
+                    <div class="featured-side-item">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 2">
+                        <div class="featured-side-content">
+                            <h4>Summer Music Festivals Return With Impressive Lineups</h4>
+                            <a href="#" class="read-more">Read →</a>
+                        </div>
+                    </div>
+                    <div class="featured-side-item">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 3">
+                        <div class="featured-side-content">
+                            <h4>How Remote Work Is Reshaping Urban Real Estate Markets</h4>
+                            <a href="#" class="read-more">Read →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <h2 class="section-title">Browse by Category</h2>
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="news">News</div>
+                <div class="category-tab" data-category="entertainment">Entertainment</div>
+                <div class="category-tab" data-category="technology">Technology</div>
+                <div class="category-tab" data-category="lifestyle">Lifestyle</div>
+            </div>
+
+            <!-- News Category -->
+            <div class="category-content active" id="news">
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="News Article 1">
+                        <div class="article-content">
+                            <span class="article-category">News</span>
+                            <h3>Global Summit Addresses Climate Change Action Plans</h3>
+                            <p>World leaders gather to discuss ambitious targets for reducing carbon emissions over the next decade.</p>
+                            <div class="article-meta">
+                                <span>June 15, 2023</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="News Article 2">
+                        <div class="article-content">
+                            <span class="article-category">News</span>
+                            <h3>Economic Recovery Shows Strong Signs in Q2 Reports</h3>
+                            <p>Latest economic indicators suggest a faster-than-expected rebound across multiple sectors.</p>
+                            <div class="article-meta">
+                                <span>June 12, 2023</span>
+                                <span>4 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="News Article 3">
+                        <div class="article-content">
+                            <span class="article-category">News</span>
+                            <h3>New Education Policies Focus on Digital Literacy</h3>
+                            <p>Government announces revised curriculum standards to better prepare students for the digital age.</p>
+                            <div class="article-meta">
+                                <span>June 10, 2023</span>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entertainment Category -->
+            <div class="category-content" id="entertainment">
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c1bf527?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Entertainment Article 1">
+                        <div class="article-content">
+                            <span class="article-category">Entertainment</span>
+                            <h3>Streaming Wars Intensify With New Platform Launches</h3>
+                            <p>As more services enter the market, consumers face both more choice and subscription fatigue.</p>
+                            <div class="article-meta">
+                                <span>June 14, 2023</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Entertainment Article 2">
+                        <div class="article-content">
+                            <span class="article-category">Entertainment</span>
+                            <h3>Rising Stars to Watch in This Year's Film Festival Circuit</h3>
+                            <p>These emerging talents are generating buzz ahead of the major international film festivals.</p>
+                            <div class="article-meta">
+                                <span>June 11, 2023</span>
+                                <span>4 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Entertainment Article 3">
+                        <div class="article-content">
+                            <span class="article-category">Entertainment</span>
+                            <h3>The Evolution of Music Consumption in the Digital Age</h3>
+                            <p>From vinyl to streaming, how technology continues to reshape how we discover and enjoy music.</p>
+                            <div class="article-meta">
+                                <span>June 8, 2023</span>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="container">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter and never miss the latest news, trends, and insights.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for the latest news, entertainment, and insights from around the world.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Entertainment</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Category Tabs
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const categoryContents = document.querySelectorAll('.category-content');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                categoryContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const categoryId = tab.getAttribute('data-category');
+                document.getElementById(categoryId).classList.add('active');
+            });
+        });
+        
+        // Newsletter Form Submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input').value;
+            alert(`Thank you for subscribing with: ${email}`);
+            newsletterForm.reset();
+        });
+    </script>
+</body>
+</html>

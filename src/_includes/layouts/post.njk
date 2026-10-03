@@ -1,0 +1,409 @@
+---
+layout: layouts/base.njk
+ogType: article
+isPost: true
+---
+
+<!-- Breadcrumbs -->
+<section class="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            {% if categoryUrl %}
+            <li class="breadcrumb-item"><a href="{{ categoryUrl }}">{{ category }}</a></li>
+            {% elif category %}
+            <li class="breadcrumb-item"><a href="/{{ category | lower }}/">{{ category }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-item">{{ title }}</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Post Detail Section -->
+<section class="post-detail-section">
+    <div class="container post-detail-container">
+        <!-- Main Article -->
+        <article class="post-article">
+            <header class="post-header">
+                {% if category %}
+                <span class="post-category {{ categoryClass | default('news') }}">{{ category }}</span>
+                {% endif %}
+                <h1>{{ title }}</h1>
+                {% if excerpt %}
+                <p class="lead">{{ excerpt }}</p>
+                {% endif %}
+
+                <div class="post-meta-bar">
+                    <span><i class="far fa-user"></i> {{ author | default("Editorial Desk") }}</span>
+                    <span><i class="far fa-calendar"></i> {{ date | dateDisplay | default("October 2026") }}</span>
+                    <span><i class="far fa-eye"></i> {{ views | default("14.2K views") }}</span>
+                    <span id="commentCountBadge"><i class="far fa-comments"></i> <span id="headerCommentCount">2</span> Comments</span>
+                </div>
+            </header>
+
+            {% if image %}
+            <div class="post-featured-image">
+                <img src="{{ image }}" alt="{{ title }}">
+                {% if imageCaption %}
+                <div class="image-caption">{{ imageCaption }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Post Body Content -->
+            <div class="post-body">
+                {{ content | safe }}
+            </div>
+
+            <!-- Post Tags & Share Buttons -->
+            <div class="post-footer-tools">
+                <div class="post-tags">
+                    {% if tags %}
+                        {% for tag in tags %}
+                            {% if tag != "post" %}
+                            <span class="tag-badge">#{{ tag }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <span class="tag-badge">#Trending</span>
+                        <span class="tag-badge">#{{ category }}</span>
+                        <span class="tag-badge">#ViralSon</span>
+                    {% endif %}
+                </div>
+
+                <div class="share-buttons">
+                    <span style="font-size: 0.9rem; font-weight: 600; margin-right: 5px;">Share:</span>
+                    <a href="https://twitter.com/intent/tweet?text={{ title | urlencode }}&url={{ site.url }}{{ page.url }}" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}" target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <button type="button" class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Article URL copied to clipboard!');" title="Copy Link" aria-label="Copy article link"><i class="fas fa-link"></i></button>
+                </div>
+            </div>
+
+            <!-- Author Box -->
+            <div class="author-box">
+                <img src="{{ authorAvatar | default('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80') }}" alt="{{ author }}" class="author-avatar">
+                <div class="author-info">
+                    <h4>{{ author | default("Viral Son Staff Writer") }}</h4>
+                    <p>{{ authorBio | default("Senior writer covering culture, global developments, technology innovations, and emerging viral trends across digital media.") }}</p>
+                </div>
+            </div>
+
+            <!-- Auto-Generated Media Player Widgets Engine (Video/Music Detection & Playback Controls) -->
+            {% include "media-widgets-engine.njk" %}
+
+            <!-- Interactive Comments Section -->
+            <section class="comments-section" id="commentsSection">
+                <div class="comments-header">
+                    <h3 class="comments-title">
+                        <i class="far fa-comments"></i> Discussion (<span id="commentsTotalCount">0</span>)
+                    </h3>
+                    <span class="comments-subtitle">Join the conversation. Be civil and substantive.</span>
+                </div>
+
+                <!-- Comment Submission Form -->
+                <form id="commentForm" class="comment-submission-form">
+                    <h4 style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1rem;">Leave a Comment</h4>
+                    <div class="comment-form-grid">
+                        <div class="form-group">
+                            <label for="commentAuthor">Your Name <span style="color: var(--red);">*</span></label>
+                            <input type="text" id="commentAuthor" class="form-control" placeholder="e.g. Elena Rostova" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="commentEmail">Email Address <span style="color: var(--red);">*</span> <small style="font-weight: normal; color: var(--text-light);">(Kept private)</small></label>
+                            <input type="email" id="commentEmail" class="form-control" placeholder="elena@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentText">Your Thoughts <span style="color: var(--red);">*</span></label>
+                        <textarea id="commentText" class="form-control" placeholder="Share your perspective, critique, or inquiry regarding this story..." required rows="4"></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <button type="submit" class="btn" id="submitCommentBtn">
+                            <i class="fas fa-paper-plane" style="margin-right: 6px;"></i> Post Comment
+                        </button>
+                        <span id="commentStatusMessage" style="font-size: 0.9rem; color: var(--green); display: none;"></span>
+                    </div>
+                </form>
+
+                <!-- Comments List -->
+                <div class="comments-list-wrapper">
+                    <div id="commentsContainer" class="comments-container">
+                        <!-- Populated by comments.js script below -->
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="news-sidebar">
+            <div class="sidebar-widget">
+                <h3 class="sidebar-title">Trending in {{ category | default("Stories") }}</h3>
+                <ul class="trending-list">
+                    <li class="trending-item">
+                        <a href="/posts/future-of-ai/" class="trending-title">The Future of AI in Everyday Life</a>
+                        <div class="trending-meta"><span>Technology</span> • <span>19.4K views</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/global-climate-summit/" class="trending-title">Global Summit Addresses Climate Change Solutions</a>
+                        <div class="trending-meta"><span>News</span> • <span>24.5K views</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/revolutionary-foldable-phone/" class="trending-title">Revolutionary Foldable Phone Breaks New Ground</a>
+                        <div class="trending-meta"><span>Gadgets</span> • <span>15.2K views</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/minimalism-lifestyle/" class="trending-title">Minimalism: Simplifying Your Life for Happiness</a>
+                        <div class="trending-meta"><span>Lifestyle</span> • <span>11.8K views</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/summer-music-festival/" class="trending-title">Summer Music Festival 2026 Lineup Revealed</a>
+                        <div class="trending-meta"><span>Entertainment</span> • <span>18.1K views</span></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="sidebar-title">Explore Categories</h3>
+                <ul class="footer-links" style="padding-left: 0;">
+                    <li style="margin-bottom: 0.6rem;"><a href="/news/" style="color: var(--text-dark); display: flex; justify-content: space-between;"><span>News</span> <span style="color: var(--text-light);">(42)</span></a></li>
+                    <li style="margin-bottom: 0.6rem;"><a href="/technology/" style="color: var(--text-dark); display: flex; justify-content: space-between;"><span>Technology</span> <span style="color: var(--text-light);">(38)</span></a></li>
+                    <li style="margin-bottom: 0.6rem;"><a href="/entertainment/" style="color: var(--text-dark); display: flex; justify-content: space-between;"><span>Entertainment</span> <span style="color: var(--text-light);">(29)</span></a></li>
+                    <li style="margin-bottom: 0.6rem;"><a href="/lifestyle/" style="color: var(--text-dark); display: flex; justify-content: space-between;"><span>Lifestyle</span> <span style="color: var(--text-light);">(31)</span></a></li>
+                    <li style="margin-bottom: 0.6rem;"><a href="/download/music/" style="color: var(--text-dark); display: flex; justify-content: space-between;"><span>Downloads</span> <span style="color: var(--text-light);">(14)</span></a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget" style="background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);">
+                <h3 class="sidebar-title">Stay Connected</h3>
+                <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Join 50,000+ readers who receive our daily newsletter.</p>
+                <form onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                    <input type="email" class="form-control" placeholder="Email address" required style="margin-bottom: 0.8rem;">
+                    <button type="submit" class="btn" style="width: 100%;">Get Updates</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<!-- Full Interactive Comments Script -->
+<script>
+    (function() {
+        const pageKey = 'viralson_comments_' + window.location.pathname.replace(/\/$/, '');
+        const defaultComments = [
+            {
+                id: 'c1',
+                author: 'Dr. Arthur Pendelton',
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
+                date: 'Yesterday at 3:42 PM',
+                text: 'This is one of the most thorough and balanced write-ups I have read on this subject recently. The historical context provided makes the conclusions much more compelling.',
+                likes: 14,
+                userLiked: false
+            },
+            {
+                id: 'c2',
+                author: 'Maya Lin',
+                avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80',
+                date: 'Today at 10:15 AM',
+                text: 'Completely agree with the points raised here. Would love to see a follow-up piece delving into how regional policymakers are approaching these shifts.',
+                likes: 8,
+                userLiked: false
+            }
+        ];
+
+        function getComments() {
+            try {
+                const stored = localStorage.getItem(pageKey);
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+            } catch (e) {
+                console.warn('LocalStorage error:', e);
+            }
+            return defaultComments;
+        }
+
+        function saveComments(comments) {
+            try {
+                localStorage.setItem(pageKey, JSON.stringify(comments));
+            } catch (e) {
+                console.warn('LocalStorage save error:', e);
+            }
+            renderComments();
+        }
+
+        function updateCounts(count) {
+            const totalEl = document.getElementById('commentsTotalCount');
+            const headerCount = document.getElementById('headerCommentCount');
+            if (totalEl) totalEl.textContent = count;
+            if (headerCount) headerCount.textContent = count;
+        }
+
+        function escapeHTML(str) {
+            const p = document.createElement('p');
+            p.textContent = str;
+            return p.innerHTML;
+        }
+
+        function renderComments() {
+            const container = document.getElementById('commentsContainer');
+            if (!container) return;
+
+            const comments = getComments();
+            updateCounts(comments.length);
+
+            if (comments.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                        <i class="far fa-comment-dots" style="font-size: 2.2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                        <p>No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = comments.map(c => `
+                <div class="comment-card" id="comment-${c.id}">
+                    <div class="comment-avatar-wrapper">
+                        <img src="${c.avatar}" alt="${escapeHTML(c.author)}" class="comment-avatar">
+                    </div>
+                    <div class="comment-content-body">
+                        <div class="comment-meta-row">
+                            <span class="comment-author-name">${escapeHTML(c.author)}</span>
+                            <span class="comment-timestamp">${c.date}</span>
+                        </div>
+                        <p class="comment-text-paragraph">${escapeHTML(c.text)}</p>
+                        <div class="comment-actions-bar">
+                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')">
+                                <i class="${c.userLiked ? 'fas' : 'far'} fa-heart"></i>
+                                <span>${c.likes}</span>
+                            </button>
+                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')">
+                                <i class="fas fa-reply"></i> Reply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.toggleLike = function(id) {
+            const comments = getComments();
+            const comment = comments.find(c => c.id === id);
+            if (comment) {
+                if (comment.userLiked) {
+                    comment.likes = Math.max(0, comment.likes - 1);
+                    comment.userLiked = false;
+                } else {
+                    comment.likes = comment.likes + 1;
+                    comment.userLiked = true;
+                }
+                saveComments(comments);
+            }
+        };
+
+        window.startReply = function(authorName) {
+            const textarea = document.getElementById('commentText');
+            if (textarea) {
+                textarea.value = `@${authorName} `;
+                textarea.focus();
+                textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        // Form Submit Handler
+        const form = document.getElementById('commentForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const authorInput = document.getElementById('commentAuthor');
+                const emailInput = document.getElementById('commentEmail');
+                const textInput = document.getElementById('commentText');
+                const statusMsg = document.getElementById('commentStatusMessage');
+
+                const author = authorInput.value.trim();
+                const email = emailInput.value.trim();
+                const text = textInput.value.trim();
+
+                if (!author || !email || !text) return;
+
+                const avatarIndex = (author.charCodeAt(0) % 5) + 1;
+                const avatarOptions = [
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=100&q=80',
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=100&q=80'
+                ];
+
+                const newComment = {
+                    id: 'c_' + Date.now(),
+                    author: author,
+                    avatar: avatarOptions[avatarIndex - 1],
+                    date: 'Just now',
+                    text: text,
+                    likes: 0,
+                    userLiked: false
+                };
+
+                const comments = getComments();
+                comments.unshift(newComment);
+                saveComments(comments);
+
+                textInput.value = '';
+                if (statusMsg) {
+                    statusMsg.textContent = '✓ Comment posted successfully!';
+                    statusMsg.style.display = 'inline';
+                    setTimeout(() => { statusMsg.style.display = 'none'; }, 4000);
+                }
+
+                // Scroll to newly added comment
+                const newEl = document.getElementById('comment-' + newComment.id);
+                if (newEl) {
+                    newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // Initial render
+        renderComments();
+    })();
+
+    // Automatic Reading Time Calculator Script
+    (function() {
+        function calculateAndPrependReadingTime() {
+            const postBody = document.querySelector('.post-body');
+            const metaBar = document.querySelector('.post-meta-bar');
+            if (!postBody || !metaBar) return;
+
+            // Extract text from the article content
+            const articleText = (postBody.innerText || postBody.textContent || '').trim();
+            // Count words accurately
+            const words = articleText ? articleText.split(/\s+/).filter(w => w.length > 0) : [];
+            const wordCount = words.length;
+
+            // Average adult reading speed: ~200 words per minute
+            const wordsPerMinute = 200;
+            const readingMinutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+            const readingTimeText = `${readingMinutes} min read`;
+
+            // Check if already prepended
+            let readingTimeItem = metaBar.querySelector('.post-reading-time');
+            if (!readingTimeItem) {
+                readingTimeItem = document.createElement('span');
+                readingTimeItem.className = 'post-reading-time';
+                // Prepend as the first child of the post meta bar
+                metaBar.prepend(readingTimeItem);
+            }
+
+            readingTimeItem.innerHTML = `<i class="far fa-clock"></i> <span class="reading-time-value">${readingTimeText}</span>`;
+            readingTimeItem.setAttribute('title', `Auto-calculated: ${wordCount.toLocaleString()} words (~200 words/min)`);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', calculateAndPrependReadingTime);
+        } else {
+            calculateAndPrependReadingTime();
+        }
+    })();
+</script>

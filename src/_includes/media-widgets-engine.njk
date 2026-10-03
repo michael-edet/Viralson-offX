@@ -1,0 +1,695 @@
+<!-- Auto-Generating Visual/Audio Media Player Widgets Engine -->
+<div id="mediaWidgetsEngineWrapper" class="media-widgets-engine-wrapper" style="display: none;">
+    <!-- Injected dynamically by the Media Widgets Engine Script below -->
+</div>
+
+<script>
+(function() {
+    function initMediaWidgetsEngine() {
+        const postBody = document.querySelector('.post-body') || document.querySelector('article');
+        const targetContainer = document.getElementById('mediaWidgetsEngineWrapper');
+        if (!postBody || !targetContainer) return;
+
+        // 1. Gather all candidate links and text URLs
+        const candidateUrls = [];
+        postBody.querySelectorAll('a').forEach(a => {
+            if (a.href) candidateUrls.push(a.href);
+        });
+
+        const rawText = postBody.innerText || '';
+        const urlRegex = /https?:\/\/[^\s<>"']+/gi;
+        let match;
+        while ((match = urlRegex.exec(rawText)) !== null) {
+            candidateUrls.push(match[0].replace(/[.,;)]+$/, ''));
+        }
+
+        const uniqueUrls = Array.from(new Set(candidateUrls));
+        const detectedMedia = [];
+
+        // 2. Parse and detect media platforms (Video & Audio)
+        uniqueUrls.forEach(url => {
+            // YouTube
+            const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+            if (ytMatch) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'YouTube',
+                    icon: 'fab fa-youtube',
+                    color: '#ff0000',
+                    url: url,
+                    id: ytMatch[1],
+                    title: 'YouTube 4K Video Preview',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-player-frame mwe-video-frame">
+                                <iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1" 
+                                    title="YouTube preview player" frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Vimeo
+            const vimeoMatch = url.match(/(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|))(\d+)/i);
+            if (vimeoMatch) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Vimeo',
+                    icon: 'fab fa-vimeo-v',
+                    color: '#1ab7ea',
+                    url: url,
+                    id: vimeoMatch[1],
+                    title: 'Vimeo HD Feature Video',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-player-frame mwe-video-frame">
+                                <iframe src="https://player.vimeo.com/video/${id}?title=0&byline=0&portrait=0" 
+                                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Spotify Audio
+            const spotifyMatch = url.match(/open\.spotify\.com\/(track|album|playlist|episode)\/([a-zA-Z0-9]+)/i);
+            if (spotifyMatch || url.includes('spotify.com')) {
+                const sType = spotifyMatch ? spotifyMatch[1] : 'track';
+                const sId = spotifyMatch ? spotifyMatch[2] : '4cOdK2wGLETKBW3PvgPWqT';
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: 'Spotify',
+                    icon: 'fab fa-spotify',
+                    color: '#1db954',
+                    url: url,
+                    id: sId,
+                    title: 'Spotify Audio Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-player-frame mwe-audio-frame">
+                                <iframe src="https://open.spotify.com/embed/${sType}/${sId}?utm_source=generator&theme=0" 
+                                    width="100%" height="280" frameBorder="0" allowfullscreen="" 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Apple Music
+            if (url.includes('music.apple.com')) {
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: 'Apple Music',
+                    icon: 'fab fa-apple',
+                    color: 'var(--text-dark)',
+                    url: url,
+                    id: 'applemusic',
+                    title: 'Apple Music Audio Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-player-frame mwe-audio-frame">
+                                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" 
+                                    frameborder="0" height="280" style="width:100%;overflow:hidden;border-radius:10px;" 
+                                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
+                                    src="https://embed.music.apple.com/us/album/midnight-city/459798782?i=459798784" loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Audiomack / SoundCloud / Direct Audio Stream
+            const audioExtMatch = url.match(/\.(mp3|wav|ogg|m4a)($|\?)/i);
+            const isAudiomack = url.includes('audiomack.com');
+            const isSoundcloud = url.includes('soundcloud.com');
+            if (audioExtMatch || isAudiomack || isSoundcloud) {
+                const audioSrc = audioExtMatch ? url : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                const platformName = isAudiomack ? 'Audiomack' : (isSoundcloud ? 'SoundCloud' : 'Direct Audio Stream');
+                const platformIcon = isAudiomack ? 'fas fa-headphones' : (isSoundcloud ? 'fab fa-soundcloud' : 'fas fa-volume-up');
+                const platformColor = isAudiomack ? '#ffa200' : (isSoundcloud ? '#ff5500' : 'var(--primary-blue)');
+                
+                detectedMedia.push({
+                    type: 'audio',
+                    platform: platformName,
+                    icon: platformIcon,
+                    color: platformColor,
+                    url: url,
+                    id: 'audio-' + Math.random().toString(36).substr(2, 6),
+                    title: platformName + ' Player',
+                    renderPlayer: function(id) {
+                        return `
+                            <div class="mwe-custom-audio-interface">
+                                <div class="mwe-audio-art">
+                                    <i class="${platformIcon}" style="font-size: 2.2rem; color: ${platformColor};"></i>
+                                </div>
+                                <div class="mwe-audio-info">
+                                    <div class="mwe-audio-title">Lossless Studio Audio Preview</div>
+                                    <div class="mwe-audio-sub">High-Fidelity Audio Preview & Playback</div>
+                                </div>
+                                <audio controls class="mwe-native-audio-player" style="width: 100%; margin-top: 10px;">
+                                    <source src="${audioSrc}" type="audio/mpeg">
+                                    Your browser does not support audio element.
+                                </audio>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // TikTok
+            const tiktokMatch = url.match(/tiktok\.com\/@([a-zA-Z0-9_.-]+)\/video\/(\d+)/i);
+            if (tiktokMatch || url.includes('tiktok.com/')) {
+                const videoId = tiktokMatch ? tiktokMatch[2] : 'video';
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'TikTok',
+                    icon: 'fab fa-tiktok',
+                    color: '#000000',
+                    url: url,
+                    id: videoId,
+                    title: 'TikTok Viral Video Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(0,0,0,0.06);">
+                                    <i class="fab fa-tiktok" style="font-size: 2.4rem; color: var(--text-dark);"></i>
+                                </div>
+                                <div class="mwe-social-desc">Watch the trending vertical video release directly on TikTok:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn btn-purple mwe-control-btn">
+                                    <i class="fas fa-play"></i> Play Video on TikTok
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Instagram
+            const instaMatch = url.match(/instagram\.com\/(?:p|reel|tv)\/([a-zA-Z0-9_-]+)/i);
+            if (instaMatch || url.includes('instagram.com/reel/')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Instagram',
+                    icon: 'fab fa-instagram',
+                    color: '#e1306c',
+                    url: url,
+                    id: instaMatch ? instaMatch[1] : 'reel',
+                    title: 'Instagram Reel Preview',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(225, 48, 108, 0.1);">
+                                    <i class="fab fa-instagram" style="font-size: 2.4rem; color: #e1306c;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Official video clip & behind-the-scenes reel on Instagram:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff !important;">
+                                    <i class="fas fa-play"></i> Preview Reel on Instagram
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // X (Twitter)
+            const xMatch = url.match(/(?:twitter\.com|x\.com)\/([a-zA-Z0-9_]+)\/status\/(\d+)/i);
+            if (xMatch || url.includes('x.com/') || url.includes('twitter.com/')) {
+                const user = xMatch ? xMatch[1] : 'post';
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'X (Twitter)',
+                    icon: 'fab fa-x-twitter',
+                    color: 'var(--text-dark)',
+                    url: url,
+                    id: xMatch ? xMatch[2] : 'post',
+                    title: `X Video (@${user})`,
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(0,0,0,0.06);">
+                                    <i class="fab fa-x-twitter" style="font-size: 2.4rem; color: var(--text-dark);"></i>
+                                </div>
+                                <div class="mwe-social-desc">Video broadcast clip and commentary shared by @${user}:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #000; color: #fff !important;">
+                                    <i class="fab fa-x-twitter"></i> Watch Video on X
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Facebook Video
+            const fbMatch = url.match(/(?:facebook\.com\/(?:watch\/\?v=|.*\/videos\/)|fb\.watch\/)([0-9a-zA-Z_-]+)/i);
+            if (fbMatch || url.includes('facebook.com/watch') || url.includes('fb.watch')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Facebook',
+                    icon: 'fab fa-facebook-f',
+                    color: '#1877f2',
+                    url: url,
+                    id: fbMatch ? fbMatch[1] : '',
+                    title: 'Facebook Video Stream',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(24, 119, 242, 0.1);">
+                                    <i class="fab fa-facebook-f" style="font-size: 2.4rem; color: #1877f2;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Official video stream broadcast on Facebook Watch:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #1877f2; color: #fff !important;">
+                                    <i class="fas fa-play"></i> Watch on Facebook
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // LinkedIn Video
+            const lnMatch = url.match(/linkedin\.com\/(?:posts|feed\/update)\/([a-zA-Z0-9:_-]+)/i);
+            if (lnMatch || url.includes('linkedin.com/posts')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'LinkedIn',
+                    icon: 'fab fa-linkedin-in',
+                    color: '#0a66c2',
+                    url: url,
+                    id: lnMatch ? lnMatch[1] : '',
+                    title: 'LinkedIn Keynote Video',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(10, 102, 194, 0.1);">
+                                    <i class="fab fa-linkedin-in" style="font-size: 2.4rem; color: #0a66c2;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Executive keynote discussion and panel presentation:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #0a66c2; color: #fff !important;">
+                                    <i class="fas fa-play"></i> Watch on LinkedIn
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+
+            // Snapchat
+            const snapMatch = url.match(/(?:story\.)?snapchat\.com\/(?:s|spotlight|p)\/([a-zA-Z0-9_-]+)/i);
+            if (snapMatch || url.includes('snapchat.com/spotlight')) {
+                detectedMedia.push({
+                    type: 'video',
+                    platform: 'Snapchat',
+                    icon: 'fab fa-snapchat',
+                    color: '#fffc00',
+                    url: url,
+                    id: snapMatch ? snapMatch[1] : '',
+                    title: 'Snapchat Spotlight Clip',
+                    renderPlayer: function() {
+                        return `
+                            <div class="mwe-social-media-card">
+                                <div class="mwe-social-icon-wrapper" style="background: rgba(255, 252, 0, 0.15);">
+                                    <i class="fab fa-snapchat" style="font-size: 2.4rem; color: #e6b800;"></i>
+                                </div>
+                                <div class="mwe-social-desc">Behind-the-scenes vertical spotlight video clip on Snapchat:</div>
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn mwe-control-btn" style="background: #fffc00; color: #000 !important; font-weight: 700;">
+                                    <i class="fas fa-play"></i> Open in Snapchat
+                                </a>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+        });
+
+        // If no media links detected, keep container hidden
+        if (detectedMedia.length === 0) return;
+
+        const totalLinks = detectedMedia.length;
+        const isHorizontalScroll = totalLinks > 3;
+
+        // Build self-contained HTML & CSS
+        let layoutClass = 'mwe-layout-single';
+        if (totalLinks === 2) layoutClass = 'mwe-layout-grid-2';
+        if (totalLinks === 3) layoutClass = 'mwe-layout-grid-3';
+        if (isHorizontalScroll) layoutClass = 'mwe-layout-scrollable';
+
+        let cardsHtml = detectedMedia.map((media, index) => {
+            return `
+                <div class="mwe-widget-card" data-index="${index}">
+                    <div class="mwe-widget-header">
+                        <span class="mwe-platform-badge">
+                            <i class="${media.icon}" style="color: ${media.color}; font-size: 1.05rem;"></i>
+                            <strong>${media.platform}</strong>
+                        </span>
+                        <a href="${media.url}" target="_blank" rel="noopener noreferrer" class="mwe-external-link" title="Open source on ${media.platform}">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="mwe-widget-body">
+                        ${media.renderPlayer(media.id)}
+                    </div>
+                    <div class="mwe-widget-footer">
+                        <span class="mwe-media-title">${media.title}</span>
+                        <span class="mwe-media-type-badge">${media.type === 'video' ? '🎬 Video' : '🎵 Audio'}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        targetContainer.innerHTML = `
+            <style>
+                .media-widgets-engine-wrapper {
+                    margin: 3rem 0 2rem;
+                    padding: 2rem 0;
+                    border-top: 2px solid var(--border-color);
+                    border-bottom: 1px solid var(--border-color);
+                    background: transparent;
+                }
+                .mwe-section-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    margin-bottom: 1.4rem;
+                }
+                .mwe-title-group h3 {
+                    font-size: 1.35rem;
+                    color: var(--text-dark);
+                    display: flex;
+                    align-items: center;
+                    gap: 9px;
+                    margin-bottom: 0.2rem;
+                }
+                .mwe-title-group p {
+                    font-size: 0.88rem;
+                    color: var(--text-light);
+                    margin: 0;
+                }
+                .mwe-counter-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    background: rgba(52, 152, 219, 0.12);
+                    color: var(--primary-blue);
+                    font-size: 0.82rem;
+                    font-weight: 700;
+                }
+                .mwe-layout-single {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    max-width: 680px;
+                    margin: 0 auto;
+                }
+                .mwe-layout-grid-2 {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 1.5rem;
+                }
+                .mwe-layout-grid-3 {
+                    display: grid;
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 1.5rem;
+                }
+                .mwe-layout-scrollable {
+                    display: flex;
+                    overflow-x: auto;
+                    gap: 1.4rem;
+                    padding: 0.5rem 0.2rem 1.2rem;
+                    scroll-snap-type: x mandatory;
+                    scroll-behavior: smooth;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar {
+                    height: 8px;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar-track {
+                    background: var(--light-gray);
+                    border-radius: 4px;
+                }
+                .mwe-layout-scrollable::-webkit-scrollbar-thumb {
+                    background: var(--primary-blue);
+                    border-radius: 4px;
+                }
+                .mwe-widget-card {
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-md);
+                    overflow: hidden;
+                    box-shadow: var(--shadow-sm);
+                    display: flex;
+                    flex-direction: column;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .mwe-widget-card:hover {
+                    box-shadow: var(--shadow-md);
+                    transform: translateY(-2px);
+                }
+                .mwe-layout-scrollable .mwe-widget-card {
+                    flex: 0 0 clamp(290px, 32vw, 380px);
+                    scroll-snap-align: start;
+                }
+                .mwe-widget-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.8rem 1rem;
+                    background: var(--surface-bg);
+                    border-bottom: 1px solid var(--border-color);
+                }
+                .mwe-platform-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 0.85rem;
+                    color: var(--text-dark);
+                }
+                .mwe-external-link {
+                    color: var(--text-light);
+                    font-size: 0.85rem;
+                    padding: 4px;
+                    transition: var(--transition);
+                }
+                .mwe-external-link:hover {
+                    color: var(--primary-blue);
+                }
+                .mwe-widget-body {
+                    flex: 1;
+                    background: #000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 220px;
+                }
+                .mwe-player-frame {
+                    width: 100%;
+                    height: 100%;
+                }
+                .mwe-video-frame {
+                    position: relative;
+                    padding-bottom: 56.25%;
+                    height: 0;
+                    overflow: hidden;
+                }
+                .mwe-video-frame iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+                .mwe-audio-frame {
+                    padding: 0.5rem;
+                    background: #121212;
+                }
+                .mwe-custom-audio-interface {
+                    width: 100%;
+                    padding: 1.5rem 1.2rem;
+                    background: var(--surface-bg);
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .mwe-audio-art {
+                    margin-bottom: 0.6rem;
+                }
+                .mwe-audio-title {
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 2px;
+                }
+                .mwe-audio-sub {
+                    font-size: 0.8rem;
+                    color: var(--text-light);
+                    margin-bottom: 0.8rem;
+                }
+                .mwe-social-media-card {
+                    padding: 1.8rem 1.2rem;
+                    background: var(--surface-bg);
+                    text-align: center;
+                    width: 100%;
+                }
+                .mwe-social-icon-wrapper {
+                    width: 58px;
+                    height: 58px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 0.8rem;
+                }
+                .mwe-social-desc {
+                    font-size: 0.85rem;
+                    color: var(--text-light);
+                    margin-bottom: 1.2rem;
+                    line-height: 1.4;
+                }
+                .mwe-control-btn {
+                    padding: 8px 16px;
+                    font-size: 0.85rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .mwe-widget-footer {
+                    padding: 0.7rem 1rem;
+                    background: var(--surface-bg);
+                    border-top: 1px solid var(--border-color);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 0.8rem;
+                }
+                .mwe-media-title {
+                    font-weight: 600;
+                    color: var(--text-dark);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    max-width: 220px;
+                }
+                .mwe-media-type-badge {
+                    color: var(--text-light);
+                    font-size: 0.75rem;
+                }
+                .mwe-scroll-controls {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .mwe-nav-btn {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background: var(--surface-bg);
+                    border: 1px solid var(--border-color);
+                    color: var(--text-dark);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: var(--transition);
+                }
+                .mwe-nav-btn:hover {
+                    background: var(--primary-blue);
+                    color: #fff;
+                    border-color: var(--primary-blue);
+                }
+                .mwe-scroll-cue {
+                    font-size: 0.8rem;
+                    color: var(--text-light);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                @media (max-width: 868px) {
+                    .mwe-layout-grid-3 {
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                    }
+                }
+                @media (max-width: 576px) {
+                    .mwe-layout-grid-2,
+                    .mwe-layout-grid-3 {
+                        grid-template-columns: 1fr;
+                    }
+                    .mwe-layout-scrollable .mwe-widget-card {
+                        flex: 0 0 88%;
+                    }
+                }
+            </style>
+
+            <div class="mwe-section-header">
+                <div class="mwe-title-group">
+                    <h3><i class="fas fa-play-circle" style="color: var(--primary-blue);"></i> Interactive Media Player Widgets</h3>
+                    <p>Auto-generated audio & video preview interfaces detected from this article</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span class="mwe-counter-badge">
+                        <i class="fas fa-layer-group"></i> ${totalLinks} Media Link${totalLinks > 1 ? 's' : ''}
+                    </span>
+                    ${isHorizontalScroll ? `
+                        <div class="mwe-scroll-controls">
+                            <span class="mwe-scroll-cue"><i class="fas fa-arrows-left-right"></i> Scrollable (${totalLinks})</span>
+                            <button type="button" class="mwe-nav-btn" id="mwePrevBtn" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+                            <button type="button" class="mwe-nav-btn" id="mweNextBtn" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+
+            <div class="${layoutClass}" id="mweContainerInner">
+                ${cardsHtml}
+            </div>
+        `;
+
+        targetContainer.style.display = 'block';
+
+        // Horizontal scroll controls if more than 3
+        if (isHorizontalScroll) {
+            const containerInner = document.getElementById('mweContainerInner');
+            const prevBtn = document.getElementById('mwePrevBtn');
+            const nextBtn = document.getElementById('mweNextBtn');
+
+            if (containerInner && prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    containerInner.scrollBy({ left: -340, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    containerInner.scrollBy({ left: 340, behavior: 'smooth' });
+                });
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMediaWidgetsEngine);
+    } else {
+        initMediaWidgetsEngine();
+    }
+})();
+</script>

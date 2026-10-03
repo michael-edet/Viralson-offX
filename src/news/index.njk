@@ -1,0 +1,128 @@
+---
+layout: layouts/base.njk
+title: "Latest News & Global Updates | Viral Son"
+description: "Stay informed with breaking global news, geopolitical analyses, climate initiatives, and economic reports."
+currentCategory: "news"
+category: "News"
+permalink: "/news/"
+---
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category news" style="margin-bottom: 0.8rem;">World Coverage</span>
+        <h1>Latest Global News</h1>
+        <p>Stay updated with verified reporting, breaking developments, and insightful geopolitical analysis from around the globe.</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Category Filter Pills with Auto-Selection Tags -->
+    <div class="filter-pills" id="newsFilterPills">
+        <span class="filter-pill active" data-tag="all">All News</span>
+        <span class="filter-pill" data-tag="world">World & Politics</span>
+        <span class="filter-pill" data-tag="climate">Climate & Nature</span>
+        <span class="filter-pill" data-tag="business">Business & Markets</span>
+        <span class="filter-pill" data-tag="science">Science & Health</span>
+    </div>
+
+    <div class="news-container">
+        <!-- Main News Column -->
+        <div class="news-main">
+            <!-- Lead Article -->
+            <article class="news-card featured" data-tags="climate nature environment policy news">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=800&q=80" alt="Climate Summit">
+                </div>
+                <div class="news-content">
+                    <span class="post-category news">Environment & Climate</span>
+                    <h2 class="news-title"><a href="/posts/global-climate-summit/">Global Summit Addresses Climate Change Solutions</a></h2>
+                    <p class="news-date">June 18, 2026 • By Michael Chen • 7 min read</p>
+                    <p style="color: var(--text-light); margin-bottom: 1.2rem;">World leaders gather to formalize actionable plans for reducing carbon emissions, establishing a $100B adaptation fund, and protecting biodiversity.</p>
+                    <a href="/posts/global-climate-summit/" class="btn">Read Full Story</a>
+                </div>
+            </article>
+
+            <!-- News Grid -->
+            <div class="two-col-grid">
+                <article class="news-card" data-tags="business markets economy finance green">
+                    <div class="news-image" style="height: 190px;">
+                        <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?auto=format&fit=crop&w=600&q=80" alt="Global Financial Market">
+                    </div>
+                    <div class="news-content" style="padding: 1.4rem;">
+                        <span class="post-category" style="background: rgba(22, 160, 133, 0.15); color:#16a085;">Economy</span>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;"><a href="/posts/global-climate-summit/">Green Bonds Hit Record Volume in Q2</a></h3>
+                        <p class="news-date">June 17, 2026 • 4 min read</p>
+                        <p style="font-size: 0.92rem; color: var(--text-light);">Sustainable finance gains traction as international institutional investors allocate record funds to renewable grid projects.</p>
+                    </div>
+                </article>
+
+                <article class="news-card" data-tags="world politics diplomacy trade alliances">
+                    <div class="news-image" style="height: 190px;">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Diplomacy summit">
+                    </div>
+                    <div class="news-content" style="padding: 1.4rem;">
+                        <span class="post-category news">Diplomacy</span>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;"><a href="/posts/global-climate-summit/">Trade Alliances Form New Digital Shipping Standards</a></h3>
+                        <p class="news-date">June 15, 2026 • 5 min read</p>
+                        <p style="font-size: 0.92rem; color: var(--text-light);">Global port authorities sign cross-border smart customs accord to eliminate friction in international supply chains.</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Additional News List Items -->
+            <article class="news-card mini-news-card" data-tags="science health technology semiconductors">
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Tech News" class="mini-news-img">
+                <div class="mini-news-body">
+                    <span class="post-category tech">Science & Tech</span>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.4rem;"><a href="/posts/future-of-ai/">Semiconductor Innovations Power Next-Gen Renewable Grids</a></h3>
+                    <p class="news-date">June 14, 2026 • 3 min read</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Ultra-efficient microchips allow microgrids to optimize battery distribution in real time.</p>
+                </div>
+            </article>
+
+            <article class="news-card mini-news-card" data-tags="world politics elections democracy">
+                <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=400&q=80" alt="World Politics" class="mini-news-img">
+                <div class="mini-news-body">
+                    <span class="post-category news">World & Politics</span>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.4rem;"><a href="/posts/simple-post/">Global Voter Participation Trends in 2026</a></h3>
+                    <p class="news-date">June 13, 2026 • 5 min read</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">How digital voting transparency and mobile registration drives are boosting civic engagement globally.</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="news-sidebar">
+            <div class="sidebar-widget">
+                <h3 class="sidebar-title">Trending in News</h3>
+                <ul class="trending-list">
+                    <li class="trending-item">
+                        <a href="/posts/global-climate-summit/" class="trending-title">195 Nations Ratify Clean Transition Pledge</a>
+                        <div class="trending-meta"><span>Climate</span> • <span>24.5K reads</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/future-of-ai/" class="trending-title">AI Regulations Discussed at G7 Summit</a>
+                        <div class="trending-meta"><span>Tech/Policy</span> • <span>19.1K reads</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/revolutionary-foldable-phone/" class="trending-title">Tech Supply Chains Diversify Across SE Asia</a>
+                        <div class="trending-meta"><span>Economy</span> • <span>14.3K reads</span></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="sidebar-title">Filter by Topic</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                    <a href="/news/?tag=climate" class="quick-tag-btn" style="text-align: left; padding: 8px 12px;">🌿 Climate & Nature (14)</a>
+                    <a href="/news/?tag=world" class="quick-tag-btn" style="text-align: left; padding: 8px 12px;">🏛️ World Politics (18)</a>
+                    <a href="/news/?tag=business" class="quick-tag-btn" style="text-align: left; padding: 8px 12px;">📈 Business & Markets (12)</a>
+                    <a href="/news/?tag=science" class="quick-tag-btn" style="text-align: left; padding: 8px 12px;">🧬 Science & Health (9)</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+{% include "category-filter-script.njk" %}

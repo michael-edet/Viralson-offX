@@ -1,0 +1,110 @@
+---
+layout: layouts/base.njk
+title: "Technology & Innovation | Viral Son"
+description: "Frontier technology coverage: artificial intelligence, smart hardware, cybersecurity, software, and robotics."
+currentCategory: "technology"
+category: "Technology"
+permalink: "/technology/"
+---
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category tech" style="margin-bottom: 0.8rem;">Frontier Tech</span>
+        <h1>Technology & Gadgets</h1>
+        <p>Exploring the next frontier of consumer hardware, machine intelligence, cloud architectures, and computational breakthroughs.</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Category Filter Pills with Auto-Selection Tags -->
+    <div class="filter-pills" id="techFilterPills">
+        <span class="filter-pill active" data-tag="all">All Tech</span>
+        <span class="filter-pill" data-tag="ai">Artificial Intelligence</span>
+        <span class="filter-pill" data-tag="hardware">Smartphones & Hardware</span>
+        <span class="filter-pill" data-tag="software">Software & Web</span>
+        <span class="filter-pill" data-tag="security">Cybersecurity</span>
+    </div>
+
+    <!-- Featured Post -->
+    <article class="news-card featured" data-tags="hardware smartphones gadgets innovation mobile" style="margin-bottom: 3rem;">
+        <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80" alt="Foldable smartphone innovation">
+        </div>
+        <div class="news-content">
+            <span class="post-category tech">Hardware Breakthrough</span>
+            <h2 class="news-title"><a href="/posts/revolutionary-foldable-phone/">Revolutionary Foldable Phone Breaks New Ground in Mobile Technology</a></h2>
+            <p class="news-date">June 17, 2026 • By David Kim • 6 min read</p>
+            <p style="color: var(--text-light); margin-bottom: 1.2rem;">Featuring a crease-free titanium hinge, ultra-thin flexible glass, and desktop-class multitasking capabilities, this device redefines mobile productivity.</p>
+            <a href="/posts/revolutionary-foldable-phone/" class="btn">Read Hands-on Review</a>
+        </div>
+    </article>
+
+    <div class="posts-grid">
+        <!-- AI Card -->
+        <article class="post-card" data-tags="ai machine-learning artificial-intelligence agents neural">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=600&q=80" alt="Artificial Intelligence">
+            </div>
+            <div class="post-content">
+                <span class="post-category tech">Artificial Intelligence</span>
+                <h3 class="post-title"><a href="/posts/future-of-ai/">The Future of AI in Everyday Life</a></h3>
+                <p class="post-excerpt">How neural networks, autonomous agents, and ambient computing are reshaping productivity and home life.</p>
+                <div class="post-meta">
+                    <span>June 15, 2026</span>
+                    <a href="/posts/future-of-ai/" style="color: var(--primary-blue); font-weight: 600;">Read Deep Dive &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Quantum Computing Card -->
+        <article class="post-card" data-tags="hardware computing quantum physics chips">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80" alt="Quantum Computing Chips">
+            </div>
+            <div class="post-content">
+                <span class="post-category tech">Hardware & Chips</span>
+                <h3 class="post-title"><a href="/posts/revolutionary-foldable-phone/">Quantum Processors Reach 1,000 Logical Qubits</a></h3>
+                <p class="post-excerpt">Breakthrough in topological error correction brings fault-tolerant quantum algorithms within industrial reach.</p>
+                <div class="post-meta">
+                    <span>June 11, 2026</span>
+                    <a href="/posts/revolutionary-foldable-phone/" style="color: var(--primary-blue); font-weight: 600;">Explore Specs &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Software Architecture -->
+        <article class="post-card" data-tags="software web frameworks frontend developer">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Coding workspace">
+            </div>
+            <div class="post-content">
+                <span class="post-category tech">Software & Web</span>
+                <h3 class="post-title"><a href="/posts/simple-post/">Modern Static Site Architecture at Global Scale</a></h3>
+                <p class="post-excerpt">Why engineering teams are replacing monolithic server renderers with blazing fast static generation on edge CDNs.</p>
+                <div class="post-meta">
+                    <span>June 8, 2026</span>
+                    <a href="/posts/simple-post/" style="color: var(--primary-blue); font-weight: 600;">Read Architecture &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Cybersecurity -->
+        <article class="post-card" data-tags="security cybersecurity privacy zero-trust encryption">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Cybersecurity lock">
+            </div>
+            <div class="post-content">
+                <span class="post-category tech">Cybersecurity</span>
+                <h3 class="post-title"><a href="/posts/future-of-ai/">Zero-Trust Authentication in the Post-Password Era</a></h3>
+                <p class="post-excerpt">Passkeys, decentralized identity, and hardware security keys are making credential stuffing attacks obsolete.</p>
+                <div class="post-meta">
+                    <span>June 5, 2026</span>
+                    <a href="/posts/future-of-ai/" style="color: var(--primary-blue); font-weight: 600;">Security Audit &rarr;</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+{% include "category-filter-script.njk" %}

@@ -1,0 +1,93 @@
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+
+# Redirects from legacy GitHub / subpage URLs to 11ty clean permalinks
+[[redirects]]
+  from = "/Assets/page/subpage/news.html"
+  to = "/news/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/subpage/entertainment.html"
+  to = "/entertainment/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/subpage/technology.html"
+  to = "/technology/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/subpage/lifestyle.html"
+  to = "/lifestyle/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/subpage/community.html"
+  to = "/community/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/subpage/about.html"
+  to = "/about/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/news.html"
+  to = "/posts/global-climate-summit/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/technology.html"
+  to = "/posts/revolutionary-foldable-phone/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/entertainment.html"
+  to = "/posts/summer-music-festival/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/lifestyle.html"
+  to = "/posts/minimalism-lifestyle/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/1T-entertainment.html"
+  to = "/posts/midnight-whispers/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/trac.html"
+  to = "/posts/midnight-dreams-track/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/tra.html"
+  to = "/posts/midnight-dreams-track/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/postdetail/simple.html"
+  to = "/posts/simple-post/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/download/music.html"
+  to = "/download/music/"
+  status = 301
+
+[[redirects]]
+  from = "/Assets/page/download/music0.html"
+  to = "/download/music0/"
+  status = 301

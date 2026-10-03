@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title | default(site.name + " | " + site.tagline) }}</title>
+    <meta name="description" content="{{ description | default(site.description) }}">
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="{{ title | default(site.name + ' | ' + site.tagline) }}">
+    <meta property="og:description" content="{{ description | default(site.description) }}">
+    <meta property="og:type" content="{{ ogType | default('website') }}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    {% if image %}
+    <meta property="og:image" content="{{ image }}">
+    {% endif %}
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <!-- Theme Initialization to prevent FOUC -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('viralson_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+<body class="{% if isPost or ogType == 'article' %}post-detail-page{% endif %}">
+    <!-- Global Reusable Page Loader -->
+    {% include "pageloader.njk" %}
+
+    <!-- Dynamic Header -->
+    {% include "header.njk" %}
+
+    <!-- Main Content Area -->
+    <main>
+        {{ content | safe }}
+    </main>
+
+    <!-- Dynamic Footer -->
+    {% include "footer.njk" %}
+
+    <!-- Sitewide Newsletter Popup Modal -->
+    {% include "newsletter-modal.njk" %}
+</body>
+</html>

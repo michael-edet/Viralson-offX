@@ -1,0 +1,16 @@
+{
+  "name": "Viral Son",
+  "tagline": "Modern Blogging Platform",
+  "description": "Your go-to source for viral news, entertainment, technology, lifestyle, and community discussions.",
+  "url": "https://viralson.com",
+  "author": "Viral Son Editorial Team",
+  "navigation": [
+    { "title": "Home", "url": "/" },
+    { "title": "News", "url": "/news/" },
+    { "title": "Entertainment", "url": "/entertainment/" },
+    { "title": "Technology", "url": "/technology/" },
+    { "title": "Lifestyle", "url": "/lifestyle/" },
+    { "title": "Community", "url": "/community/" },
+    { "title": "About", "url": "/about/" }
+  ]
+}

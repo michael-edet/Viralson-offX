@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News &amp; Global Updates | Viral Son</title>
+    <meta name="description" content="Stay informed with breaking global news, geopolitical analyses, climate initiatives, and economic reports.">
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="Latest News &amp; Global Updates | Viral Son">
+    <meta property="og:description" content="Stay informed with breaking global news, geopolitical analyses, climate initiatives, and economic reports.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://viralson.com/news/">
+    
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+</head>
+<body>
+    <!-- Global Reusable Page Loader -->
+    <!-- Reusable Page Loader Component -->
+<div class="page-loader" id="pageLoader">
+    <div class="vs-logo">VS</div>
+    <div class="loading-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<script>
+    // Smooth loader disappearance on page ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loader.classList.add('hidden');
+                }, 300);
+            });
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 2500);
+        }
+    });
+</script>
+
+
+    <!-- Dynamic Header -->
+    <!-- Dynamic Header Component -->
+<header>
+    <div class="container header-container">
+        <a href="/" class="logo">
+            <div class="logo-icon">VS</div>
+            <div class="logo-text">Viral Son</div>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/" class="nav-link ">Home</a></li>
+                <li><a href="/news/" class="nav-link active">News</a></li>
+                <li><a href="/entertainment/" class="nav-link ">Entertainment</a></li>
+                <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
+                <li><a href="/community/" class="nav-link ">Community</a></li>
+                <li><a href="/about/" class="nav-link ">About</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script>
+    (function() {
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('navMenu');
+        if (btn && menu) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    menu.classList.remove('active');
+                }
+            });
+        }
+    })();
+</script>
+
+
+    <!-- Main Content Area -->
+    <main>
+        
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category news" style="margin-bottom: 0.8rem;">World Coverage</span>
+        <h1>Latest Global News</h1>
+        <p>Stay updated with verified reporting, breaking developments, and insightful geopolitical analysis from around the globe.</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Category Filter Pills -->
+    <div class="filter-pills">
+        <span class="filter-pill active">All News</span>
+        <span class="filter-pill">World & Politics</span>
+        <span class="filter-pill">Climate & Nature</span>
+        <span class="filter-pill">Business & Markets</span>
+        <span class="filter-pill">Science & Health</span>
+    </div>
+
+    <div class="news-container">
+        <!-- Main News Column -->
+        <div class="news-main">
+            <!-- Lead Article -->
+            <article class="news-card featured">
+                <div class="news-image">
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=800&q=80" alt="Climate Summit">
+                </div>
+                <div class="news-content">
+                    <span class="post-category news">Environment & Climate</span>
+                    <h2 class="news-title"><a href="/posts/global-climate-summit/">Global Summit Addresses Climate Change Solutions</a></h2>
+                    <p class="news-date">June 18, 2026 • By Michael Chen • 7 min read</p>
+                    <p style="color: var(--text-light); margin-bottom: 1.2rem;">World leaders gather to formalize actionable plans for reducing carbon emissions, establishing a $100B adaptation fund, and protecting biodiversity.</p>
+                    <a href="/posts/global-climate-summit/" class="btn">Read Full Story</a>
+                </div>
+            </article>
+
+            <!-- News Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <article class="news-card">
+                    <div class="news-image" style="height: 200px;">
+                        <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?auto=format&fit=crop&w=600&q=80" alt="Global Financial Market">
+                    </div>
+                    <div class="news-content" style="padding: 1.4rem;">
+                        <span class="post-category" style="background:#e8f8f5; color:#16a085;">Economy</span>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;"><a href="/posts/global-climate-summit/">Green Bonds Hit Record Volume in Q2</a></h3>
+                        <p class="news-date">June 17, 2026 • 4 min read</p>
+                        <p style="font-size: 0.92rem; color: var(--text-light);">Sustainable finance gains traction as international institutional investors allocate record funds to renewable grid projects.</p>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-image" style="height: 200px;">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Diplomacy summit">
+                    </div>
+                    <div class="news-content" style="padding: 1.4rem;">
+                        <span class="post-category news">Diplomacy</span>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;"><a href="/posts/global-climate-summit/">Trade Alliances Form New Digital Shipping Standards</a></h3>
+                        <p class="news-date">June 15, 2026 • 5 min read</p>
+                        <p style="font-size: 0.92rem; color: var(--text-light);">Global port authorities sign cross-border smart customs accord to eliminate friction in international supply chains.</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Additional News List Item -->
+            <article class="news-card" style="display: flex; gap: 1.5rem; padding: 1.5rem; align-items: center;">
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=300&q=80" alt="Tech News" style="width: 140px; height: 110px; border-radius: var(--radius-sm); object-fit: cover;">
+                <div>
+                    <span class="post-category tech">Tech Horizon</span>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.4rem;"><a href="/posts/future-of-ai/">Semiconductor Innovations Power Next-Gen Renewable Grids</a></h3>
+                    <p class="news-date">June 14, 2026 • 3 min read</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Ultra-efficient microchips allow microgrids to optimize battery distribution in real time.</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="news-sidebar">
+            <div class="sidebar-widget">
+                <h3 class="sidebar-title">Trending in News</h3>
+                <ul class="trending-list">
+                    <li class="trending-item">
+                        <a href="/posts/global-climate-summit/" class="trending-title">195 Nations Ratify Clean Transition Pledge</a>
+                        <div class="trending-meta"><span>Climate</span> • <span>24.5K reads</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/future-of-ai/" class="trending-title">AI Regulations Discussed at G7 Summit</a>
+                        <div class="trending-meta"><span>Policy</span> • <span>19.1K reads</span></div>
+                    </li>
+                    <li class="trending-item">
+                        <a href="/posts/minimalism-lifestyle/" class="trending-title">Cities Pilot Urban Green Spaces to Cool Streets</a>
+                        <div class="trending-meta"><span>Urban</span> • <span>13.8K reads</span></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget" style="background: var(--light-blue);">
+                <h3 class="sidebar-title">Newsroom Inquiries</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 1rem;">Direct news tips, press releases, and editorial feedback to our global desk:</p>
+                <p style="font-weight: 700; color: var(--dark-blue); font-size: 1.05rem;"><i class="far fa-envelope"></i> news@viralson.com</p>
+            </div>
+        </aside>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Dynamic Footer -->
+    <!-- Dynamic Footer Component -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-col">
+                <a href="/" class="logo" style="margin-bottom: 1.2rem; display: inline-flex;">
+                    <div class="logo-icon" style="background: rgba(255,255,255,0.18);">VS</div>
+                    <div class="logo-text" style="color: #ffffff;">Viral Son</div>
+                </a>
+                <p style="font-size: 0.95rem; opacity: 0.85; margin-bottom: 1.2rem;">
+                    Your trusted destination for trending news, deep-dive technology insights, lifestyle guides, entertainment culture, and vibrant community discussions.
+                </p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Column -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="/">Home</a></li>
+                    <li class="footer-link"><a href="/news/">News</a></li>
+                    <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                    <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
+                    <li class="footer-link"><a href="/community/">Community Hub</a></li>
+                    <li class="footer-link"><a href="/about/">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Dynamic Category Column -->
+            <div class="footer-col">
+                
+                    <h3>News Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/global-climate-summit/">Climate & Environment</a></li>
+                        <li class="footer-link"><a href="/news/">Global Politics</a></li>
+                        <li class="footer-link"><a href="/news/">Finance & Markets</a></li>
+                        <li class="footer-link"><a href="/news/">Science Breakthroughs</a></li>
+                        <li class="footer-link"><a href="/news/">Breaking Headlines</a></li>
+                    </ul>
+                
+            </div>
+
+            <!-- Contact & Newsletter Column -->
+            <div class="footer-col">
+                <h3>Contact & Updates</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 0.4rem;">
+                    <strong>Department:</strong> 
+                    
+                        news@viralson.com
+                    
+                </p>
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
+                    Get curated daily digests and viral stories delivered straight to your inbox.
+                </p>
+                <form class="footer-form" onsubmit="event.preventDefault(); const email = this.querySelector('input').value; alert('Thank you for subscribing with ' + email + '!'); this.reset();">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <input type="email" class="form-control" placeholder="Enter your email" required style="padding: 10px; font-size: 0.9rem; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; padding: 10px; font-size: 0.9rem;">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

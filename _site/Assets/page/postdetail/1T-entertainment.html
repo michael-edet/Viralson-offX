@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download "Midnight Whispers" by Aurora | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --purple: #9b59b6;
+            --pink: #e84393;
+            --orange: #e67e22;
+            --green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .section-title.purple::after {
+            background-color: var(--purple);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-purple {
+            background-color: var(--purple);
+        }
+
+        .btn-purple:hover {
+            background-color: #8e44ad;
+        }
+
+        .btn-green {
+            background-color: var(--green);
+        }
+
+        .btn-green:hover {
+            background-color: #27ae60;
+        }
+
+        /* Page Loader Styles */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .vs-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .line {
+            height: 8px;
+            width: 200px;
+            border-radius: 4px;
+            background-color: #e8f4fc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #3498db,
+                #3498db 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 0.2s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 0.4s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: var(--light-gray);
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--medium-gray);
+        }
+
+        .breadcrumb-link {
+            color: var(--primary-blue);
+        }
+
+        .breadcrumb-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Post Content */
+        .post-content {
+            padding: 3rem 0;
+        }
+
+        .post-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .post-excerpt {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .post-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-featured-image {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .post-featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-source {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            border-top-left-radius: 4px;
+        }
+
+        /* Track Info Section */
+        .track-info-section {
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .track-cover {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .track-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-details {
+            flex: 1;
+        }
+
+        .track-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        .track-artist {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .track-album {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .track-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .track-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .track-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .play-btn {
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background-color: #8e44ad;
+            transform: scale(1.05);
+        }
+
+        /* Download Section */
+        .download-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .download-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .download-option {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .download-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-blue);
+        }
+
+        .download-option.recommended {
+            border-color: var(--green);
+            position: relative;
+        }
+
+        .download-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background-color: var(--green);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .download-option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .download-option-title {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .download-option-size {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .download-option-description {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .download-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: var(--green);
+            color: var(--white);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .download-btn i {
+            margin-right: 8px;
+        }
+
+        .download-note {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #666;
+            border-left: 3px solid var(--orange);
+        }
+
+        /* Lyrics Section */
+        .lyrics-section {
+            margin: 2.5rem 0;
+        }
+
+        .lyrics-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .lyrics-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-line;
+            color: #555;
+        }
+
+        /* Post Body */
+        .post-body {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .post-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .post-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--dark-blue);
+        }
+
+        .post-body blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .post-body ul, .post-body ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .post-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .fact-box {
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--green);
+        }
+
+        .fact-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        /* Post Actions */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin: 2.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--medium-gray);
+            border-bottom: 1px solid var(--medium-gray);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .social-share {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        .twitter {
+            background-color: #1da1f2;
+        }
+
+        .linkedin {
+            background-color: #0077b5;
+        }
+
+        .whatsapp {
+            background-color: #25d366;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: var(--medium-gray);
+        }
+
+        /* Author Bio */
+        .author-bio {
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        .author-role {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin: 3rem 0;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .comments-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .comments-list {
+            margin-bottom: 2.5rem;
+        }
+
+        .comment {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .comment-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-meta h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .comment-reply {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .comment-reply:hover {
+            text-decoration: underline;
+        }
+
+        .comment-body {
+            line-height: 1.6;
+        }
+
+        .comment-form {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Sidebar */
+        .post-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .trending-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #888;
+            gap: 0.5rem;
+        }
+
+        .related-posts {
+            list-style: none;
+        }
+
+        .related-post {
+            display: flex;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .related-post:last-child {
+            border-bottom: none;
+        }
+
+        .related-image {
+            width: 80px;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-content {
+            flex: 1;
+        }
+
+        .related-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .related-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--light-blue);
+            padding: 3rem 0;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form-horizontal {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .post-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .post-actions {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .author-bio {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .newsletter-form-horizontal {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+
+            .post-meta {
+                gap: 1rem;
+            }
+
+            .social-share span {
+                width: 100%;
+            }
+
+            .download-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-options {
+                grid-template-columns: 1fr;
+            }
+
+            .track-info-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .track-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .track-title {
+                font-size: 1.5rem;
+            }
+
+            .track-artist {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="vs-logo">VS</div>
+        <div class="loading-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="entertainment.html" class="nav-link active">Entertainment</a></li>
+                <li><a href="technology.html" class="nav-link">Technology</a></li>
+                <li><a href="lifestyle.html" class="nav-link">Lifestyle</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">Home</a></li>
+                <li class="breadcrumb-item"><a href="entertainment.html" class="breadcrumb-link">Entertainment</a></li>
+                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Music Downloads</a></li>
+                <li class="breadcrumb-item">Midnight Whispers</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container post-container">
+            <div class="post-main">
+                <article class="post-article">
+                    <header class="post-header">
+                        <span class="post-category">Single Track Download</span>
+                        <h1 class="post-title">Download "Midnight Whispers" by Aurora</h1>
+                        <p class="post-excerpt">Get the latest single from Aurora's upcoming album in multiple high-quality formats.</p>
+                        <div class="post-meta">
+                            <div class="post-meta-item">
+                                <i class="far fa-user" aria-hidden="true"></i>
+                                <span>By Sarah Johnson</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-calendar" aria-hidden="true"></i>
+                                <span>June 25, 2023</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-clock" aria-hidden="true"></i>
+                                <span>3 min read</span>
+                            </div>
+                            <div class="post-meta-item">
+                                <i class="far fa-eye" aria-hidden="true"></i>
+                                <span>15.2K views</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Track Info Section -->
+                    <section class="track-info-section">
+                        <div class="track-cover">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Midnight Whispers Single Cover">
+                        </div>
+                        <div class="track-details">
+                            <h2 class="track-title">Midnight Whispers</h2>
+                            <div class="track-artist">Aurora</div>
+                            <div class="track-album">From the album "Echoes of Silence"</div>
+                            <div class="track-stats">
+                                <div class="track-stat">
+                                    <div class="stat-value">3:45</div>
+                                    <div class="stat-label">Duration</div>
+                                </div>
+                                <div class="track-stat">
+                                    <div class="stat-value">9.8K</div>
+                                    <div class="stat-label">Downloads</div>
+                                </div>
+                                <div class="track-stat">
+                                    <div class="stat-value">4.7</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                            <div class="track-controls">
+                                <button class="play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="btn btn-purple">
+                                    <i class="fas fa-heart"></i> Add to Favorites
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Download Section -->
+                    <section class="download-section">
+                        <div class="download-header">
+                            <h2 class="download-title">Download Options</h2>
+                            <div class="post-meta">
+                                <div class="post-meta-item">
+                                    <i class="fas fa-download" aria-hidden="true"></i>
+                                    <span>9.8K Downloads</span>
+                                </div>
+                                <div class="post-meta-item">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <span>4.7/5 Rating</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="download-options">
+                            <div class="download-option recommended">
+                                <div class="download-badge">Recommended</div>
+                                <div class="download-option-header">
+                                    <h3 class="download-option-title">MP3 Format</h3>
+                                    <span class="download-option-size">320 kbps • 8.7 MB</span>
+                                </div>
+                                <p class="download-option-description">High-quality MP3 file compatible with all devices and media players. Perfect for everyday listening.</p>
+                                <a href="#" class="download-btn">
+                                    <i class="fas fa-download"></i> Download MP3
+                                </a>
+                            </div>
+
+                            <div class="download-option">
+                                <div class="download-option-header">
+                                    <h3 class="download-option-title">FLAC Format</h3>
+                                    <span class="download-option-size">Lossless • 25.3 MB</span>
+                                </div>
+                                <p class="download-option-description">Studio-quality FLAC file for audiophiles. Experience the track exactly as the artist intended.</p>
+                                <a href="#" class="download-btn">
+                                    <i class="fas fa-download"></i> Download FLAC
+                                </a>
+                            </div>
+
+                            <div class="download-option">
+                                <div class="download-option-header">
+                                    <h3 class="download-option-title">WAV Format</h3>
+                                    <span class="download-option-size">Uncompressed • 41.2 MB</span>
+                                </div>
+                                <p class="download-option-description">Uncompressed WAV file for the highest audio fidelity. Ideal for professional use.</p>
+                                <a href="#" class="download-btn">
+                                    <i class="fas fa-download"></i> Download WAV
+                                </a>
+                            </div>
+
+                            <div class="download-option">
+                                <div class="download-option-header">
+                                    <h3 class="download-option-title">Instrumental Version</h3>
+                                    <span class="download-option-size">MP3 • 8.5 MB</span>
+                                </div>
+                                <p class="download-option-description">Instrumental version without vocals. Perfect for karaoke or background music.</p>
+                                <a href="#" class="download-btn">
+                                    <i class="fas fa-download"></i> Download Instrumental
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="download-note">
+                            <p><strong>Note:</strong> All downloads are provided for personal use only. Please support the artist by purchasing official releases when available.</p>
+                        </div>
+                    </section>
+
+                    <!-- Lyrics Section -->
+                    <section class="lyrics-section">
+                        <h2 class="section-title purple">Lyrics</h2>
+                        <div class="lyrics-container">
+                            <div class="lyrics-text">
+                                [Verse 1]
+                                Midnight whispers in the dark
+                                Carrying secrets, leaving marks
+                                Silent echoes in the air
+                                Filling up the space between us there
+
+                                [Pre-Chorus]
+                                And I can hear you calling out my name
+                                Through the silence, through the rain
+                                Every whisper, every sound
+                                Is where our lost and found is bound
+
+                                [Chorus]
+                                Midnight whispers, tell me true
+                                What am I supposed to do?
+                                With these feelings, with this ache
+                                For goodness sake, my heart might break
+                                In the stillness of the night
+                                Everything feels so right, so right
+
+                                [Verse 2]
+                                Shadows dancing on the wall
+                                Telling stories, big and small
+                                Memories of what used to be
+                                Flowing softly back to me
+
+                                [Pre-Chorus]
+                                And I can feel you reaching through the veil
+                                A whispered promise, never frail
+                                Every moment, every breath
+                                Is fighting away the fear of death
+
+                                [Chorus]
+                                Midnight whispers, tell me true
+                                What am I supposed to do?
+                                With these feelings, with this ache
+                                For goodness sake, my heart might break
+                                In the stillness of the night
+                                Everything feels so right, so right
+
+                                [Bridge]
+                                Maybe in the quiet hours
+                                We discover hidden powers
+                                To heal the wounds, to mend the seams
+                                To realize we're more than dreams
+
+                                [Outro]
+                                Midnight whispers fading now
+                                As morning light begins to show how
+                                Everything will be alright
+                                In the soft and gentle light
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="post-body">
+                        <h2>About This Track</h2>
+                        <p>"Midnight Whispers" is the lead single from Aurora's upcoming album "Echoes of Silence". The track showcases her signature ethereal vocals combined with minimalist production that allows the emotional depth of the lyrics to shine through.</p>
+
+                        <p>The song was written during a period of introspection for Aurora, who described the creative process as "channeling the quiet thoughts that emerge in the stillness of night." The production features subtle electronic elements layered over acoustic instrumentation, creating a dreamlike soundscape.</p>
+
+                        <div class="fact-box">
+                            <div class="fact-title">Did You Know?</div>
+                            <p>"Midnight Whispers" was recorded in a single take during a late-night studio session. Aurora wanted to capture the raw emotion of the moment, and the final version includes the original vocal performance with minimal editing.</p>
+                        </div>
+
+                        <h2>Production Details</h2>
+                        <p>The track was produced by Marcus Johnson, known for his work with indie and alternative artists. Johnson employed a minimalist approach to production, focusing on creating space around Aurora's vocals while adding subtle atmospheric elements.</p>
+
+                        <blockquote>
+                            "With 'Midnight Whispers', we wanted to create something that felt intimate and expansive at the same time. The production serves the song rather than overpowering it." - Marcus Johnson, Producer
+                        </blockquote>
+
+                        <h2>Critical Reception</h2>
+                        <p>Early reviews of "Midnight Whispers" have been overwhelmingly positive. Critics have praised the track's emotional authenticity and Aurora's vulnerable vocal performance.</p>
+
+                        <p>Music journalist Elena Rodriguez described the single as "a hauntingly beautiful meditation on solitude and connection that showcases Aurora's growth as both a songwriter and vocalist."</p>
+
+                        <h2>Download Instructions</h2>
+                        <p>To download the track, simply select your preferred format from the options above. After downloading, the file will be saved to your device's default download location.</p>
+
+                        <p>For the best listening experience, we recommend using high-quality headphones to fully appreciate the track's intricate production details and Aurora's nuanced vocal performance.</p>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="social-share">
+                            <span>Share this track:</span>
+                            <a href="#" class="share-btn facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-btn twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-btn linkedin" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="share-btn whatsapp" aria-label="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <div class="post-tags">
+                            <a href="#" class="tag">Aurora</a>
+                            <a href="#" class="tag">Single Track</a>
+                            <a href="#" class="tag">Music Download</a>
+                            <a href="#" class="tag">Midnight Whispers</a>
+                            <a href="#" class="tag">MP3</a>
+                            <a href="#" class="tag">FLAC</a>
+                        </div>
+                    </div>
+
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Sarah Johnson - Music Editor">
+                        </div>
+                        <div class="author-info">
+                            <h3>Sarah Johnson</h3>
+                            <div class="author-role">Music Editor</div>
+                            <p>Sarah has been covering the music industry for over 8 years. She specializes in indie and alternative music and has interviewed numerous acclaimed artists.</p>
+                        </div>
+                    </div>
+
+                    <section class="comments-section">
+                        <div class="comments-header">
+                            <h3 class="comments-count">16 Comments</h3>
+                            <button class="btn btn-green">Add Comment</button>
+                        </div>
+
+                        <div class="comments-list">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <div class="comment-author">
+                                        <div class="comment-avatar">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Mark Thompson">
+                                        </div>
+                                        <div class="comment-meta">
+                                            <h4>Mark Thompson</h4>
+                                            <div class="comment-date">June 26, 2023 at 9:15 AM</div>
+                                        </div>
+                                    </div>
+                                    <button class="comment-reply">Reply</button>
+                                </div>
+                                <div class="comment-body">
+                                    <p>The FLAC version sounds incredible! Aurora's voice has so much depth and emotion in this track. Can't wait for the full album.</p>
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <div class="comment-author">
+                                        <div class="comment-avatar">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Jessica Lee">
+                                        </div>
+                                        <div class="comment-meta">
+                                            <h4>Jessica Lee</h4>
+                                            <div class="comment-date">June 25, 2023 at 7:32 PM</div>
+                                        </div>
+                                    </div>
+                                    <button class="comment-reply">Reply</button>
+                                </div>
+                                <div class="comment-body">
+                                    <p>I've had this on repeat all day! The lyrics are so beautiful and relatable. The instrumental version is perfect for studying too.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-form">
+                            <h3>Leave a Comment</h3>
+                            <form id="commentForm">
+                                <div class="form-group">
+                                    <label for="comment-name">Name</label>
+                                    <input type="text" id="comment-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment-email">Email</label>
+                                    <input type="email" id="comment-email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment-message">Comment</label>
+                                    <textarea id="comment-message" class="form-control" required></textarea>
+                                </div>
+                                <button type="submit" class="btn">Post Comment</button>
+                            </form>
+                        </div>
+                    </section>
+                </article>
+            </div>
+
+            <div class="post-sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Popular Singles</h3>
+                    <ul class="trending-list">
+                        <li class="trending-item">
+                            <h4 class="trending-title">The Weeknd - Blinding Lights</h4>
+                            <div class="trending-meta">
+                                <span>Pop</span>
+                                <span>•</span>
+                                <span>24K downloads</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Billie Eilish - Therefore I Am</h4>
+                            <div class="trending-meta">
+                                <span>Alternative</span>
+                                <span>•</span>
+                                <span>18K downloads</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Dua Lipa - Levitating</h4>
+                            <div class="trending-meta">
+                                <span>Pop</span>
+                                <span>•</span>
+                                <span>15K downloads</span>
+                            </div>
+                        </li>
+                        <li class="trending-item">
+                            <h4 class="trending-title">Tame Impala - Borderline</h4>
+                            <div class="trending-meta">
+                                <span>Psychedelic</span>
+                                <span>•</span>
+                                <span>12K downloads</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">More by Aurora</h3>
+                    <ul class="related-posts">
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Aurora Track">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">Runaway - Aurora</h4>
+                                <div class="related-date">May 15, 2023</div>
+                            </div>
+                        </li>
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Aurora Track">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">Queendom - Aurora</h4>
+                                <div class="related-date">April 10, 2023</div>
+                            </div>
+                        </li>
+                        <li class="related-post">
+                            <div class="related-image">
+                                <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Aurora Track">
+                            </div>
+                            <div class="related-content">
+                                <h4 class="related-title">Running With The Wolves</h4>
+                                <div class="related-date">March 5, 2023</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">New Music Alerts</h3>
+                    <p>Get notified when new singles are available for download.</p>
+                    <form class="newsletter-form" id="sidebarNewsletter">
+                        <input type="email" class="form-control" placeholder="Your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>New Music Updates</h2>
+            <p>Subscribe to receive notifications about the latest singles and exclusive content available for download.</p>
+            <form class="newsletter-form-horizontal" id="mainNewsletter">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending news, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html">Home</a></li>
+                        <li class="footer-link"><a href="about.html">About Us</a></li>
+                        <li class="footer-link"><a href="news.html">News</a></li>
+                        <li class="footer-link"><a href="entertainment.html">Entertainment</a></li>
+                        <li class="footer-link"><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Entertainment</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Music</a></li>
+                        <li class="footer-link"><a href="#">Movies</a></li>
+                        <li class="footer-link"><a href="#">TV Shows</a></li>
+                        <li class="footer-link"><a href="#">Downloads</a></li>
+                        <li class="footer-link"><a href="#">Artists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Email: entertainment@viralson.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 Media Street, Digital City</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Loader Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            const body = document.body;
+            
+            // Add loading class to body to prevent scrolling
+            body.classList.add('loading');
+            
+            // Hide loader when everything is loaded
+            window.addEventListener('load', function() {
+                // Minimum display time (2 seconds) for better UX
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Remove from DOM after transition
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            });
+            
+            // Fallback: hide loader after 5 seconds max even if load event doesn't fire
+            setTimeout(function() {
+                if (pageLoader.style.display !== 'none') {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.header-container')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                });
+            });
+        }
+        
+        // Comment form submission
+        const commentForm = document.getElementById('commentForm');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('comment-name').value;
+                const email = document.getElementById('comment-email').value;
+                const message = document.getElementById('comment-message').value;
+                
+                if (name && email && message) {
+                    alert('Thank you for your comment! It will be reviewed before publishing.');
+                    this.reset();
+                } else {
+                    alert('Please fill in all fields before submitting your comment.');
+                }
+            });
+        }
+
+        // Newsletter form submission
+        const sidebarNewsletter = document.getElementById('sidebarNewsletter');
+        const mainNewsletter = document.getElementById('mainNewsletter');
+        
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            if (email) {
+                alert(`Thank you for subscribing to our music updates with: ${email}`);
+                this.querySelector('input[type="email"]').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+        
+        if (sidebarNewsletter) {
+            sidebarNewsletter.addEventListener('submit', handleNewsletterSubmit);
+        }
+        
+        if (mainNewsletter) {
+            mainNewsletter.addEventListener('submit', handleNewsletterSubmit);
+        }
+
+        // Download button functionality
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const format = this.textContent.trim();
+                alert(`Thank you for your interest in downloading the ${format} version. For security reasons, please complete the verification process to proceed with your download.`);
+            });
+        });
+
+        // Play button functionality
+        const playBtn = document.querySelector('.play-btn');
+        if (playBtn) {
+            playBtn.addEventListener('click', function() {
+                alert('Now playing: "Midnight Whispers" by Aurora (30-second preview)');
+                // In a real implementation, this would trigger an audio player
+            });
+        }
+
+        // Reply button functionality
+        const replyButtons = document.querySelectorAll('.comment-reply');
+        replyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const commentAuthor = this.closest('.comment').querySelector('h4').textContent;
+                const commentForm = document.querySelector('.comment-form form');
+                const textarea = commentForm.querySelector('textarea');
+                textarea.value = `@${commentAuthor} `;
+                textarea.focus();
+                
+                // Scroll to comment form
+                commentForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Add Comment button functionality
+        const addCommentBtn = document.querySelector('.comments-header .btn');
+        if (addCommentBtn) {
+            addCommentBtn.addEventListener('click', function() {
+                document.querySelector('.comment-form').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    </script>
+</body>
+</html>

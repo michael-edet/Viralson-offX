@@ -1,0 +1,82 @@
+---
+layout: layouts/post.njk
+title: "Release Spotlight: \"Midnight Dreams\" by Alex Parker"
+description: "Experience the new atmospheric synth-wave single by Alex Parker. Interactive audio preview, track stems, and studio liner notes."
+excerpt: "Experience the new atmospheric synth-wave single by Alex Parker. Interactive audio preview, track stems, and studio liner notes."
+category: "Entertainment"
+categoryUrl: "/entertainment/"
+categoryClass: "ent"
+author: "Viral Son Music Desk"
+authorBio: "Music production review team profiling indie sound designers, electronic producers, and acoustic masters."
+date: 2026-06-09
+readTime: "4 min read"
+views: "14.2K plays"
+image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80"
+imageCaption: "Studio mixing console during final mastering of 'Midnight Dreams'"
+tags: ["Audio", "MusicRelease", "Synthwave", "Spotify", "AppleMusic", "YouTube", "Audiomack"]
+permalink: "/posts/midnight-dreams-track/"
+---
+
+<!-- Track Audio Player Card -->
+<div class="track-player-card" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-sm);">
+    <div class="track-preview" style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80" alt="Midnight Dreams Album Artwork" class="track-cover" style="width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover;">
+        <div class="track-info">
+            <span class="post-category ent">Single Premiere</span>
+            <h3 style="font-size: 1.4rem; color: var(--text-dark); margin: 0.3rem 0;">"Midnight Dreams" — Alex Parker</h3>
+            <p style="color: var(--text-light); margin-bottom: 0.8rem;">Album: Neon Horizons EP • Length: 3:48 • Genre: Synthwave / Ambient</p>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button class="btn btn-purple" id="playBtn" onclick="togglePlay()"><i class="fas fa-play" id="playIcon"></i> Play Audio Stream</button>
+                <span id="playerStatus" style="font-size: 0.9rem; color: var(--text-light); font-weight: 500;">Ready to stream studio audio preview</span>
+            </div>
+            <audio id="audioElement" preload="none" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        </div>
+    </div>
+</div>
+
+<div class="post-body">
+    <h2>Studio Diary: Crafting Analog Atmospheres</h2>
+    <p>
+        Recorded in an analog home studio in Berlin, <em>"Midnight Dreams"</em> combines the unmistakable texture of vintage Roland synthesizer circuitry with lush tape delay loops. Alex Parker spent four weeks dialing in the bass sequence on an original 1982 Roland Juno-60 before tracking real electric bass guitar to ground the groove.
+    </p>
+
+    <blockquote>
+        "There is a warmth to magnetic tape saturation that modern plugins approximate, but the tactile feel of turning physical knobs and hearing analog filters open up can never be replicated."
+        <br><br><strong>— Alex Parker</strong>
+    </blockquote>
+
+    <h2>Multi-Platform Streaming & Video Links</h2>
+    <p>Stream the official release across all primary music services:</p>
+    <ul>
+        <li>Listen on Spotify: <a href="https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT" target="_blank">https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT</a></li>
+        <li>Stream on Apple Music: <a href="https://music.apple.com/us/album/midnight-city/459798782" target="_blank">https://music.apple.com/us/album/midnight-city/459798782</a></li>
+        <li>Listen to high-bitrate audio on Audiomack: <a href="https://audiomack.com/song/alex-parker/midnight-dreams" target="_blank">https://audiomack.com/song/alex-parker/midnight-dreams</a></li>
+        <li>Watch the official 4K studio session video on YouTube: <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank">https://www.youtube.com/watch?v=jfKfPfyJRdk</a></li>
+    </ul>
+</div>
+
+<script>
+    let isPlaying = false;
+    const audio = document.getElementById('audioElement');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const playerStatus = document.getElementById('playerStatus');
+
+    function togglePlay() {
+        if (!audio) return;
+        if (isPlaying) {
+            audio.pause();
+            playIcon.className = 'fas fa-play';
+            playerStatus.textContent = 'Audio paused';
+            isPlaying = false;
+        } else {
+            audio.play().then(() => {
+                playIcon.className = 'fas fa-pause';
+                playerStatus.textContent = 'Streaming preview (High Fidelity)';
+                isPlaying = true;
+            }).catch(e => {
+                playerStatus.textContent = 'Click play to start stream';
+            });
+        }
+    }
+</script>

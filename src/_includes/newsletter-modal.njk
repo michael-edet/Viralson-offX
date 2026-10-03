@@ -1,0 +1,172 @@
+<!-- Triggered Newsletter Signup Modal with Blur Backdrop & Theme Matching -->
+<div class="newsletter-modal-backdrop" id="newsletterModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="newsletter-modal-card" id="newsletterModalCard">
+        <!-- Prominent Close Button -->
+        <button type="button" class="newsletter-close-btn" id="newsletterCloseBtn" aria-label="Close newsletter popup" title="Close (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Badge -->
+        <div class="newsletter-modal-badge">
+            <i class="fas fa-bolt" style="margin-right: 5px; color: var(--primary-blue);"></i> Daily Viral Dispatch
+        </div>
+
+        <h3 class="newsletter-modal-title">Stay Ahead of the Curve</h3>
+        <p class="newsletter-modal-desc">
+            Get our editors' top investigative scoops, breaking tech & sports reports, and cultural premieres delivered directly to your inbox every morning.
+        </p>
+
+        <!-- Newsletter Submission Form -->
+        <form id="newsletterModalForm" class="newsletter-modal-form">
+            <div class="newsletter-input-group">
+                <input type="email" id="newsletterModalEmail" class="newsletter-modal-input" placeholder="Enter your email address" required autocomplete="email">
+                <button type="submit" class="btn newsletter-modal-submit" id="newsletterModalSubmit">
+                    <span>Subscribe Free</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </div>
+            <p class="newsletter-privacy-note">
+                <i class="fas fa-shield-alt" style="color: var(--green); margin-right: 4px;"></i> Zero spam. One-click unsubscribe anytime.
+            </p>
+        </form>
+
+        <!-- Success Confirmation State (shown post-submit) -->
+        <div id="newsletterSuccessState" class="newsletter-success-state" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--green); margin-bottom: 0.8rem;"></i>
+            <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark);">Welcome to Viral Son!</h4>
+            <p style="font-size: 0.92rem; color: var(--text-light);">You're on the VIP list. We've queued your first morning briefing.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const COOKIE_NAME = 'viralson_newsletter_suppressed';
+        const SUPPRESSION_DAYS = 14;
+
+        // Check if on home/index page
+        const path = window.location.pathname;
+        const isIndexPage = path === '/' || path === '/index.html' || path === '';
+
+        // Only trigger on the index page
+        if (!isIndexPage) return;
+
+        // Cookie & Storage Helpers
+        function getCookie(name) {
+            try {
+                const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+                return match ? decodeURIComponent(match[3]) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+                localStorage.setItem(name, 'true');
+            } catch (e) {}
+        }
+
+        function isSuppressed() {
+            try {
+                if (getCookie(COOKIE_NAME) === 'true') return true;
+                if (localStorage.getItem(COOKIE_NAME) === 'true') return true;
+            } catch (e) {}
+            return false;
+        }
+
+        if (isSuppressed()) return;
+
+        const backdrop = document.getElementById('newsletterModalBackdrop');
+        const card = document.getElementById('newsletterModalCard');
+        const closeBtn = document.getElementById('newsletterCloseBtn');
+        const form = document.getElementById('newsletterModalForm');
+        const successState = document.getElementById('newsletterSuccessState');
+        const emailInput = document.getElementById('newsletterModalEmail');
+
+        if (!backdrop || !card) return;
+
+        let modalShown = false;
+        let timer = null;
+
+        function showModal() {
+            if (modalShown || isSuppressed()) return;
+            modalShown = true;
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('scroll', checkScroll);
+
+            backdrop.style.display = 'flex';
+            backdrop.setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                backdrop.classList.add('visible');
+                if (emailInput) emailInput.focus();
+            }, 30);
+        }
+
+        function closeModal(suppressDays = SUPPRESSION_DAYS) {
+            setCookie(COOKIE_NAME, 'true', suppressDays);
+            backdrop.classList.remove('visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 350);
+        }
+
+        // Trigger 1: 50% Scroll of page content
+        function checkScroll() {
+            if (modalShown) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal <= 0) return;
+            const currentScroll = window.scrollY || window.pageYOffset;
+            if ((currentScroll / scrollTotal) >= 0.50) {
+                showModal();
+            }
+        }
+
+        // Trigger 2: Exactly 30 seconds on index page
+        timer = setTimeout(showModal, 30000);
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+
+        // Close Handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeModal(SUPPRESSION_DAYS);
+            });
+        }
+
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('visible')) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                if (!email) return;
+
+                form.style.display = 'none';
+                if (successState) successState.style.display = 'block';
+
+                setCookie(COOKIE_NAME, 'true', 60);
+
+                setTimeout(function() {
+                    closeModal(60);
+                }, 2600);
+            });
+        }
+    })();
+</script>

@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --facebook: #3b5998;
+            --instagram: #e4405f;
+            --twitter: #1da1f2;
+            --whatsapp: #25d366;
+            --telegram: #0088cc;
+            --youtube: #ff0000;
+            --tiktok: #000000;
+            --linkedin: #0077b5;
+            --reddit: #ff4500;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+        }
+
+        .section-title.center {
+            text-align: center;
+        }
+
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Page Loader Styles */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .vs-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .line {
+            height: 8px;
+            width: 200px;
+            border-radius: 4px;
+            background-color: #e8f4fc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #3498db,
+                #3498db 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: loading 1.5s infinite;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 0.2s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 0.4s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loading {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Social Stats */
+        .social-stats {
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--white);
+        }
+
+        .facebook-bg {
+            background-color: var(--facebook);
+        }
+
+        .instagram-bg {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .twitter-bg {
+            background-color: var(--twitter);
+        }
+
+        .whatsapp-bg {
+            background-color: var(--whatsapp);
+        }
+
+        .telegram-bg {
+            background-color: var(--telegram);
+        }
+
+        .youtube-bg {
+            background-color: var(--youtube);
+        }
+
+        .tiktok-bg {
+            background-color: var(--tiktok);
+        }
+
+        .linkedin-bg {
+            background-color: var(--linkedin);
+        }
+
+        .reddit-bg {
+            background-color: var(--reddit);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .facebook-btn {
+            background-color: var(--facebook);
+            color: var(--white);
+        }
+
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: var(--white);
+        }
+
+        .twitter-btn {
+            background-color: var(--twitter);
+            color: var(--white);
+        }
+
+        .whatsapp-btn {
+            background-color: var(--whatsapp);
+            color: var(--white);
+        }
+
+        .telegram-btn {
+            background-color: var(--telegram);
+            color: var(--white);
+        }
+
+        .youtube-btn {
+            background-color: var(--youtube);
+            color: var(--white);
+        }
+
+        .tiktok-btn {
+            background-color: var(--tiktok);
+            color: var(--white);
+        }
+
+        .linkedin-btn {
+            background-color: var(--linkedin);
+            color: var(--white);
+        }
+
+        .reddit-btn {
+            background-color: var(--reddit);
+            color: var(--white);
+        }
+
+        .stat-btn:hover {
+            filter: brightness(110%);
+            transform: translateY(-2px);
+        }
+
+        /* Community Features */
+        .community-features {
+            background-color: var(--light-blue);
+            padding: 4rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        /* Community Groups */
+        .community-groups {
+            padding: 4rem 0;
+        }
+
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .group-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .group-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .group-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .group-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-blue);
+        }
+
+        .group-members {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .group-content {
+            padding: 1.5rem;
+        }
+
+        .group-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .group-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .group-btn.primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .group-btn.secondary {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .group-btn:hover {
+            filter: brightness(110%);
+            transform: translateY(-2px);
+        }
+
+        /* User Testimonials */
+        .testimonials {
+            background-color: var(--light-blue);
+            padding: 4rem 0;
+        }
+
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.3rem;
+            color: var(--dark-blue);
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--light-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+
+            .group-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="vs-logo">VS</div>
+        <div class="loading-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="entertainment.html" class="nav-link">Entertainment</a></li>
+                <li><a href="technology.html" class="nav-link">Technology</a></li>
+                <li><a href="lifestyle.html" class="nav-link">Lifestyle</a></li>
+                <li><a href="community.html" class="nav-link active">Community</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Join Our Community</h1>
+            <p>Connect with millions of readers, share your thoughts, and be part of the conversation across all our social platforms.</p>
+        </div>
+    </section>
+
+    <!-- Social Stats -->
+    <section class="social-stats">
+        <div class="container">
+            <h2 class="section-title center">Our Social Media Presence</h2>
+            <p class="center" style="max-width: 700px; margin: 0 auto 2rem;">We're building communities across all major platforms. Join us wherever you're most active!</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon facebook-bg">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="stat-value">125K</div>
+                    <div class="stat-label">Facebook Followers</div>
+                    <a href="https://facebook.com/viralson" target="_blank" class="stat-btn facebook-btn">Follow Us</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon instagram-bg">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="stat-value">89K</div>
+                    <div class="stat-label">Instagram Followers</div>
+                    <a href="https://instagram.com/viralson" target="_blank" class="stat-btn instagram-btn">Follow Us</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon twitter-bg">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="stat-value">64K</div>
+                    <div class="stat-label">Twitter Followers</div>
+                    <a href="https://twitter.com/viralson" target="_blank" class="stat-btn twitter-btn">Follow Us</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon youtube-bg">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="stat-value">42K</div>
+                    <div class="stat-label">YouTube Subscribers</div>
+                    <a href="https://youtube.com/viralson" target="_blank" class="stat-btn youtube-btn">Subscribe</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon tiktok-bg">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <div class="stat-value">78K</div>
+                    <div class="stat-label">TikTok Followers</div>
+                    <a href="https://tiktok.com/@viralson" target="_blank" class="stat-btn tiktok-btn">Follow Us</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon linkedin-bg">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <div class="stat-value">15K</div>
+                    <div class="stat-label">LinkedIn Followers</div>
+                    <a href="https://linkedin.com/company/viralson" target="_blank" class="stat-btn linkedin-btn">Follow Us</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon reddit-bg">
+                        <i class="fab fa-reddit-alien"></i>
+                    </div>
+                    <div class="stat-value">32K</div>
+                    <div class="stat-label">Reddit Members</div>
+                    <a href="https://reddit.com/r/viralson" target="_blank" class="stat-btn reddit-btn">Join Community</a>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon telegram-bg">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <div class="stat-value">18K</div>
+                    <div class="stat-label">Telegram Members</div>
+                    <a href="https://t.me/viralson" target="_blank" class="stat-btn telegram-btn">Join Channel</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Features -->
+    <section class="community-features">
+        <div class="container">
+            <h2 class="section-title center">Community Benefits</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Exclusive Content</h3>
+                    <p>Get access to content not available on our main website, including behind-the-scenes looks and early releases.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Direct Interaction</h3>
+                    <p>Chat directly with our editors, writers, and fellow community members in our dedicated groups.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="feature-title">Influence Content</h3>
+                    <p>Suggest topics, vote on what we cover next, and help shape the future of Viral Son.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Groups -->
+    <section class="community-groups">
+        <div class="container">
+            <h2 class="section-title center">Join Our Groups</h2>
+            <p class="center" style="max-width: 700px; margin: 0 auto 2rem;">Connect with like-minded people in our dedicated community groups.</p>
+            
+            <div class="groups-container">
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon whatsapp-bg">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="group-title">WhatsApp Group</h3>
+                        <div class="group-members">1,200+ Members</div>
+                    </div>
+                    <div class="group-content">
+                        <p class="group-description">Join our daily conversations about trending topics, share interesting finds, and connect with our community in real-time.</p>
+                        <div class="group-actions">
+                            <a href="https://chat.whatsapp.com/invite/viralson" target="_blank" class="group-btn primary">Join Group</a>
+                            <a href="#" class="group-btn secondary">View Rules</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon telegram-bg">
+                            <i class="fab fa-telegram-plane"></i>
+                        </div>
+                        <h3 class="group-title">Telegram Channel</h3>
+                        <div class="group-members">18,000+ Subscribers</div>
+                    </div>
+                    <div class="group-content">
+                        <p class="group-description">Get instant updates on breaking news, viral content, and exclusive announcements directly to your Telegram.</p>
+                        <div class="group-actions">
+                            <a href="https://t.me/viralson" target="_blank" class="group-btn primary">Join Channel</a>
+                            <a href="#" class="group-btn secondary">View Content</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon facebook-bg">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <h3 class="group-title">Facebook Group</h3>
+                        <div class="group-members">45,000+ Members</div>
+                    </div>
+                    <div class="group-content">
+                        <p class="group-description">Participate in discussions, share your thoughts on articles, and connect with our largest community on Facebook.</p>
+                        <div class="group-actions">
+                            <a href="https://facebook.com/groups/viralson" target="_blank" class="group-btn primary">Join Group</a>
+                            <a href="#" class="group-btn secondary">View Guidelines</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title center">What Our Community Says</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"The Viral Son WhatsApp group is my go-to source for staying updated on trending topics. The discussions are always insightful and the community is amazing!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Sarah Johnson">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Community Member since 2021</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"I love how engaged the Viral Son team is with their community. They actually listen to our suggestions and implement them. It feels great to be heard!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Michael Chen">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Active in Telegram Channel</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"The exclusive content in the Facebook group is worth joining alone. I've discovered so many interesting perspectives and made genuine connections."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Priya Patel">
+                        </div>
+                        <div class="author-info">
+                            <h4>Priya Patel</h4>
+                            <p>Facebook Group Moderator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay Connected</h2>
+            <p>Subscribe to our newsletter for weekly updates, exclusive content, and community highlights.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for trending news, entertainment, and community discussions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html">Home</a></li>
+                        <li class="footer-link"><a href="news.html">News</a></li>
+                        <li class="footer-link"><a href="entertainment.html">Entertainment</a></li>
+                        <li class="footer-link"><a href="technology.html">Technology</a></li>
+                        <li class="footer-link"><a href="lifestyle.html">Lifestyle</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Community</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Join Our Groups</a></li>
+                        <li class="footer-link"><a href="#">Community Guidelines</a></li>
+                        <li class="footer-link"><a href="#">Events</a></li>
+                        <li class="footer-link"><a href="#">Contribute</a></li>
+                        <li class="footer-link"><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Email: community@viralson.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 Community Street, Digital City</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Loader Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            const body = document.body;
+            
+            // Add loading class to body to prevent scrolling
+            body.classList.add('loading');
+            
+            // Hide loader when everything is loaded
+            window.addEventListener('load', function() {
+                // Minimum display time (2 seconds) for better UX
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    
+                    // Remove from DOM after transition
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            });
+            
+            // Fallback: hide loader after 5 seconds max even if load event doesn't fire
+            setTimeout(function() {
+                if (pageLoader.style.display !== 'none') {
+                    pageLoader.classList.add('hidden');
+                    body.classList.remove('loading');
+                    setTimeout(function() {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-container')) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Social media buttons functionality
+        const socialButtons = document.querySelectorAll('.stat-btn, .group-btn.primary');
+        socialButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // In a real implementation, this would track the click for analytics
+                console.log(`Clicked on: ${this.textContent}`);
+                // The actual navigation happens via the href attribute
+            });
+        });
+
+        // Newsletter form submission
+        const newsletterForms = document.querySelectorAll('.newsletter-form');
+        newsletterForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                if (email) {
+                    alert(`Thank you for subscribing to our community newsletter with: ${email}`);
+                    this.querySelector('input[type="email"]').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

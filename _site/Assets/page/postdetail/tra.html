@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download "Midnight Dreams" by Alex Parker | Viral Son</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --light-blue: #e8f4fc;
+            --dark-blue: #2980b9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --green: #2ecc71;
+            --purple: #9b59b6;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .track-download {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+
+        .track-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .album-cover {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .track-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+            line-height: 1.2;
+        }
+
+        .track-artist {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .track-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .song-description {
+            margin: 2rem 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .description-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .song-description p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .download-options {
+            margin: 2rem 0;
+        }
+
+        .download-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .quality-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quality-option {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quality-option:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        .quality-option.selected {
+            border-color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .quality-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .quality-details {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-green {
+            background-color: var(--green);
+        }
+
+        .btn-green:hover {
+            background-color: #27ae60;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .track-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .track-title {
+                font-size: 2rem;
+            }
+            
+            .quality-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Track Download Section -->
+    <section class="track-download">
+        <div class="container track-container">
+            <div class="track-artwork">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Midnight Dreams Album Cover" class="album-cover">
+            </div>
+            <div class="track-info">
+                <h1 class="track-title">Midnight Dreams</h1>
+                <div class="track-artist">Alex Parker</div>
+                
+                <div class="track-meta">
+                    <div class="track-meta-item">
+                        <i class="far fa-clock"></i>
+                        <span>3:45</span>
+                    </div>
+                    <div class="track-meta-item">
+                        <i class="far fa-calendar"></i>
+                        <span>June 15, 2023</span>
+                    </div>
+                    <div class="track-meta-item">
+                        <i class="far fa-eye"></i>
+                        <span>125K views</span>
+                    </div>
+                </div>
+
+                <div class="audio-player">
+                    <audio controls style="width: 100%;">
+                        <source src="#" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <!-- Song Description Section -->
+                <div class="song-description">
+                    <h3 class="description-title">About This Track</h3>
+                    <p>"Midnight Dreams" is a mesmerizing electronic chillout track that takes listeners on an atmospheric journey through the quiet hours of the night. Alex Parker masterfully blends ethereal synth pads with a subtle, driving beat that captures the feeling of wandering through a sleeping city.</p>
+                    
+                    <p>The track opens with a gentle, pulsing bassline that sets the mood, gradually introducing layered textures of ambient sounds and distant echoes. At the 1:10 mark, the main melody emerges - a haunting piano sequence that floats above the arrangement like moonlight through clouds.</p>
+                    
+                    <div class="highlight">
+                        <p>"I wanted to capture that magical feeling when the world is asleep and anything seems possible. The quiet hours between midnight and dawn have always been my most creative time." - Alex Parker</p>
+                    </div>
+                    
+                    <p>As the track progresses, subtle percussion elements enter the soundscape, creating a sense of movement and anticipation. The carefully crafted build-up leads to an emotional peak at 2:45, where all elements converge in a beautiful, cinematic moment before gradually fading back into the night.</p>
+                    
+                    <p>Production-wise, "Midnight Dreams" showcases Parker's signature attention to detail. The track features field recordings of rain and distant city sounds, processed through various effects to create a dreamlike quality. The mixing balances warmth and clarity, allowing each element to breathe while maintaining the overall atmospheric cohesion.</p>
+                    
+                    <p>This track has been featured in several popular chillout and study playlists, with listeners praising its ability to create a focused yet relaxed state of mind. Whether you're working late, studying, or simply unwinding, "Midnight Dreams" provides the perfect sonic backdrop for your nighttime activities.</p>
+                </div>
+
+                <!-- Download Options -->
+                <div class="download-options">
+                    <h3 class="download-title">Download Options</h3>
+                    <div class="quality-options">
+                        <div class="quality-option selected" data-quality="high">
+                            <div class="quality-name">High Quality</div>
+                            <div class="quality-details">320 kbps • 8.9 MB</div>
+                        </div>
+                        <div class="quality-option" data-quality="medium">
+                            <div class="quality-name">Medium Quality</div>
+                            <div class="quality-details">192 kbps • 5.4 MB</div>
+                        </div>
+                        <div class="quality-option" data-quality="low">
+                            <div class="quality-name">Standard Quality</div>
+                            <div class="quality-details">128 kbps • 3.6 MB</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-green download-btn">
+                        <i class="fas fa-download"></i> Download Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Viral Son. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Quality selection functionality
+        const qualityOptions = document.querySelectorAll('.quality-option');
+        let selectedQuality = 'high';
+        
+        qualityOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                qualityOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Update selected quality
+                selectedQuality = this.getAttribute('data-quality');
+                
+                // Update download button text
+                const downloadBtn = document.querySelector('.download-btn');
+                downloadBtn.innerHTML = `<i class="fas fa-download"></i> Download (${selectedQuality.toUpperCase()})`;
+            });
+        });
+
+        // Download button functionality
+        const downloadBtn = document.querySelector('.download-btn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function() {
+                alert(`Your download for "Midnight Dreams" in ${selectedQuality.toUpperCase()} quality will begin shortly. Thank you for using Viral Son!`);
+            });
+        }
+    </script>
+</body>
+</html>

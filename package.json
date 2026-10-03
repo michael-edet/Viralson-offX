@@ -1,0 +1,17 @@
+{
+  "name": "viralson",
+  "version": "1.0.0",
+  "description": "Viral Son - Modern Blogging Platform (11ty + Netlify Ready)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "dev": "node server.js",
+    "start": "node server.js",
+    "lint": "npx @11ty/eleventy --dryrun"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "express": "^4.21.2"
+  }
+}

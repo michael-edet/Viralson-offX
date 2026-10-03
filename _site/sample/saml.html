@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Son | Modern Blogging Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --accent-blue: #4285f4;
+            --text-dark: #202124;
+            --text-light: #5f6368;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --border-color: #dadce0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Advanced Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 800;
+            font-size: 22px;
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.2);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Advanced Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .main-nav li {
+            position: relative;
+        }
+
+        .main-nav a {
+            font-weight: 600;
+            color: var(--text-dark);
+            padding: 8px 0;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-blue);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            padding: 15px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .dropdown li {
+            padding: 0;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .main-nav li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-btn, .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .search-btn:hover, .mobile-menu-btn:hover {
+            background: var(--light-gray);
+            color: var(--primary-blue);
+        }
+
+        .subscribe-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.2);
+        }
+
+        .subscribe-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            margin-bottom: 60px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-blue), var(--accent-blue));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--dark-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(26, 115, 232, 0.4);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            box-shadow: none;
+        }
+
+        .cta-button.outline:hover {
+            background: var(--light-blue);
+            transform: translateY(-3px);
+        }
+
+        /* Featured Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        .view-all {
+            color: var(--primary-blue);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .view-all:hover {
+            gap: 12px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .featured-main {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .featured-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .featured-main img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 25px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .featured-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .featured-content p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .article-meta i {
+            margin-right: 5px;
+        }
+
+        .featured-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .side-article {
+            display: flex;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .side-article:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .side-article img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .side-content {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .side-content h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 12px 24px;
+            background: var(--light-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .category-tab.active {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .category-tab:hover:not(.active) {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 20px;
+        }
+
+        .article-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .article-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            padding: 70px 0;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--white);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 16px 25px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background: var(--dark-blue);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #0a3d7a;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 70px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #b0b3b8;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-blue);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-container {
+                gap: 20px;
+            }
+            
+            .main-nav {
+                gap: 20px;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .main-nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 280px;
+                height: calc(100vh - 80px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 40px 30px;
+                transition: var(--transition);
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .main-nav.active {
+                left: 0;
+            }
+            
+            .main-nav li {
+                width: 100%;
+            }
+            
+            .main-nav a {
+                display: block;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding: 0;
+                background: transparent;
+                display: none;
+            }
+            
+            .dropdown.active {
+                display: block;
+            }
+            
+            .dropdown li {
+                padding-left: 20px;
+            }
+            
+            .dropdown a {
+                padding: 10px 0;
+                border-bottom: none;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                border-radius: 16px;
+            }
+            
+            .newsletter-form input {
+                border-radius: 16px 16px 0 0;
+            }
+            
+            .newsletter-form button {
+                padding: 16px;
+                border-radius: 0 0 16px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 24px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Advanced Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VS</div>
+                <div class="logo-text">Viral Son</div>
+            </div>
+            
+            <div class="nav-container">
+                <nav>
+                    <ul class="main-nav">
+                        <li><a href="#">Home</a></li>
+                        <li>
+                            <a href="#">News <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="#">Politics</a></li>
+                                <li><a href="#">Business</a></li>
+                                <li><a href="#">Technology</a></li>
+                                <li><a href="#">Science</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Entertainment <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="#">Movies</a></li>
+                                <li><a href="#">TV Shows</a></li>
+                                <li><a href="#">Music</a></li>
+                                <li><a href="#">Celebrity News</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Opinion</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="nav-actions">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                    <button class="subscribe-btn">Subscribe</button>
+                    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Stay Ahead with Viral Son's Exclusive Content</h1>
+                <p>Discover breaking news, entertainment updates, and thought-provoking articles from around the globe. Join our community of informed readers.</p>
+                <div class="hero-actions">
+                    <a href="#" class="cta-button">Explore Articles</a>
+                    <a href="#" class="cta-button outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Featured Section -->
+        <section class="featured">
+            <div class="section-header">
+                <h2 class="section-title">Featured Stories</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="featured-grid">
+                <div class="featured-main">
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Featured Article">
+                    <div class="featured-content">
+                        <span class="category-tag">Technology</span>
+                        <h3>The Future of Digital Entertainment in a Post-Pandemic World</h3>
+                        <p>How streaming services and content creators are adapting to changing consumer behaviors and what we can expect in the coming years.</p>
+                        <div class="article-meta">
+                            <span><i class="far fa-user"></i> John Smith</span>
+                            <span><i class="far fa-clock"></i> June 15, 2023</span>
+                            <span><i class="far fa-comment"></i> 24 Comments</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="featured-sidebar">
+                    <div class="side-article">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 1">
+                        <div class="side-content">
+                            <span class="category-tag">Business</span>
+                            <h4>Tech Giants Announce New Sustainability Initiatives</h4>
+                            <div class="article-meta">
+                                <span><i class="far fa-clock"></i> June 14</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="side-article">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 2">
+                        <div class="side-content">
+                            <span class="category-tag">Entertainment</span>
+                            <h4>Summer Music Festivals Return With Impressive Lineups</h4>
+                            <div class="article-meta">
+                                <span><i class="far fa-clock"></i> June 12</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="side-article">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Side Article 3">
+                        <div class="side-content">
+                            <span class="category-tag">Lifestyle</span>
+                            <h4>How Remote Work Is Reshaping Urban Real Estate Markets</h4>
+                            <div class="article-meta">
+                                <span><i class="far fa-clock"></i> June 10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Tabs -->
+        <section class="categories">
+            <div class="section-header">
+                <h2 class="section-title">Latest Articles</h2>
+            </div>
+            
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All</div>
+                <div class="category-tab" data-category="news">News</div>
+                <div class="category-tab" data-category="entertainment">Entertainment</div>
+                <div class="category-tab" data-category="technology">Technology</div>
+                <div class="category-tab" data-category="lifestyle">Lifestyle</div>
+            </div>
+
+            <div class="articles-grid">
+                <div class="article-card" data-category="news">
+                    <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="News Article 1">
+                    <div class="article-content">
+                        <span class="category-tag">News</span>
+                        <h3>Global Summit Addresses Climate Change Action Plans</h3>
+                        <p>World leaders gather to discuss ambitious targets for reducing carbon emissions over the next decade.</p>
+                        <div class="article-meta">
+                            <span><i class="far fa-clock"></i> June 15</span>
+                            <span><i class="far fa-comment"></i> 18</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card" data-category="entertainment">
+                    <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c1bf527?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Entertainment Article 1">
+                    <div class="article-content">
+                        <span class="category-tag">Entertainment</span>
+                        <h3>Streaming Wars Intensify With New Platform Launches</h3>
+                        <p>As more services enter the market, consumers face both more choice and subscription fatigue.</p>
+                        <div class="article-meta">
+                            <span><i class="far fa-clock"></i> June 14</span>
+                            <span><i class="far fa-comment"></i> 32</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card" data-category="technology">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Technology Article 1">
+                    <div class="article-content">
+                        <span class="category-tag">Technology</span>
+                        <h3>AI Breakthroughs Promise to Revolutionize Healthcare</h3>
+                        <p>New machine learning models are showing remarkable accuracy in diagnosing diseases from medical images.</p>
+                        <div class="article-meta">
+                            <span><i class="far fa-clock"></i> June 13</span>
+                            <span><i class="far fa-comment"></i> 21</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Add this section right before the newsletter section in your existing code -->
+
+<section class="community">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Join Our Community</h2>
+            <p>Connect with fellow readers, share your thoughts, and be part of the conversation</p>
+        </div>
+        
+        <div class="community-grid">
+            <!-- Community Stats -->
+            <div class="community-stats">
+                <div class="stat-item">
+                    <div class="stat-number">25K+</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1.2M</div>
+                    <div class="stat-label">Monthly Discussions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Expert Contributors</div>
+                </div>
+            </div>
+            
+            <!-- Community Features -->
+            <div class="community-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Discussion Forums</h3>
+                    <p>Join conversations on trending topics and share your perspective with our community.</p>
+                    <a href="#" class="feature-link">Explore Forums <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Member Groups</h3>
+                    <p>Connect with people who share your interests in specialized topic groups.</p>
+                    <a href="#" class="feature-link">Find Groups <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Live Events</h3>
+                    <p>Participate in Q&A sessions, webinars, and virtual meetups with experts.</p>
+                    <a href="#" class="feature-link">View Events <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3>Recent Community Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-user">Sarah Johnson</div>
+                            <div class="activity-text">commented on "The Future of AI in Creative Industries"</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-user">Michael Chen</div>
+                            <div class="activity-text">started a new discussion in Tech Enthusiasts</div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-user">Emma Rodriguez</div>
+                            <div class="activity-text">shared an article in Movie Lovers group</div>
+                            <div class="activity-time">Yesterday</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="view-all">View All Activity <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <!-- Community CTA -->
+            <div class="community-cta">
+                <div class="cta-content">
+                    <h3>Ready to Join the Conversation?</h3>
+                    <p>Create your free account and become part of our growing community today.</p>
+                    <div class="cta-actions">
+                        <a href="#" class="cta-button">Sign Up Free</a>
+                        <a href="#" class="cta-button outline">Learn More</a>
+                    </div>
+                </div>
+                <div class="cta-image">
+                    <img src="https://images.unsplash.com/photo-1551836026-d5c88ac5c4c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Community Members">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Community Section Styles */
+    .community {
+        padding: 80px 0;
+        background: var(--light-gray);
+        margin-bottom: 60px;
+    }
+
+    .community-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    /* Community Stats */
+    .community-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 20px;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 30px 20px;
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        color: var(--text-light);
+        font-weight: 600;
+    }
+
+    /* Community Features */
+    .community-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .feature-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        text-align: center;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: var(--light-blue);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: var(--primary-blue);
+        font-size: 28px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+    }
+
+    .feature-card p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+    }
+
+    .feature-link {
+        color: var(--primary-blue);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition);
+    }
+
+    .feature-link:hover {
+        gap: 12px;
+    }
+
+    /* Recent Activity */
+    .recent-activity {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+    }
+
+    .recent-activity h3 {
+        font-size: 1.4rem;
+        margin-bottom: 25px;
+        color: var(--text-dark);
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .recent-activity h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--primary-blue);
+        border-radius: 2px;
+    }
+
+    .activity-list {
+        margin-bottom: 25px;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+    .activity-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .activity-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-user {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+    }
+
+    .activity-text {
+        color: var(--text-light);
+        margin-bottom: 5px;
+    }
+
+    .activity-time {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    /* Community CTA */
+    .community-cta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        border-radius: 20px;
+        overflow: hidden;
+        color: var(--white);
+    }
+
+    .cta-content {
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .cta-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .cta-content p {
+        margin-bottom: 30px;
+        opacity: 0.9;
+    }
+
+    .cta-actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .cta-actions .cta-button {
+        background: var(--white);
+        color: var(--primary-blue);
+    }
+
+    .cta-actions .cta-button.outline {
+        background: transparent;
+        color: var(--white);
+        border: 2px solid var(--white);
+    }
+
+    .cta-actions .cta-button.outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cta-image {
+        height: 100%;
+        min-height: 300px;
+    }
+
+    .cta-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+        .community-cta {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-image {
+            order: -1;
+            min-height: 250px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .community {
+            padding: 60px 0;
+        }
+        
+        .community-stats {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-content {
+            padding: 30px;
+        }
+        
+        .cta-actions {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .community-features {
+            grid-template-columns: 1fr;
+        }
+        
+        .feature-card {
+            padding: 25px;
+        }
+        
+        .recent-activity {
+            padding: 25px;
+        }
+    }
+</style>
+
+<script>
+    // Add any JavaScript needed for the community section here
+    // For example, you could add functionality to:
+    // - Load more activity items
+    // - Animate stats counting up
+    // - Handle community sign-up forms
+    
+    // Example: Animate stats counting up
+    document.addEventListener('DOMContentLoaded', function() {
+        const statItems = document.querySelectorAll('.stat-item');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.stat-number');
+                    const targetValue = parseInt(statNumber.textContent);
+                    let currentValue = 0;
+                    const increment = targetValue / 50;
+                    
+                    const timer = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= targetValue) {
+                            statNumber.textContent = targetValue.toLocaleString() + (targetValue === 500 ? '+' : '');
+                            clearInterval(timer);
+                        } else {
+                            statNumber.textContent = Math.floor(currentValue).toLocaleString();
+                        }
+                    }, 30);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statItems.forEach(item => {
+            observer.observe(item);
+        });
+    });
+</script>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter and never miss the latest news, trends, and insights from Viral Son.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Viral Son</h3>
+                    <p>Your trusted source for the latest news, entertainment, and insights from around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Entertainment</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Blog Street, City</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> info@viralson.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Viral Son. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mainNav = document.querySelector('.main-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Dropdown Menu for Mobile
+        const dropdownParents = document.querySelectorAll('.main-nav li:has(.dropdown)');
+        
+        dropdownParents.forEach(parent => {
+            const link = parent.querySelector('a');
+            
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = parent.querySelector('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Category Tabs
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const articleCards = document.querySelectorAll('.article-card');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Filter articles
+                const category = tab.getAttribute('data-category');
+                
+                articleCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Newsletter Form Submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input').value;
+            alert(`Thank you for subscribing with: ${email}`);
+            newsletterForm.reset();
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+            }
+        });
+    </script>
+</body>
+</html>

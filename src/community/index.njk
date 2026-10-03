@@ -1,0 +1,104 @@
+---
+layout: layouts/base.njk
+title: "Community Hub | Viral Son"
+description: "Join the Viral Son community to discuss trending topics, share insights, and connect with global thinkers."
+currentCategory: "community"
+category: "Community"
+permalink: "/community/"
+---
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category" style="background:#e8eaf6; color:#3f51b5; margin-bottom: 0.8rem;">Voices & Discussions</span>
+        <h1>Community Hub</h1>
+        <p>A vibrant, moderated space where readers, creators, and experts exchange perspectives on modern culture, technology, and society.</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="community-layout" style="margin-bottom: 4rem;">
+        <div>
+            <h2 class="section-title">Active Discussion Boards</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem;">
+                <div style="background: var(--white); padding: 1.8rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--primary-blue);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span class="post-category tech">Tech Debate</span>
+                        <span style="font-size: 0.85rem; color: var(--text-light);"><i class="far fa-comments"></i> 148 replies</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.6rem;"><a href="/posts/future-of-ai/">Will autonomous agent workflows replace traditional SaaS interfaces by 2028?</a></h3>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Community members weigh in on software automation, personal agent architectures, and enterprise adoption hurdles.</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-light);">
+                        <span>Started by <strong>@AlexCoder</strong></span>
+                        <span>Active 12m ago</span>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); padding: 1.8rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span class="post-category news">Climate Action</span>
+                        <span style="font-size: 0.85rem; color: var(--text-light);"><i class="far fa-comments"></i> 92 replies</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.6rem;"><a href="/posts/global-climate-summit/">How local communities can participate in the newly announced conservation targets</a></h3>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Sharing grassroots reforestation efforts, municipal solar cooperatives, and water harvesting models.</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-light);">
+                        <span>Started by <strong>@EcoLeader</strong></span>
+                        <span>Active 1h ago</span>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); padding: 1.8rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--purple);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span class="post-category ent">Music Producers</span>
+                        <span style="font-size: 0.85rem; color: var(--text-light);"><i class="far fa-comments"></i> 64 replies</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.6rem;"><a href="/download/music/">Stem remix contest: "Midnight Whispers" acoustic tracks available</a></h3>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem;">Download raw audio stems and submit your electronic or orchestral remix before the end of the month.</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-light);">
+                        <span>Started by <strong>@AuroraAudio</strong></span>
+                        <span>Active 3h ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join / Guidelines Sidebar -->
+        <div>
+            <div class="sidebar-widget" style="margin-bottom: 2rem;">
+                <h3 class="sidebar-title">Join Member Ranks</h3>
+                <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.5rem;">Register to participate in voting, publish community blogs, and access exclusive sound and article downloads.</p>
+                <form onsubmit="event.preventDefault(); alert('Welcome to the Viral Son Community! A verification email has been sent.'); this.reset();">
+                    <div class="form-group">
+                        <label>Display Name</label>
+                        <input type="text" class="form-control" placeholder="e.g. AlexMorgan" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" placeholder="alex@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Area of Interest</label>
+                        <select class="form-control">
+                            <option>Technology & AI</option>
+                            <option>Global News & Climate</option>
+                            <option>Music & Entertainment</option>
+                            <option>Lifestyle & Productivity</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Create Free Account</button>
+                </form>
+            </div>
+
+            <div class="sidebar-widget" style="background: var(--light-blue);">
+                <h3 class="sidebar-title">Community Code of Conduct</h3>
+                <ul style="list-style: none; font-size: 0.9rem; color: var(--text-dark);">
+                    <li style="margin-bottom: 0.6rem;"><i class="fas fa-check" style="color: var(--green); margin-right: 8px;"></i> Be respectful and constructive in critiques.</li>
+                    <li style="margin-bottom: 0.6rem;"><i class="fas fa-check" style="color: var(--green); margin-right: 8px;"></i> Cite sources when sharing statistical claims.</li>
+                    <li style="margin-bottom: 0.6rem;"><i class="fas fa-check" style="color: var(--green); margin-right: 8px;"></i> Zero tolerance for spam, hate speech, or harassment.</li>
+                    <li><i class="fas fa-envelope" style="color: var(--primary-blue); margin-right: 8px;"></i> Contact: <strong>community@viralson.com</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

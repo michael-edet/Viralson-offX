@@ -1,0 +1,126 @@
+<!-- Category Tabs & Dynamic Tag Filter Script -->
+<script>
+    (function() {
+        function initCategoryFilter() {
+            const filterContainer = document.querySelector('.filter-pills');
+            if (!filterContainer) return;
+
+            const pills = filterContainer.querySelectorAll('.filter-pill');
+            if (!pills.length) return;
+
+            // Find all filterable article items
+            const filterableCards = document.querySelectorAll('[data-tags]');
+            if (!filterableCards.length) return;
+
+            // Empty state container element
+            let emptyState = document.getElementById('categoryFilterEmptyState');
+            if (!emptyState) {
+                emptyState = document.createElement('div');
+                emptyState.id = 'categoryFilterEmptyState';
+                emptyState.className = 'category-filter-empty';
+                emptyState.style.display = 'none';
+                emptyState.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 1.5rem; background: var(--card-bg); border-radius: var(--radius-md); border: 1px dashed var(--border-color); margin: 2rem 0;">
+                        <i class="fas fa-filter" style="font-size: 2.2rem; color: var(--primary-blue); opacity: 0.6; margin-bottom: 0.8rem;"></i>
+                        <h4 style="font-size: 1.25rem; color: var(--text-dark); margin-bottom: 0.4rem;">No articles found under this tag</h4>
+                        <p style="color: var(--text-light); font-size: 0.92rem; margin-bottom: 1.2rem;">Try selecting a different topic or return to all stories.</p>
+                        <button type="button" class="btn btn-outline" id="resetCategoryFilterBtn">Show All Stories</button>
+                    </div>
+                `;
+                
+                // Append after grid or container
+                const grid = document.querySelector('.posts-grid') || document.querySelector('.news-container');
+                if (grid && grid.parentNode) {
+                    grid.parentNode.insertBefore(emptyState, grid.nextSibling);
+                }
+            }
+
+            const resetBtn = document.getElementById('resetCategoryFilterBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => applyFilter('all'));
+            }
+
+            function applyFilter(selectedTag) {
+                const normalizedFilter = (selectedTag || 'all').toLowerCase().trim();
+
+                // Update active class on pills
+                pills.forEach(pill => {
+                    const pillTag = (pill.getAttribute('data-tag') || pill.textContent || '').toLowerCase().trim();
+                    const isAll = (normalizedFilter === 'all' && (pillTag.includes('all') || pillTag === 'all'));
+                    const isMatch = pillTag.includes(normalizedFilter) || normalizedFilter.includes(pillTag) || (pill.getAttribute('data-tag') === normalizedFilter);
+
+                    if (isAll || isMatch) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+
+                // Filter cards
+                let matchCount = 0;
+                filterableCards.forEach(card => {
+                    const cardTags = (card.getAttribute('data-tags') || '').toLowerCase();
+                    const cardCategory = (card.querySelector('.post-category')?.textContent || '').toLowerCase();
+                    const cardTitle = (card.querySelector('h2, h3, h4')?.textContent || '').toLowerCase();
+
+                    const matches = normalizedFilter === 'all' || 
+                                    cardTags.includes(normalizedFilter) || 
+                                    cardCategory.includes(normalizedFilter) ||
+                                    cardTitle.includes(normalizedFilter);
+
+                    if (matches) {
+                        card.style.display = '';
+                        card.classList.remove('filter-hidden');
+                        card.classList.add('filter-visible');
+                        matchCount++;
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.add('filter-hidden');
+                        card.classList.remove('filter-visible');
+                    }
+                });
+
+                // Handle empty state
+                if (matchCount === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+
+                // Update query parameter without page reload
+                try {
+                    const url = new URL(window.location.href);
+                    if (normalizedFilter === 'all') {
+                        url.searchParams.delete('tag');
+                    } else {
+                        url.searchParams.set('tag', normalizedFilter);
+                    }
+                    window.history.replaceState({}, '', url.toString());
+                } catch (e) {}
+            }
+
+            // Click event listeners for filter pills
+            pills.forEach(pill => {
+                pill.style.cursor = 'pointer';
+                pill.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tag = this.getAttribute('data-tag') || this.textContent.trim();
+                    applyFilter(tag);
+                });
+            });
+
+            // Auto-selection on page load from URL (?tag=... or #...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tagFromUrl = urlParams.get('tag') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+            if (tagFromUrl) {
+                applyFilter(tagFromUrl);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCategoryFilter);
+        } else {
+            initCategoryFilter();
+        }
+    })();
+</script>

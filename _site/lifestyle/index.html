@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestyle &amp; Wellness | Viral Son</title>
+    <meta name="description" content="Cultivate mindful productivity, intentional living, wellness routines, and balanced habits.">
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="Lifestyle &amp; Wellness | Viral Son">
+    <meta property="og:description" content="Cultivate mindful productivity, intentional living, wellness routines, and balanced habits.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://viralson.com/lifestyle/">
+    
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+</head>
+<body>
+    <!-- Global Reusable Page Loader -->
+    <!-- Reusable Page Loader Component -->
+<div class="page-loader" id="pageLoader">
+    <div class="vs-logo">VS</div>
+    <div class="loading-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<script>
+    // Smooth loader disappearance on page ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loader.classList.add('hidden');
+                }, 300);
+            });
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 2500);
+        }
+    });
+</script>
+
+
+    <!-- Dynamic Header -->
+    <!-- Dynamic Header Component -->
+<header>
+    <div class="container header-container">
+        <a href="/" class="logo">
+            <div class="logo-icon">VS</div>
+            <div class="logo-text">Viral Son</div>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/" class="nav-link ">Home</a></li>
+                <li><a href="/news/" class="nav-link ">News</a></li>
+                <li><a href="/entertainment/" class="nav-link ">Entertainment</a></li>
+                <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/lifestyle/" class="nav-link active">Lifestyle</a></li>
+                <li><a href="/community/" class="nav-link ">Community</a></li>
+                <li><a href="/about/" class="nav-link ">About</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script>
+    (function() {
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('navMenu');
+        if (btn && menu) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    menu.classList.remove('active');
+                }
+            });
+        }
+    })();
+</script>
+
+
+    <!-- Main Content Area -->
+    <main>
+        
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <span class="post-category life" style="margin-bottom: 0.8rem;">Mindful Living</span>
+        <h1>Lifestyle & Wellness</h1>
+        <p>Curated guides on mindful minimalism, sustainable habits, sleep science, mental resilience, and peak productivity.</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="filter-pills">
+        <span class="filter-pill active">All Lifestyle</span>
+        <span class="filter-pill">Productivity</span>
+        <span class="filter-pill">Mindfulness & Minimalism</span>
+        <span class="filter-pill">Health & Sleep</span>
+        <span class="filter-pill">Travel & Living</span>
+    </div>
+
+    <!-- Featured Post -->
+    <article class="news-card featured" style="margin-bottom: 3rem;">
+        <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80" alt="Minimalist living room">
+        </div>
+        <div class="news-content">
+            <span class="post-category life">Minimalism</span>
+            <h2 class="news-title"><a href="/posts/minimalism-lifestyle/">Minimalism: How Simplifying Your Life Can Lead to Happiness</a></h2>
+            <p class="news-date">June 16, 2026 • By Sarah Jenkins • 5 min read</p>
+            <p style="color: var(--text-light); margin-bottom: 1.2rem;">Decluttering physical and digital spaces isn't just aesthetic—it fundamentally lowers cognitive load, improves decision-making, and brings tranquility.</p>
+            <a href="/posts/minimalism-lifestyle/" class="btn">Read Lifestyle Guide</a>
+        </div>
+    </article>
+
+    <div class="posts-grid">
+        <!-- Productivity Habits -->
+        <article class="post-card">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Productivity Desk">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Productivity</span>
+                <h3 class="post-title"><a href="/posts/productive-habits/">10 Habits of Highly Productive People</a></h3>
+                <p class="post-excerpt">Discover the daily routines that high achievers swear by to protect focus and maximize creative output.</p>
+                <div class="post-meta">
+                    <span>June 12, 2026</span>
+                    <a href="/posts/productive-habits/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Sleep Science -->
+        <article class="post-card">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80" alt="Rest and sleep">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Health</span>
+                <h3 class="post-title"><a href="/posts/better-sleep-science/">The Science Behind Better Sleep</a></h3>
+                <p class="post-excerpt">Practical clinical tips, circadian optimization, and bedroom environmental cues for deep, restorative sleep.</p>
+                <div class="post-meta">
+                    <span>June 10, 2026</span>
+                    <a href="/posts/better-sleep-science/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Nutrition & Longevity -->
+        <article class="post-card">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" alt="Healthy nutrition">
+            </div>
+            <div class="post-content">
+                <span class="post-category life">Nutrition</span>
+                <h3 class="post-title"><a href="/posts/minimalism-lifestyle/">The Mediterranean Diet: Longevity Secrets</a></h3>
+                <p class="post-excerpt">Cardiovascular health and neuroprotective benefits confirmed by recent multi-decade clinical trials.</p>
+                <div class="post-meta">
+                    <span>June 8, 2026</span>
+                    <a href="/posts/minimalism-lifestyle/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Dynamic Footer -->
+    <!-- Dynamic Footer Component -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-col">
+                <a href="/" class="logo" style="margin-bottom: 1.2rem; display: inline-flex;">
+                    <div class="logo-icon" style="background: rgba(255,255,255,0.18);">VS</div>
+                    <div class="logo-text" style="color: #ffffff;">Viral Son</div>
+                </a>
+                <p style="font-size: 0.95rem; opacity: 0.85; margin-bottom: 1.2rem;">
+                    Your trusted destination for trending news, deep-dive technology insights, lifestyle guides, entertainment culture, and vibrant community discussions.
+                </p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Column -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="/">Home</a></li>
+                    <li class="footer-link"><a href="/news/">News</a></li>
+                    <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                    <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
+                    <li class="footer-link"><a href="/community/">Community Hub</a></li>
+                    <li class="footer-link"><a href="/about/">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Dynamic Category Column -->
+            <div class="footer-col">
+                
+                    <h3>Lifestyle Focus</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/minimalism-lifestyle/">Minimalist Philosophy</a></li>
+                        <li class="footer-link"><a href="/posts/productive-habits/">Productivity Routines</a></li>
+                        <li class="footer-link"><a href="/posts/better-sleep-science/">Sleep & Health Science</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Mindfulness</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Travel & Living</a></li>
+                    </ul>
+                
+            </div>
+
+            <!-- Contact & Newsletter Column -->
+            <div class="footer-col">
+                <h3>Contact & Updates</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 0.4rem;">
+                    <strong>Department:</strong> 
+                    
+                        lifestyle@viralson.com
+                    
+                </p>
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
+                    Get curated daily digests and viral stories delivered straight to your inbox.
+                </p>
+                <form class="footer-form" onsubmit="event.preventDefault(); const email = this.querySelector('input').value; alert('Thank you for subscribing with ' + email + '!'); this.reset();">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <input type="email" class="form-control" placeholder="Enter your email" required style="padding: 10px; font-size: 0.9rem; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; padding: 10px; font-size: 0.9rem;">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

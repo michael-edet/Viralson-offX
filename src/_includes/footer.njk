@@ -1,0 +1,150 @@
+<!-- Dynamic Footer Component -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-col">
+                <a href="/" class="logo" style="margin-bottom: 1.2rem; display: inline-flex;">
+                    <div class="logo-icon" style="background: rgba(255,255,255,0.18);">VS</div>
+                    <div class="logo-text" style="color: #ffffff;">Viral Son</div>
+                </a>
+                <p style="font-size: 0.95rem; opacity: 0.85; margin-bottom: 1.2rem;">
+                    Your trusted destination for trending news, deep-dive technology insights, lifestyle guides, entertainment culture, and vibrant community discussions.
+                </p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Column -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="/">Home</a></li>
+                    <li class="footer-link"><a href="/news/">News</a></li>
+                    <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                    <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/sports/">Sports</a></li>
+                    <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
+                    <li class="footer-link"><a href="/community/">Community Hub</a></li>
+                    <li class="footer-link"><a href="/about/">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Dynamic Category Column -->
+            <div class="footer-col">
+                {% if category == 'News' or currentCategory == 'news' %}
+                    <h3>News Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/global-climate-summit/">Climate & Environment</a></li>
+                        <li class="footer-link"><a href="/news/">Global Politics</a></li>
+                        <li class="footer-link"><a href="/news/">Finance & Markets</a></li>
+                        <li class="footer-link"><a href="/news/">Science Breakthroughs</a></li>
+                        <li class="footer-link"><a href="/news/">Breaking Headlines</a></li>
+                    </ul>
+                {% elif category == 'Entertainment' or currentCategory == 'entertainment' %}
+                    <h3>Entertainment</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/summer-music-festival/">Music Festivals</a></li>
+                        <li class="footer-link"><a href="/entertainment/">Cinema & TV Series</a></li>
+                        <li class="footer-link"><a href="/download/music/">Music Downloads</a></li>
+                        <li class="footer-link"><a href="/posts/midnight-dreams-track/">Audio Single Teaser</a></li>
+                        <li class="footer-link"><a href="/posts/midnight-whispers/">Feature Reviews</a></li>
+                    </ul>
+                {% elif category == 'Technology' or currentCategory == 'technology' %}
+                    <h3>Tech Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/future-of-ai/">Artificial Intelligence</a></li>
+                        <li class="footer-link"><a href="/posts/revolutionary-foldable-phone/">Smartphones & Hardware</a></li>
+                        <li class="footer-link"><a href="/technology/">Mobile Innovation</a></li>
+                        <li class="footer-link"><a href="/technology/">Cybersecurity</a></li>
+                        <li class="footer-link"><a href="/technology/">Software & Web3</a></li>
+                    </ul>
+                {% elif category == 'Sports' or currentCategory == 'sports' %}
+                    <h3>Sports Categories</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/united-late-winner/">Champions League</a></li>
+                        <li class="footer-link"><a href="/sports/?tab=football">Football Coverage</a></li>
+                        <li class="footer-link"><a href="/sports/?tab=basketball">Basketball Playoffs</a></li>
+                        <li class="footer-link"><a href="/sports/?tab=tennis">Grand Slam Tennis</a></li>
+                        <li class="footer-link"><a href="/sports/?tab=motorsport">Motorsport & GP</a></li>
+                    </ul>
+                {% elif category == 'Lifestyle' or currentCategory == 'lifestyle' %}
+                    <h3>Lifestyle Focus</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/posts/minimalism-lifestyle/">Minimalist Philosophy</a></li>
+                        <li class="footer-link"><a href="/posts/productive-habits/">Productivity Routines</a></li>
+                        <li class="footer-link"><a href="/posts/better-sleep-science/">Sleep & Health Science</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Mindfulness</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Travel & Living</a></li>
+                    </ul>
+                {% elif category == 'Community' or currentCategory == 'community' %}
+                    <h3>Community Hub</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/community/">Trending Discussions</a></li>
+                        <li class="footer-link"><a href="/community/">Writer Circles</a></li>
+                        <li class="footer-link"><a href="/community/">Member Feedback</a></li>
+                        <li class="footer-link"><a href="/community/">Community Guidelines</a></li>
+                        <li class="footer-link"><a href="/about/">Join the Team</a></li>
+                    </ul>
+                {% else %}
+                    <h3>Top Sections</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/news/">Latest News</a></li>
+                        <li class="footer-link"><a href="/technology/">Tech Horizons</a></li>
+                        <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Lifestyle & Wellness</a></li>
+                        <li class="footer-link"><a href="/community/">Community Voices</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+
+            <!-- Contact & Newsletter Column -->
+            <div class="footer-col">
+                <h3>Contact & Updates</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 0.4rem;">
+                    <strong>Department:</strong> 
+                    {% if category == 'News' or currentCategory == 'news' %}
+                        news@viralson.com
+                    {% elif category == 'Entertainment' or currentCategory == 'entertainment' %}
+                        entertainment@viralson.com
+                    {% elif category == 'Technology' or currentCategory == 'technology' %}
+                        tech@viralson.com
+                    {% elif category == 'Lifestyle' or currentCategory == 'lifestyle' %}
+                        lifestyle@viralson.com
+                    {% elif category == 'Community' or currentCategory == 'community' %}
+                        community@viralson.com
+                    {% else %}
+                        info@viralson.com
+                    {% endif %}
+                </p>
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
+                    Get curated daily digests and viral stories delivered straight to your inbox.
+                </p>
+                <form class="footer-form" onsubmit="event.preventDefault(); const email = this.querySelector('input').value; alert('Thank you for subscribing with ' + email + '!'); this.reset();">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <input type="email" class="form-control" placeholder="Enter your email" required style="padding: 10px; font-size: 0.9rem; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; padding: 10px; font-size: 0.9rem;">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; <span id="footerCurrentYear">{% year %}</span> Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Auto-Update Yearly Date Script -->
+<script>
+    (function() {
+        const yearEl = document.getElementById('footerCurrentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    })();
+</script>

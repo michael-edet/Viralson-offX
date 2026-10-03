@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Son | Modern Blogging Platform</title>
+    <meta name="description" content="Discover what&#39;s trending worldwide in tech, entertainment, lifestyle, and global news.">
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:title" content="Viral Son | Modern Blogging Platform">
+    <meta property="og:description" content="Discover what&#39;s trending worldwide in tech, entertainment, lifestyle, and global news.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://viralson.com/">
+    
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+</head>
+<body>
+    <!-- Global Reusable Page Loader -->
+    <!-- Reusable Page Loader Component -->
+<div class="page-loader" id="pageLoader">
+    <div class="vs-logo">VS</div>
+    <div class="loading-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<script>
+    // Smooth loader disappearance on page ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loader.classList.add('hidden');
+                }, 300);
+            });
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 2500);
+        }
+    });
+</script>
+
+
+    <!-- Dynamic Header -->
+    <!-- Dynamic Header Component -->
+<header>
+    <div class="container header-container">
+        <a href="/" class="logo">
+            <div class="logo-icon">VS</div>
+            <div class="logo-text">Viral Son</div>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/" class="nav-link active">Home</a></li>
+                <li><a href="/news/" class="nav-link ">News</a></li>
+                <li><a href="/entertainment/" class="nav-link ">Entertainment</a></li>
+                <li><a href="/technology/" class="nav-link ">Technology</a></li>
+                <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
+                <li><a href="/community/" class="nav-link ">Community</a></li>
+                <li><a href="/about/" class="nav-link ">About</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script>
+    (function() {
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('navMenu');
+        if (btn && menu) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    menu.classList.remove('active');
+                }
+            });
+        }
+    })();
+</script>
+
+
+    <!-- Main Content Area -->
+    <main>
+        
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-container">
+        <div class="hero-content">
+            <span class="post-category" style="margin-bottom: 1rem; font-size: 0.9rem;">Trending Right Now</span>
+            <h1 class="hero-title">Discover What's Shaping Tomorrow</h1>
+            <p class="hero-subtitle">Your premier digital destination for breaking stories, in-depth technology analyses, music releases, and thought-provoking lifestyle features.</p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#featured" class="btn">Explore Latest Stories</a>
+                <a href="/news/" class="btn btn-outline">Browse News Hub</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80" alt="Viral Son Blogging Studio">
+        </div>
+    </div>
+</section>
+
+<!-- Breaking News Ticker -->
+<section class="breaking-news">
+    <div class="container breaking-container">
+        <span class="breaking-label">HOT STORY</span>
+        <div class="breaking-text">
+            <a href="/posts/global-climate-summit/" style="color: #ffffff; text-decoration: none;">Global Climate Summit reaches historic agreement on carbon emissions - 195 countries commit to net-zero framework &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Posts Section -->
+<section class="featured-posts" id="featured" style="padding: 4rem 0;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <h2 class="section-title" style="margin-bottom: 0;">Featured Articles</h2>
+            <a href="/technology/" style="color: var(--primary-blue); font-weight: 600;">View All Tech &rarr;</a>
+        </div>
+
+        <div class="posts-grid">
+            <!-- Card 1 -->
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=600&q=80" alt="Artificial Intelligence">
+                </div>
+                <div class="post-content">
+                    <span class="post-category tech">Technology</span>
+                    <h3 class="post-title"><a href="/posts/future-of-ai/">The Future of AI in Everyday Life</a></h3>
+                    <p class="post-excerpt">How artificial intelligence and agentic models are transforming our daily workflows, smart homes, and creative routines.</p>
+                    <div class="post-meta">
+                        <span>June 15, 2026</span>
+                        <span>5 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Productive Habits">
+                </div>
+                <div class="post-content">
+                    <span class="post-category life">Lifestyle</span>
+                    <h3 class="post-title"><a href="/posts/productive-habits/">10 Habits of Highly Productive People</a></h3>
+                    <p class="post-excerpt">Discover actionable morning rituals, deep work protocols, and cognitive strategies that top performers use daily.</p>
+                    <div class="post-meta">
+                        <span>June 12, 2026</span>
+                        <span>4 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80" alt="Sleep Science">
+                </div>
+                <div class="post-content">
+                    <span class="post-category life">Health & Wellness</span>
+                    <h3 class="post-title"><a href="/posts/better-sleep-science/">The Science Behind Better Sleep</a></h3>
+                    <p class="post-excerpt">Understanding circadian rhythm biology, blue light mitigation, and clinical protocols for rejuvenating rest.</p>
+                    <div class="post-meta">
+                        <span>June 10, 2026</span>
+                        <span>6 min read</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+<section class="news" style="padding: 4rem 0; background-color: var(--white);">
+    <div class="container">
+        <h2 class="section-title">Latest Global News</h2>
+        <div class="news-container">
+            <div class="news-main">
+                <!-- Large Highlight Card -->
+                <div class="news-card featured">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=600&q=80" alt="Global Summit">
+                    </div>
+                    <div class="news-content">
+                        <span class="post-category news">Breaking News</span>
+                        <h3 class="news-title"><a href="/posts/global-climate-summit/">Global Summit Addresses Climate Change Solutions</a></h3>
+                        <p class="news-date">June 18, 2026 • 7 min read</p>
+                        <p style="color: var(--text-light); margin-bottom: 1.2rem;">World leaders gather to formalize actionable timelines for emissions caps, renewable infrastructure investments, and biodiversity preservation.</p>
+                        <a href="/posts/global-climate-summit/" class="btn">Read Full Story</a>
+                    </div>
+                </div>
+
+                <!-- Secondary Cards Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="news-card">
+                        <div class="news-image" style="height: 160px;">
+                            <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=600&q=80" alt="Smartphone tech">
+                        </div>
+                        <div class="news-content" style="padding: 1.2rem;">
+                            <span class="post-category tech">Gadgets</span>
+                            <h4 style="font-size: 1.15rem; margin-bottom: 0.5rem;"><a href="/posts/revolutionary-foldable-phone/">Revolutionary Foldable Phone Breaks New Ground</a></h4>
+                            <p class="news-date">June 17, 2026</p>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <div class="news-image" style="height: 160px;">
+                            <img src="https://images.unsplash.com/photo-1551135049-8a33b5883817?auto=format&fit=crop&w=600&q=80" alt="Market growth">
+                        </div>
+                        <div class="news-content" style="padding: 1.2rem;">
+                            <span class="post-category news">Markets</span>
+                            <h4 style="font-size: 1.15rem; margin-bottom: 0.5rem;"><a href="/news/">Tech Sector Surges as Clean Energy Index Sets Records</a></h4>
+                            <p class="news-date">June 16, 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Sidebar -->
+            <aside class="news-sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="sidebar-title">Trending Now</h3>
+                    <ul class="trending-list">
+                        <li class="trending-item">
+                            <a href="/posts/minimalism-lifestyle/" class="trending-title">Minimalism: Simplifying Your Life for True Joy</a>
+                            <div class="trending-meta"><span>Lifestyle</span> • <span>14.2K views</span></div>
+                        </li>
+                        <li class="trending-item">
+                            <a href="/posts/summer-music-festival/" class="trending-title">Summer Music Festival 2026 Announces Lineup</a>
+                            <div class="trending-meta"><span>Entertainment</span> • <span>18.5K views</span></div>
+                        </li>
+                        <li class="trending-item">
+                            <a href="/download/music/" class="trending-title">Single Download: "Midnight Whispers" - Aurora</a>
+                            <div class="trending-meta"><span>Music Release</span> • <span>9.8K downloads</span></div>
+                        </li>
+                        <li class="trending-item">
+                            <a href="/posts/midnight-dreams-track/" class="trending-title">Audio Feature: "Midnight Dreams" by Alex Parker</a>
+                            <div class="trending-meta"><span>Exclusive</span> • <span>7.1K views</span></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget" style="background: var(--light-blue);">
+                    <h3 class="sidebar-title" style="border-bottom-color: var(--primary-blue);">Join Our Community</h3>
+                    <p style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 1.2rem;">Engage with over 30,000 passionate writers, creators, and readers in topic channels.</p>
+                    <a href="/community/" class="btn btn-purple" style="width: 100%;">Enter Community Hub</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- Entertainment & Music Spotlights -->
+<section class="entertainment" style="padding: 4rem 0;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem;">
+            <h2 class="section-title" style="margin-bottom: 0;">Entertainment & Media</h2>
+            <a href="/entertainment/" style="color: var(--primary-blue); font-weight: 600;">Browse All Entertainment &rarr;</a>
+        </div>
+
+        <div class="posts-grid">
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1489599809505-7c8e1c8bfc26?auto=format&fit=crop&w=600&q=80" alt="Music Festival">
+                </div>
+                <div class="post-content">
+                    <span class="post-category ent">Festival</span>
+                    <h3 class="post-title"><a href="/posts/summer-music-festival/">Summer Music Festival Lineup Revealed</a></h3>
+                    <p class="post-excerpt">Headliners, stage breakdowns, and acoustic highlights for this summer's most anticipated outdoor festival.</p>
+                    <div class="post-meta">
+                        <span>June 14, 2026</span>
+                        <a href="/posts/summer-music-festival/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Midnight Whispers track">
+                </div>
+                <div class="post-content">
+                    <span class="post-category ent">Single Release</span>
+                    <h3 class="post-title"><a href="/download/music/">"Midnight Whispers" by Aurora (Audio)</a></h3>
+                    <p class="post-excerpt">Experience the mesmerizing vocal harmonies and electronic textures. Available for high-res lossless download.</p>
+                    <div class="post-meta">
+                        <span>Audio Single</span>
+                        <a href="/download/music/" class="btn btn-green" style="padding: 4px 12px; font-size: 0.85rem;">Download</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Midnight Dreams track">
+                </div>
+                <div class="post-content">
+                    <span class="post-category ent">Track Premiere</span>
+                    <h3 class="post-title"><a href="/posts/midnight-dreams-track/">"Midnight Dreams" by Alex Parker</a></h3>
+                    <p class="post-excerpt">Interactive audio player, track stems, and behind-the-scenes recording diary of Parker's newest album preview.</p>
+                    <div class="post-meta">
+                        <span>June 9, 2026</span>
+                        <a href="/posts/midnight-dreams-track/" style="color: var(--primary-blue); font-weight: 600;">Listen Now &rarr;</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Community Showcase Section -->
+<section style="padding: 4rem 0; background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%); border-top: 1px solid var(--border-color);">
+    <div class="container" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center;">
+        <div>
+            <span class="post-category" style="background: #e8eaf6; color: #3f51b5; margin-bottom: 1rem;">Collaborative Hub</span>
+            <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 1.2rem;">Be Part of the Conversation</h2>
+            <p style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1.5rem;">Join a community of thought leaders, indie writers, and curious readers sharing perspectives on tomorrow's world.</p>
+            <ul style="list-style: none; margin-bottom: 2rem;">
+                <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; font-size: 1.05rem;"><i class="fas fa-check-circle" style="color: var(--green);"></i> Exclusive member articles & early preview downloads</li>
+                <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; font-size: 1.05rem;"><i class="fas fa-check-circle" style="color: var(--green);"></i> Submit guest editorials and articles for review</li>
+                <li style="display: flex; align-items: center; gap: 10px; font-size: 1.05rem;"><i class="fas fa-check-circle" style="color: var(--green);"></i> Moderated discussion boards across all key topics</li>
+            </ul>
+            <a href="/community/" class="btn">Explore Community</a>
+        </div>
+        <div style="background: var(--white); padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+            <h3 style="font-size: 1.4rem; color: var(--dark-blue); margin-bottom: 0.5rem;">Send Us a Message</h3>
+            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.5rem;">Have a story pitch, question, or feedback for the editors?</p>
+            <form onsubmit="event.preventDefault(); alert('Message sent successfully! Our editorial desk will reply shortly.'); this.reset();">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Your Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="Your Email Address" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea class="form-control" placeholder="How can we collaborate?" required style="min-height: 90px;"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <!-- Dynamic Footer -->
+    <!-- Dynamic Footer Component -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-col">
+                <a href="/" class="logo" style="margin-bottom: 1.2rem; display: inline-flex;">
+                    <div class="logo-icon" style="background: rgba(255,255,255,0.18);">VS</div>
+                    <div class="logo-text" style="color: #ffffff;">Viral Son</div>
+                </a>
+                <p style="font-size: 0.95rem; opacity: 0.85; margin-bottom: 1.2rem;">
+                    Your trusted destination for trending news, deep-dive technology insights, lifestyle guides, entertainment culture, and vibrant community discussions.
+                </p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Column -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="/">Home</a></li>
+                    <li class="footer-link"><a href="/news/">News</a></li>
+                    <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                    <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
+                    <li class="footer-link"><a href="/community/">Community Hub</a></li>
+                    <li class="footer-link"><a href="/about/">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Dynamic Category Column -->
+            <div class="footer-col">
+                
+                    <h3>Top Sections</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="/news/">Latest News</a></li>
+                        <li class="footer-link"><a href="/technology/">Tech Horizons</a></li>
+                        <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
+                        <li class="footer-link"><a href="/lifestyle/">Lifestyle & Wellness</a></li>
+                        <li class="footer-link"><a href="/community/">Community Voices</a></li>
+                    </ul>
+                
+            </div>
+
+            <!-- Contact & Newsletter Column -->
+            <div class="footer-col">
+                <h3>Contact & Updates</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 0.4rem;">
+                    <strong>Department:</strong> 
+                    
+                        info@viralson.com
+                    
+                </p>
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">
+                    Get curated daily digests and viral stories delivered straight to your inbox.
+                </p>
+                <form class="footer-form" onsubmit="event.preventDefault(); const email = this.querySelector('input').value; alert('Thank you for subscribing with ' + email + '!'); this.reset();">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <input type="email" class="form-control" placeholder="Enter your email" required style="padding: 10px; font-size: 0.9rem; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; padding: 10px; font-size: 0.9rem;">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
