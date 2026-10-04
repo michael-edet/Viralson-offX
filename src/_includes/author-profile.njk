@@ -7,6 +7,7 @@
 {% set finalAuthorDesk = authorDesk | default(authorProfile.desk if authorProfile else "Viral Son Newsroom") %}
 {% set finalAuthorAvatar = authorAvatar | default(authorProfile.avatar if authorProfile else "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80") %}
 {% set finalAuthorBio = authorBio | default(authorProfile.bio if authorProfile else "Senior contributor covering cultural movements, technology breakthroughs, and global stories for Viral Son.") %}
+{% set finalAuthorFullBio = authorFullBio | default(authorProfile.fullBio if authorProfile and authorProfile.fullBio else finalAuthorBio) %}
 
 {# Social Link Resolution #}
 {% set socialTwitter = authorTwitter | default(authorProfile.social.twitter if authorProfile and authorProfile.social else null) %}
@@ -91,8 +92,45 @@
                 </div>
             </div>
 
-            <!-- Author Bio Paragraph -->
-            <p class="author-bio-text">{{ finalAuthorBio }}</p>
+            <!-- Author Bio Paragraph with Expand / Collapse Feature -->
+            <div class="author-bio-container" id="authorBioContainer_{{ finalAuthorName | slugify }}">
+                <p class="author-bio-text author-bio-summary">{{ finalAuthorBio }}</p>
+                {% if finalAuthorFullBio and finalAuthorFullBio != finalAuthorBio %}
+                <div class="author-bio-extended" id="authorBioExtended_{{ finalAuthorName | slugify }}" style="display: none;">
+                    <p class="author-bio-text author-bio-full-details">{{ finalAuthorFullBio }}</p>
+                </div>
+                <button type="button" class="author-bio-toggle-btn" aria-expanded="false" aria-controls="authorBioExtended_{{ finalAuthorName | slugify }}" onclick="toggleAuthorBio(this, 'authorBioExtended_{{ finalAuthorName | slugify }}')">
+                    <span class="bio-toggle-label">Read Full Biography</span>
+                    <i class="fas fa-chevron-down bio-toggle-icon"></i>
+                </button>
+                {% endif %}
+            </div>
+
+            <script>
+                if (typeof window.toggleAuthorBio !== 'function') {
+                    window.toggleAuthorBio = function(btn, targetId) {
+                        const extendedEl = document.getElementById(targetId);
+                        if (!extendedEl) return;
+                        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                        const labelEl = btn.querySelector('.bio-toggle-label');
+                        const iconEl = btn.querySelector('.bio-toggle-icon');
+                        
+                        if (isExpanded) {
+                            extendedEl.style.display = 'none';
+                            btn.setAttribute('aria-expanded', 'false');
+                            btn.classList.remove('expanded');
+                            if (labelEl) labelEl.textContent = 'Read Full Biography';
+                            if (iconEl) iconEl.className = 'fas fa-chevron-down bio-toggle-icon';
+                        } else {
+                            extendedEl.style.display = 'block';
+                            btn.setAttribute('aria-expanded', 'true');
+                            btn.classList.add('expanded');
+                            if (labelEl) labelEl.textContent = 'Collapse Biography';
+                            if (iconEl) iconEl.className = 'fas fa-chevron-up bio-toggle-icon';
+                        }
+                    };
+                }
+            </script>
 
             <!-- Author Card Bottom Actions / Attribution -->
             <div class="author-profile-footer">

@@ -130,6 +130,42 @@ isPost: true
                         <!-- Populated by comments.js script below -->
                     </div>
                 </div>
+
+                <!-- Comment Report Confirmation Modal Dialog -->
+                <div id="commentReportModal" class="comment-report-backdrop" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle" style="display: none;">
+                    <div class="comment-report-dialog">
+                        <div class="report-dialog-header">
+                            <h4 id="reportModalTitle" style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-flag" style="color: var(--red);"></i> Report Comment for Review
+                            </h4>
+                            <button type="button" class="report-dialog-close" onclick="closeReportDialog()" aria-label="Close dialog">&times;</button>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin: 0.75rem 0 1.25rem 0; line-height: 1.5;">
+                            Help our moderation team keep conversations constructive and civil. Please confirm if this comment violates our community guidelines:
+                        </p>
+                        <form id="commentReportForm" onsubmit="handleConfirmReport(event)">
+                            <input type="hidden" id="reportTargetCommentId" value="">
+                            <div class="form-group" style="margin-bottom: 1.25rem;">
+                                <label for="reportReasonSelect" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-dark);">
+                                    Reason for Report <span style="color: var(--red);">*</span>
+                                </label>
+                                <select id="reportReasonSelect" class="form-control" required style="width: 100%;">
+                                    <option value="Spam or Unsolicited Promotion">Spam or Unsolicited Promotion</option>
+                                    <option value="Harassment or Hate Speech">Harassment, Insults, or Hate Speech</option>
+                                    <option value="Misinformation or False Claims">Misinformation or Deceptive Claims</option>
+                                    <option value="Inappropriate or Vulgar Content">Inappropriate or Vulgar Content</option>
+                                    <option value="Other Policy Violation">Other Code of Conduct Violation</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                                <button type="button" class="btn btn-outline" onclick="closeReportDialog()" style="padding: 8px 16px;">Cancel</button>
+                                <button type="submit" class="btn" style="background-color: var(--red); border-color: var(--red); padding: 8px 18px; color: #fff;">
+                                    <i class="fas fa-shield-alt"></i> Confirm & Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </section>
         </article>
 
@@ -265,7 +301,7 @@ isPost: true
             }
 
             container.innerHTML = comments.map(c => `
-                <div class="comment-card" id="comment-${c.id}">
+                <div class="comment-card ${c.reported ? 'comment-flagged' : ''}" id="comment-${c.id}">
                     <div class="comment-avatar-wrapper">
                         <img src="${c.avatar}" alt="${escapeHTML(c.author)}" class="comment-avatar">
                     </div>
@@ -275,13 +311,22 @@ isPost: true
                             <span class="comment-timestamp">${c.date}</span>
                         </div>
                         <p class="comment-text-paragraph">${escapeHTML(c.text)}</p>
+                        ${c.reported ? `
+                            <div class="comment-reported-tag" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--red); background: rgba(231, 76, 60, 0.1); padding: 3px 8px; border-radius: 4px; margin-bottom: 0.6rem; border: 1px solid rgba(231, 76, 60, 0.25);">
+                                <i class="fas fa-shield-alt"></i> Flagged for moderator review (${escapeHTML(c.reportedReason || 'Policy check')})
+                            </div>
+                        ` : ''}
                         <div class="comment-actions-bar">
-                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')">
+                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')" aria-label="Like comment">
                                 <i class="${c.userLiked ? 'fas' : 'far'} fa-heart"></i>
                                 <span>${c.likes}</span>
                             </button>
-                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')">
+                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')" aria-label="Reply to comment">
                                 <i class="fas fa-reply"></i> Reply
+                            </button>
+                            <button type="button" class="comment-action-btn report-btn ${c.reported ? 'reported' : ''}" onclick="openReportDialog('${c.id}')" ${c.reported ? 'disabled title="Comment is already reported"' : 'title="Report this comment for moderator review"'} aria-label="Report comment">
+                                <i class="${c.reported ? 'fas fa-shield-alt' : 'far fa-flag'}"></i>
+                                <span>${c.reported ? 'Reported' : 'Report'}</span>
                             </button>
                         </div>
                     </div>
@@ -310,6 +355,51 @@ isPost: true
                 textarea.value = `@${authorName} `;
                 textarea.focus();
                 textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        // --- Comment Report Confirmation Flow ---
+        window.openReportDialog = function(commentId) {
+            const modal = document.getElementById('commentReportModal');
+            const targetInput = document.getElementById('reportTargetCommentId');
+            if (modal && targetInput) {
+                targetInput.value = commentId;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeReportDialog = function() {
+            const modal = document.getElementById('commentReportModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        };
+
+        window.handleConfirmReport = function(e) {
+            e.preventDefault();
+            const commentId = document.getElementById('reportTargetCommentId')?.value;
+            const reason = document.getElementById('reportReasonSelect')?.value || 'Community guideline check';
+            if (!commentId) return;
+
+            const comments = getComments();
+            const targetComment = comments.find(c => c.id === commentId);
+            if (targetComment) {
+                targetComment.reported = true;
+                targetComment.reportedReason = reason;
+                targetComment.reportedAt = new Date().toISOString();
+                saveComments(comments);
+
+                closeReportDialog();
+
+                // Show affirmative confirmation message
+                const statusMsg = document.getElementById('commentStatusMessage');
+                if (statusMsg) {
+                    statusMsg.innerHTML = '<i class="fas fa-shield-alt" style="color: var(--green);"></i> Comment reported to moderation team. Thank you!';
+                    statusMsg.style.display = 'inline';
+                    setTimeout(() => { statusMsg.style.display = 'none'; }, 5000);
+                }
             }
         };
 

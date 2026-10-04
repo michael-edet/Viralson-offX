@@ -951,6 +951,88 @@ eleventyExcludeFromCollections: true
             line-height: 1.3;
         }
 
+        /* Automated SEO Meta Data Checker Styles */
+        .cms-seo-status-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-family: var(--cms-font-mono);
+            letter-spacing: 0.02em;
+        }
+
+        .cms-seo-status-pill.optimal {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .cms-seo-status-pill.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .cms-seo-status-pill.danger {
+            background: rgba(239, 68, 68, 0.18);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            animation: pulseWarning 1.5s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .cms-seo-warning-inline {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.28);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.78rem;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .cms-seo-warning-inline.info {
+            background: rgba(245, 158, 11, 0.08);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: #fcd34d;
+        }
+
+        .cms-seo-audit-box {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: 10px;
+            padding: 1.15rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cms-seo-meter-track {
+            height: 6px;
+            background: var(--cms-border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.4rem 0 0.2rem 0;
+            width: 100%;
+        }
+
+        .cms-seo-meter-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.2s ease, background-color 0.2s ease;
+        }
+
         /* Code Inspector */
         .cms-code-block {
             background: #090d16;
@@ -1272,10 +1354,24 @@ eleventyExcludeFromCollections: true
                             </div>
                         </div>
 
-                        <!-- Headline Input -->
+                        <!-- Headline Input with Live Automated SEO Checker -->
                         <div class="cms-form-group">
-                            <label class="cms-label" for="postTitle">Headline Title</label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" for="postTitle" style="margin-bottom: 0;">Headline Title</label>
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">SEO Limit: 60 chars</span>
+                                    <span id="titleCountBadge" class="cms-seo-status-pill optimal">0 / 60 chars</span>
+                                </div>
+                            </div>
                             <input type="text" id="postTitle" class="cms-input cms-input-title" placeholder="Enter a compelling article headline..." oninput="handleTitleChange()">
+                            
+                            <!-- Dynamic SEO Title Length Meter -->
+                            <div class="cms-seo-meter-track" title="Title Length Progress Bar (Standard search engine limit: 60 chars)">
+                                <div id="titleSeoMeter" class="cms-seo-meter-fill" style="width: 0%; background-color: var(--cms-primary);"></div>
+                            </div>
+
+                            <!-- Title SEO Warning Box (shows when exceeding 60 chars or when too short) -->
+                            <div id="titleSeoWarning" class="cms-seo-warning-inline" style="display: none;"></div>
                             
                             <div class="cms-slug-preview">
                                 <span>URL Permalink: /posts/</span>
@@ -1426,13 +1522,65 @@ eleventyExcludeFromCollections: true
                             </div>
                         </div>
 
-                        <!-- Excerpt / Meta Description -->
+                        <!-- Excerpt / Meta Description with Live Automated SEO Checker -->
                         <div class="cms-form-group">
-                            <label class="cms-label" for="postExcerpt">
-                                <span>Excerpt & Meta Description</span>
-                                <span id="excerptCountLabel" style="font-weight: 400; font-size: 0.72rem;">0 / 160 chars</span>
-                            </label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" for="postExcerpt" style="margin-bottom: 0;">
+                                    <span>Excerpt & Meta Description</span>
+                                </label>
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">SEO Limit: 160 chars</span>
+                                    <span id="excerptCountLabel" class="cms-seo-status-pill optimal">0 / 160 chars</span>
+                                </div>
+                            </div>
                             <textarea id="postExcerpt" class="cms-textarea" rows="3" placeholder="Brief summary of the article for social share snippets, Google search results, and category card feeds..." oninput="handleExcerptChange()"></textarea>
+
+                            <!-- Dynamic SEO Excerpt Length Meter -->
+                            <div class="cms-seo-meter-track" title="Meta Description Progress Bar (Standard search engine limit: 160 chars)">
+                                <div id="excerptSeoMeter" class="cms-seo-meter-fill" style="width: 0%; background-color: var(--cms-primary);"></div>
+                            </div>
+
+                            <!-- Excerpt SEO Warning Box (shows when exceeding 160 chars or when too short) -->
+                            <div id="excerptSeoWarning" class="cms-seo-warning-inline" style="display: none;"></div>
+                        </div>
+
+                        <!-- Automated SEO Meta Data Audit Card -->
+                        <div class="cms-seo-audit-box" id="seoAuditBox">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-search" style="color: #38bdf8;"></i>
+                                    <strong style="font-size: 0.88rem; color: var(--cms-text);">Automated SEO Meta Data Checker</strong>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span id="seoOverallScoreBadge" class="cms-seo-status-pill optimal">
+                                        <i class="fas fa-check-circle"></i> SEO Ready
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <div style="background: var(--cms-code-bg); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--cms-border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--cms-text);">Title Tag (Max 60 chars)</span>
+                                        <span id="auditTitleChars" style="font-size: 0.75rem; font-family: var(--cms-font-mono);">0 / 60</span>
+                                    </div>
+                                    <p id="auditTitleStatus" style="font-size: 0.75rem; color: var(--cms-text-muted); margin: 0; line-height: 1.4;">Enter a title to begin SEO check.</p>
+                                </div>
+                                <div style="background: var(--cms-code-bg); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--cms-border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--cms-text);">Description (Max 160 chars)</span>
+                                        <span id="auditExcerptChars" style="font-size: 0.75rem; font-family: var(--cms-font-mono);">0 / 160</span>
+                                    </div>
+                                    <p id="auditExcerptStatus" style="font-size: 0.75rem; color: var(--cms-text-muted); margin: 0; line-height: 1.4;">Enter an excerpt to begin SEO check.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.65rem;">
+                                <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="autoTrimTitle()" id="btnTrimTitle" style="display: none;">
+                                    <i class="fas fa-cut"></i> Trim Title (60 chars)
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="autoTrimExcerpt()" id="btnTrimExcerpt" style="display: none;">
+                                    <i class="fas fa-cut"></i> Trim Excerpt (160 chars)
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Author Bio -->
@@ -1623,6 +1771,58 @@ eleventyExcludeFromCollections: true
 
                         <!-- Mode 2: SEO Simulator Tab -->
                         <div id="seoPreviewTab" style="display: none; width: 100%; max-width: 720px;">
+                            <!-- Automated SEO Meta Data Checker Audit Panel -->
+                            <div class="cms-seo-card cms-seo-checker-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--cms-border); padding-bottom: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                        <i class="fas fa-search-dollar" style="color: var(--cms-primary); font-size: 1.2rem;"></i>
+                                        <div>
+                                            <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--cms-text);">Automated SEO Meta Data Checker</h4>
+                                            <p style="margin: 0; font-size: 0.78rem; color: var(--cms-text-subtle);">Real-time SERP compliance against search engine limits</p>
+                                        </div>
+                                    </div>
+                                    <span id="seoOverallScoreBadge" class="cms-seo-status-pill optimal">100% SEO Ready</span>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                                    <!-- Title Audit Metric -->
+                                    <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.75rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                            <strong style="font-size: 0.84rem; color: var(--cms-text);">
+                                                <i class="fas fa-heading" style="color: var(--cms-primary); margin-right: 4px;"></i> Headline Title (Max 60 Chars)
+                                            </strong>
+                                            <span id="auditTitleChars" style="font-size: 0.8rem; font-weight: 600; font-family: monospace;">0 / 60</span>
+                                        </div>
+                                        <div id="auditTitleStatus" style="font-size: 0.78rem; color: var(--cms-text-muted); line-height: 1.4;">
+                                            Optimal title length keeps full headline visible in Google and prevents truncation.
+                                        </div>
+                                        <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
+                                            <button type="button" id="btnTrimTitle" class="cms-btn cms-btn-danger" style="display: none; padding: 3px 10px; font-size: 0.75rem;" onclick="autoTrimTitle()">
+                                                <i class="fas fa-cut"></i> Auto-Trim Title to 60 Chars
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Excerpt Audit Metric -->
+                                    <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.75rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                            <strong style="font-size: 0.84rem; color: var(--cms-text);">
+                                                <i class="fas fa-align-left" style="color: var(--cms-primary); margin-right: 4px;"></i> Meta Description / Excerpt (Max 160 Chars)
+                                            </strong>
+                                            <span id="auditExcerptChars" style="font-size: 0.8rem; font-weight: 600; font-family: monospace;">0 / 160</span>
+                                        </div>
+                                        <div id="auditExcerptStatus" style="font-size: 0.78rem; color: var(--cms-text-muted); line-height: 1.4;">
+                                            Optimal meta descriptions between 120–160 chars maximize click-through rate.
+                                        </div>
+                                        <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
+                                            <button type="button" id="btnTrimExcerpt" class="cms-btn cms-btn-danger" style="display: none; padding: 3px 10px; font-size: 0.75rem;" onclick="autoTrimExcerpt()">
+                                                <i class="fas fa-cut"></i> Auto-Trim Description to 160 Chars
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="cms-seo-card">
                                 <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--cms-text-subtle); margin-bottom: 0.75rem;">
                                     <i class="fab fa-google" style="color: #4285f4;"></i> Google Search SERP Snippet Preview
@@ -2105,14 +2305,227 @@ eleventyExcludeFromCollections: true
             if (!isEditing || !document.getElementById('postSlug').value) {
                 document.getElementById('postSlug').value = slugifyText(title);
             }
+            auditSeoMetadata();
             updateLivePreview();
         }
 
         function handleExcerptChange() {
-            const text = document.getElementById('postExcerpt').value;
-            document.getElementById('excerptCountLabel').textContent = `${text.length} / 160 chars`;
+            auditSeoMetadata();
             updateLivePreview();
         }
+
+        // ==========================================================================
+        // AUTOMATED SEO META DATA CHECKER (Title & Excerpt/Meta Description Audit)
+        // ==========================================================================
+        function auditSeoMetadata() {
+            const titleInput = document.getElementById('postTitle');
+            const excerptInput = document.getElementById('postExcerpt');
+            if (!titleInput || !excerptInput) return;
+
+            const title = (titleInput.value || '').trim();
+            const excerpt = (excerptInput.value || '').trim();
+            const titleLen = title.length;
+            const excerptLen = excerpt.length;
+
+            const titleLimit = 60;
+            const excerptLimit = 160;
+
+            // 1. Title Audit
+            const titleCountBadge = document.getElementById('titleCountBadge');
+            const titleMeter = document.getElementById('titleSeoMeter');
+            const titleWarning = document.getElementById('titleSeoWarning');
+            const auditTitleChars = document.getElementById('auditTitleChars');
+            const auditTitleStatus = document.getElementById('auditTitleStatus');
+            const btnTrimTitle = document.getElementById('btnTrimTitle');
+
+            let titleIsOk = false;
+            let titlePercent = Math.min(100, Math.round((titleLen / titleLimit) * 100));
+
+            if (titleMeter) titleMeter.style.width = `${titlePercent}%`;
+            if (titleCountBadge) titleCountBadge.textContent = `${titleLen} / ${titleLimit} chars`;
+            if (auditTitleChars) auditTitleChars.textContent = `${titleLen} / ${titleLimit}`;
+
+            if (titleLen === 0) {
+                if (titleCountBadge) titleCountBadge.className = 'cms-seo-status-pill';
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-primary)';
+                if (titleWarning) titleWarning.style.display = 'none';
+                if (auditTitleStatus) auditTitleStatus.textContent = 'Please enter an article headline.';
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            } else if (titleLen > titleLimit) {
+                // EXCEEDED WARNING (Standard search engine limit: 60 chars)
+                const over = titleLen - titleLimit;
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill danger';
+                    titleCountBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${titleLen} / ${titleLimit} (Exceeds Limit!)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-danger)';
+                if (titleWarning) {
+                    titleWarning.style.display = 'flex';
+                    titleWarning.className = 'cms-seo-warning-inline';
+                    titleWarning.innerHTML = `
+                        <span><i class="fas fa-exclamation-circle" style="color: #ef4444; margin-right: 4px;"></i> <strong>Title exceeds limit:</strong> Headline is ${titleLen} characters (+${over} over 60-character limit). Search engines will truncate it with '...'.</span>
+                        <button type="button" class="cms-btn cms-btn-danger" style="padding: 2px 8px; font-size: 0.72rem; white-space: nowrap;" onclick="autoTrimTitle()">Auto-Trim to 60</button>
+                    `;
+                }
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-danger);"><i class="fas fa-times-circle"></i> Exceeds 60-char limit by +${over} chars. Search engines will truncate with '...'.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'inline-flex';
+            } else if (titleLen < 25) {
+                // TOO SHORT NOTICE
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill warning';
+                    titleCountBadge.innerHTML = `<i class="fas fa-info-circle"></i> ${titleLen} / ${titleLimit} (Short)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-warning)';
+                if (titleWarning) {
+                    titleWarning.style.display = 'flex';
+                    titleWarning.className = 'cms-seo-warning-inline info';
+                    titleWarning.innerHTML = `<span><i class="fas fa-info-circle" style="color: #f59e0b; margin-right: 4px;"></i> <strong>Headline is short (${titleLen} chars):</strong> Recommended optimal length is 35–60 characters to capture key search queries.</span>`;
+                }
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-warning);"><i class="fas fa-exclamation-triangle"></i> Headline is brief. Expand to 35–60 chars for optimal click-through rates.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            } else {
+                // OPTIMAL
+                titleIsOk = true;
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill optimal';
+                    titleCountBadge.innerHTML = `<i class="fas fa-check"></i> ${titleLen} / ${titleLimit} (Optimal)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-success)';
+                if (titleWarning) titleWarning.style.display = 'none';
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-success);"><i class="fas fa-check-circle"></i> Optimal length. Displays fully on Google mobile and desktop search results.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            }
+
+            // 2. Excerpt / Meta Description Audit
+            const excerptCountBadge = document.getElementById('excerptCountLabel');
+            const excerptMeter = document.getElementById('excerptSeoMeter');
+            const excerptWarning = document.getElementById('excerptSeoWarning');
+            const auditExcerptChars = document.getElementById('auditExcerptChars');
+            const auditExcerptStatus = document.getElementById('auditExcerptStatus');
+            const btnTrimExcerpt = document.getElementById('btnTrimExcerpt');
+
+            let excerptIsOk = false;
+            let excerptPercent = Math.min(100, Math.round((excerptLen / excerptLimit) * 100));
+
+            if (excerptMeter) excerptMeter.style.width = `${excerptPercent}%`;
+            if (excerptCountBadge) excerptCountBadge.textContent = `${excerptLen} / ${excerptLimit} chars`;
+            if (auditExcerptChars) auditExcerptChars.textContent = `${excerptLen} / ${excerptLimit}`;
+
+            if (excerptLen === 0) {
+                if (excerptCountBadge) excerptCountBadge.className = 'cms-seo-status-pill';
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-primary)';
+                if (excerptWarning) excerptWarning.style.display = 'none';
+                if (auditExcerptStatus) auditExcerptStatus.textContent = 'Please enter an excerpt / meta description.';
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            } else if (excerptLen > excerptLimit) {
+                // EXCEEDED WARNING (Standard search engine limit: 160 chars)
+                const over = excerptLen - excerptLimit;
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill danger';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${excerptLen} / ${excerptLimit} (Exceeds Limit!)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-danger)';
+                if (excerptWarning) {
+                    excerptWarning.style.display = 'flex';
+                    excerptWarning.className = 'cms-seo-warning-inline';
+                    excerptWarning.innerHTML = `
+                        <span><i class="fas fa-exclamation-circle" style="color: #ef4444; margin-right: 4px;"></i> <strong>Description exceeds limit:</strong> Meta description is ${excerptLen} characters (+${over} over 160-character limit). Search engines will truncate it with '...'.</span>
+                        <button type="button" class="cms-btn cms-btn-danger" style="padding: 2px 8px; font-size: 0.72rem; white-space: nowrap;" onclick="autoTrimExcerpt()">Auto-Trim to 160</button>
+                    `;
+                }
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-danger);"><i class="fas fa-times-circle"></i> Exceeds 160-char limit by +${over} chars. Snippets will be clipped by search engines.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'inline-flex';
+            } else if (excerptLen < 70) {
+                // TOO SHORT NOTICE
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill warning';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-info-circle"></i> ${excerptLen} / ${excerptLimit} (Short)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-warning)';
+                if (excerptWarning) {
+                    excerptWarning.style.display = 'flex';
+                    excerptWarning.className = 'cms-seo-warning-inline info';
+                    excerptWarning.innerHTML = `<span><i class="fas fa-info-circle" style="color: #f59e0b; margin-right: 4px;"></i> <strong>Description is short (${excerptLen} chars):</strong> Aim for 120–160 characters for complete search snippets and rich social cards.</span>`;
+                }
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-warning);"><i class="fas fa-exclamation-triangle"></i> Description is brief. Aim for 120–160 chars for optimal search presence.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            } else {
+                // OPTIMAL
+                excerptIsOk = true;
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill optimal';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-check"></i> ${excerptLen} / ${excerptLimit} (Optimal)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-success)';
+                if (excerptWarning) excerptWarning.style.display = 'none';
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-success);"><i class="fas fa-check-circle"></i> Optimal length. Fits cleanly inside Google search snippet cards.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            }
+
+            // 3. Overall Score Badge
+            const scoreBadge = document.getElementById('seoOverallScoreBadge');
+            if (scoreBadge) {
+                if (titleLen > titleLimit || excerptLen > excerptLimit) {
+                    scoreBadge.className = 'cms-seo-status-pill danger';
+                    scoreBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Warning: Limits Exceeded';
+                } else if (!titleIsOk || !excerptIsOk) {
+                    scoreBadge.className = 'cms-seo-status-pill warning';
+                    scoreBadge.innerHTML = '<i class="fas fa-info-circle"></i> SEO Needs Polish';
+                } else {
+                    scoreBadge.className = 'cms-seo-status-pill optimal';
+                    scoreBadge.innerHTML = '<i class="fas fa-check-circle"></i> 100% SEO Ready';
+                }
+            }
+        }
+
+        // Auto-Trim helper for Title (60 chars)
+        window.autoTrimTitle = function() {
+            const titleInput = document.getElementById('postTitle');
+            if (!titleInput) return;
+            let val = titleInput.value.trim();
+            if (val.length > 60) {
+                let trimmed = val.substring(0, 60);
+                const lastSpace = trimmed.lastIndexOf(' ');
+                if (lastSpace > 45) {
+                    trimmed = trimmed.substring(0, lastSpace);
+                }
+                titleInput.value = trimmed;
+                handleTitleChange();
+                showToast('Headline trimmed to 60 characters for optimal SEO.', 'success');
+            }
+        };
+
+        // Auto-Trim helper for Excerpt (160 chars)
+        window.autoTrimExcerpt = function() {
+            const excerptInput = document.getElementById('postExcerpt');
+            if (!excerptInput) return;
+            let val = excerptInput.value.trim();
+            if (val.length > 160) {
+                let trimmed = val.substring(0, 160);
+                const lastPeriod = trimmed.lastIndexOf('.');
+                const lastSpace = trimmed.lastIndexOf(' ');
+                if (lastPeriod > 120) {
+                    trimmed = trimmed.substring(0, lastPeriod + 1);
+                } else if (lastSpace > 140) {
+                    trimmed = trimmed.substring(0, lastSpace);
+                }
+                excerptInput.value = trimmed;
+                handleExcerptChange();
+                showToast('Meta description trimmed to 160 characters for optimal SEO.', 'success');
+            }
+        };
 
         function handleContentChange() {
             updateWordCount();

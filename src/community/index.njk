@@ -16,6 +16,99 @@ permalink: "/community/"
     </div>
 </section>
 
+<!-- Official Community Platform Hubs (Reddit, Telegram, WhatsApp) -->
+<section class="community-platforms-section" style="padding: 2.5rem 0 1rem 0;">
+    <div class="container">
+        <div style="text-align: center; max-width: 780px; margin: 0 auto 2.5rem auto;">
+            <span class="post-category" style="background: var(--light-blue); color: var(--primary-blue); font-weight: 700; margin-bottom: 0.6rem;">Connect Everywhere</span>
+            <h2 class="section-title center" style="margin-bottom: 0.8rem;">Official Live Channels & Communities</h2>
+            <p style="font-size: 1.05rem; color: var(--text-light); line-height: 1.6;">
+                Join the conversation where you feel most at home. Connect directly with our editors, debate trending stories in real-time, and get exclusive community briefings across Reddit, Telegram, and WhatsApp.
+            </p>
+        </div>
+
+        <div class="community-channels-grid">
+            <!-- Reddit Channel Card -->
+            <div class="community-channel-card reddit-card">
+                <div class="channel-card-top">
+                    <div class="channel-icon-badge reddit-icon-badge">
+                        <i class="fab fa-reddit-alien"></i>
+                    </div>
+                    <div class="channel-badge reddit-badge">
+                        <span class="pulse-dot reddit-dot"></span> Active Subreddit
+                    </div>
+                </div>
+                <h3 class="channel-title">Reddit Community</h3>
+                <div class="channel-handle">r/viralson</div>
+                <p class="channel-description">
+                    Engage in deep-dive threads, upvote community stories, participate in weekly editor AMAs, and debate the latest breaking tech & culture topics.
+                </p>
+                <div class="channel-meta-features">
+                    <span><i class="fas fa-check-circle"></i> Weekly AMA Sessions</span>
+                    <span><i class="fas fa-check-circle"></i> Community Story Submissions</span>
+                </div>
+                <a href="https://reddit.com/r/viralson" target="_blank" rel="noopener noreferrer" class="btn btn-channel btn-reddit" aria-label="Join Viral Son on Reddit">
+                    <i class="fab fa-reddit-alien"></i>
+                    <span>Join Subreddit & Community</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem; opacity: 0.8;"></i>
+                </a>
+            </div>
+
+            <!-- Telegram Channel Card -->
+            <div class="community-channel-card telegram-card">
+                <div class="channel-card-top">
+                    <div class="channel-icon-badge telegram-icon-badge">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <div class="channel-badge telegram-badge">
+                        <span class="pulse-dot telegram-dot"></span> Instant Broadcast & Chat
+                    </div>
+                </div>
+                <h3 class="channel-title">Telegram Channel</h3>
+                <div class="channel-handle">@viralson</div>
+                <p class="channel-description">
+                    Get breaking news alerts the second they break, audio dispatches, behind-the-scenes previews, and chat with members in our open discussion group.
+                </p>
+                <div class="channel-meta-features">
+                    <span><i class="fas fa-check-circle"></i> Instant Breaking Alerts</span>
+                    <span><i class="fas fa-check-circle"></i> Open Discussion Group</span>
+                </div>
+                <a href="https://t.me/viralson" target="_blank" rel="noopener noreferrer" class="btn btn-channel btn-telegram" aria-label="Join Viral Son on Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Join Telegram Channel & Chat</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem; opacity: 0.8;"></i>
+                </a>
+            </div>
+
+            <!-- WhatsApp Channel Card -->
+            <div class="community-channel-card whatsapp-card">
+                <div class="channel-card-top">
+                    <div class="channel-icon-badge whatsapp-icon-badge">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="channel-badge whatsapp-badge">
+                        <span class="pulse-dot whatsapp-dot"></span> Official Channel & Group
+                    </div>
+                </div>
+                <h3 class="channel-title">WhatsApp Community</h3>
+                <div class="channel-handle">Viral Son Official Channel & VIP Group</div>
+                <p class="channel-description">
+                    Direct curated daily digests, lossless sound bites, community polls, and exclusive VIP reader chat right inside your favorite messaging app.
+                </p>
+                <div class="channel-meta-features">
+                    <span><i class="fas fa-check-circle"></i> Daily Curated Digests</span>
+                    <span><i class="fas fa-check-circle"></i> Interactive Polls & Group</span>
+                </div>
+                <a href="https://whatsapp.com/channel/viralson" target="_blank" rel="noopener noreferrer" class="btn btn-channel btn-whatsapp" aria-label="Join Viral Son on WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Join WhatsApp Channel & Group</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem; opacity: 0.8;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="container">
     <div class="community-layout" style="margin-bottom: 4rem;">
         <div>
@@ -69,28 +162,38 @@ permalink: "/community/"
             {% set adType = "sidebar" %}
             {% include "google-ad.njk" %}
 
-            <div class="sidebar-widget" style="margin-bottom: 2rem;">
-                <h3 class="sidebar-title">Join Member Ranks</h3>
-                <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.5rem;">Register to participate in voting, publish community blogs, and access exclusive sound and article downloads.</p>
-                <form onsubmit="event.preventDefault(); alert('Welcome to the Viral Son Community! A verification email has been sent.'); this.reset();">
-                    <div class="form-group">
-                        <label>Display Name</label>
-                        <input type="text" class="form-control" placeholder="e.g. AlexMorgan" required>
+            <!-- Account Creation Panel (Labeled Coming Soon) -->
+            <div class="sidebar-widget account-creation-panel" style="margin-bottom: 2rem; position: relative; overflow: hidden;">
+                <div class="coming-soon-banner">
+                    <span class="coming-soon-pill">
+                        <i class="fas fa-lock" style="font-size: 0.72rem;"></i> Coming Soon
+                    </span>
+                </div>
+                
+                <h3 class="sidebar-title" style="margin-top: 0.35rem;">Join Member Ranks</h3>
+                <p style="font-size: 0.92rem; color: var(--text-light); margin-bottom: 1.2rem; line-height: 1.5;">
+                    Member accounts and personalized contributor dashboards are <strong>currently under development</strong>. Join our official Reddit, Telegram, or WhatsApp channels above to receive early beta access keys when registration opens!
+                </p>
+
+                <div class="coming-soon-feature-box" style="background: var(--light-blue); padding: 1rem; border-radius: var(--radius-sm); border: 1px dashed var(--primary-blue); margin-bottom: 1.2rem;">
+                    <div style="font-weight: 700; font-size: 0.85rem; color: var(--dark-blue); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;">
+                        <i class="fas fa-sparkles" style="color: var(--primary-blue);"></i> Upcoming Member Perks:
                     </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control" placeholder="alex@domain.com" required>
+                    <ul style="list-style: none; font-size: 0.82rem; color: var(--text-dark); padding-left: 0; margin: 0; line-height: 1.6;">
+                        <li><i class="fas fa-check" style="color: var(--green); margin-right: 6px;"></i> Verified reader badge & profile flair</li>
+                        <li><i class="fas fa-check" style="color: var(--green); margin-right: 6px;"></i> Community article drafting & submissions</li>
+                        <li><i class="fas fa-check" style="color: var(--green); margin-right: 6px;"></i> Unrestricted lossless audio & stem downloads</li>
+                    </ul>
+                </div>
+
+                <form onsubmit="event.preventDefault(); alert('Thank you! You have been added to our early access priority list. We will notify you when Member Accounts go live.'); this.reset();">
+                    <div class="form-group" style="margin-bottom: 0.85rem;">
+                        <label style="font-size: 0.85rem; font-weight: 600;">Get Notified on Launch</label>
+                        <input type="email" class="form-control" placeholder="Enter your email for launch invite..." required>
                     </div>
-                    <div class="form-group">
-                        <label>Area of Interest</label>
-                        <select class="form-control">
-                            <option>Technology & AI</option>
-                            <option>Global News & Climate</option>
-                            <option>Music & Entertainment</option>
-                            <option>Lifestyle & Productivity</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%;">Create Free Account</button>
+                    <button type="submit" class="btn btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <i class="fas fa-bell"></i> Notify Me When Available
+                    </button>
                 </form>
             </div>
 

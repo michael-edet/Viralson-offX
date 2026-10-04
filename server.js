@@ -736,6 +736,13 @@ Respond strictly in valid JSON format:
 
 // Legacy URL 301 Redirects to Canonical 11ty Routes
 const legacyRedirects = {
+  '/terms.html': '/terms/',
+  '/contact.html': '/contact/',
+  '/terms-and-conditions': '/terms/',
+  '/terms-and-conditions/': '/terms/',
+  '/terms-and-conditions.html': '/terms/',
+  '/Assets/page/subpage/terms.html': '/terms/',
+  '/Assets/page/subpage/contact.html': '/contact/',
   '/Assets/page/subpage/news.html': '/news/',
   '/Assets/page/subpage/entertainment.html': '/entertainment/',
   '/Assets/page/subpage/technology.html': '/technology/',
@@ -753,6 +760,25 @@ const legacyRedirects = {
   '/Assets/page/download/music.html': '/download/music/',
   '/Assets/page/download/music0.html': '/download/music0/'
 };
+
+// Contact Form Endpoint
+app.post('/api/contact', (req, res) => {
+  try {
+    const { name, email, phone, subject, message } = req.body || {};
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ error: 'Missing required contact fields' });
+    }
+    console.log(`[Viral Son Contact] New message received from ${name} <${email}> regarding ${subject}`);
+    res.json({
+      success: true,
+      message: `Thank you, ${name}! Your inquiry regarding ${subject} has been received by our desk. We'll reply within 24 hours.`,
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Error handling contact form:', err);
+    res.status(500).json({ error: 'Internal contact submission error' });
+  }
+});
 
 for (const [legacyPath, newRoute] of Object.entries(legacyRedirects)) {
   app.get(legacyPath, (req, res) => res.redirect(301, newRoute));

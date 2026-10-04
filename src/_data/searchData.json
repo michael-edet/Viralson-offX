@@ -150,5 +150,21 @@
     "excerpt": "Breaking sports news, live scoreboards, match analysis, transfer updates, and athlete stories from around the world.",
     "tags": ["Sports", "Football", "Basketball", "Tennis", "Motorsport", "Athletics"],
     "date": "Latest"
+  },
+  {
+    "title": "Terms and Conditions | Viral Son",
+    "url": "/terms/",
+    "category": "Legal",
+    "excerpt": "Official Terms of Service, user conduct rules, intellectual property rights, and downloadable media licensing.",
+    "tags": ["Terms", "Legal", "Policy", "Copyright", "Conditions", "Rules"],
+    "date": "June 25, 2023"
+  },
+  {
+    "title": "Contact Us & Editorial Desks | Viral Son",
+    "url": "/contact/",
+    "category": "Contact",
+    "excerpt": "Send news tips, advertising proposals, partnership inquiries, and support requests directly to our newsroom.",
+    "tags": ["Contact", "Email", "Phone", "Support", "Office", "Newsroom", "Tips", "Advertising"],
+    "date": "Active"
   }
 ]
