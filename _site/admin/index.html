@@ -6,9 +6,6 @@
     <title>Viral Son Content Studio & Publishing Manager</title>
     <meta name="description" content="Next-generation Content Management Studio for Viral Son. Manage, draft, edit, and publish static stories and media.">
     
-    <!-- Netlify Identity Widget (Requested) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -945,6 +942,88 @@
             line-height: 1.3;
         }
 
+        /* Automated SEO Meta Data Checker Styles */
+        .cms-seo-status-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-family: var(--cms-font-mono);
+            letter-spacing: 0.02em;
+        }
+
+        .cms-seo-status-pill.optimal {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .cms-seo-status-pill.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .cms-seo-status-pill.danger {
+            background: rgba(239, 68, 68, 0.18);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            animation: pulseWarning 1.5s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .cms-seo-warning-inline {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.28);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.78rem;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .cms-seo-warning-inline.info {
+            background: rgba(245, 158, 11, 0.08);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: #fcd34d;
+        }
+
+        .cms-seo-audit-box {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: 10px;
+            padding: 1.15rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cms-seo-meter-track {
+            height: 6px;
+            background: var(--cms-border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.4rem 0 0.2rem 0;
+            width: 100%;
+        }
+
+        .cms-seo-meter-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.2s ease, background-color 0.2s ease;
+        }
+
         /* Code Inspector */
         .cms-code-block {
             background: #090d16;
@@ -1062,6 +1141,297 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* --- User Badge & Auth Elements --- */
+        .cms-user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--cms-text);
+        }
+
+        .cms-logout-btn {
+            background: transparent;
+            border: none;
+            color: var(--cms-danger);
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+        .cms-logout-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Fullscreen Login Portal */
+        .cms-login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 15, 23, 0.94);
+            backdrop-filter: blur(12px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        [data-theme="light"] .cms-login-overlay {
+            background: rgba(241, 245, 249, 0.94);
+        }
+
+        .cms-login-card {
+            background: var(--cms-surface);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius-lg);
+            width: 100%;
+            max-width: 440px;
+            padding: 2.25rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.25s ease;
+        }
+
+        .cms-login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .cms-login-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .cms-login-header h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--cms-text);
+            margin-bottom: 0.35rem;
+        }
+
+        .cms-login-header p {
+            font-size: 0.85rem;
+            color: var(--cms-text-muted);
+        }
+
+        .cms-login-alert {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            margin-bottom: 1.25rem;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid var(--cms-danger);
+            color: #fca5a5;
+        }
+
+        .cms-credentials-hint {
+            background: var(--cms-code-bg);
+            border: 1px solid var(--cms-border);
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.76rem;
+            color: var(--cms-text-muted);
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            line-height: 1.45;
+        }
+
+        .cms-credentials-hint code {
+            color: var(--cms-primary);
+            font-family: var(--cms-font-mono);
+            font-weight: 600;
+        }
+
+        /* --- Device Upload & Dropzone Elements --- */
+        .cms-hero-dropzone {
+            background: var(--cms-code-bg);
+            border: 2px dashed var(--cms-border-light);
+            border-radius: var(--cms-radius);
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cms-hero-dropzone:hover, .cms-hero-dropzone.dragover {
+            border-color: var(--cms-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .hero-drop-icon {
+            font-size: 2.2rem;
+            color: var(--cms-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-drop-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-drop-text strong {
+            font-size: 0.95rem;
+            color: var(--cms-text);
+        }
+
+        .hero-drop-text span {
+            font-size: 0.78rem;
+            color: var(--cms-text-muted);
+        }
+
+        .hero-preview-overlay {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 15, 23, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        /* Media Library Grid */
+        .cms-media-dropzone {
+            background: var(--cms-surface);
+            border: 2px dashed var(--cms-border-light);
+            border-radius: var(--cms-radius-lg);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cms-media-dropzone:hover, .cms-media-dropzone.dragover {
+            border-color: var(--cms-primary);
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        .cms-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .cms-media-card {
+            background: var(--cms-card);
+            border: 1px solid var(--cms-border);
+            border-radius: var(--cms-radius);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cms-media-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--cms-primary);
+        }
+
+        .cms-media-thumb {
+            height: 130px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .cms-media-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cms-media-meta {
+            padding: 0.75rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cms-media-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--cms-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.25rem;
+        }
+
+        .cms-media-size {
+            font-size: 0.72rem;
+            color: var(--cms-text-subtle);
+            margin-bottom: 0.5rem;
+        }
+
+        .cms-media-actions {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        /* Modal Sub-Tabs */
+        .cms-modal-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--cms-border);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cms-modal-tab {
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--cms-text-muted);
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 600;
+            padding: 0.5rem 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.15s ease;
+        }
+
+        .cms-modal-tab:hover {
+            color: var(--cms-text);
+        }
+
+        .cms-modal-tab.active {
+            color: var(--cms-primary);
+            border-bottom-color: var(--cms-primary);
+        }
+
         @media (max-width: 1024px) {
             .cms-editor-layout {
                 grid-template-columns: 1fr;
@@ -1075,6 +1445,49 @@
     </style>
 </head>
 <body>
+
+    <!-- Fullscreen Admin Authentication Login Overlay -->
+    <div id="loginOverlay" class="cms-login-overlay" style="display: none;">
+        <div class="cms-login-card">
+            <div class="cms-login-header">
+                <div class="cms-login-logo">VS</div>
+                <h2>Viral Son Publishing Studio</h2>
+                <p>Enter your editorial credentials to manage articles and media.</p>
+            </div>
+
+            <div id="loginAlertBox" class="cms-login-alert" style="display: none;"></div>
+
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="cms-form-group" style="margin-bottom: 1rem;">
+                    <label class="cms-label" for="loginUsername">Username or Email</label>
+                    <input type="text" id="loginUsername" class="cms-input" placeholder="admin or iamoffixial@gmail.com" required autocomplete="username" value="admin">
+                </div>
+
+                <div class="cms-form-group" style="margin-bottom: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <label class="cms-label" for="loginPassword" style="margin-bottom: 0;">Password</label>
+                        <button type="button" class="cms-link-btn" onclick="togglePasswordVisibility()" id="togglePassBtn" style="font-size: 0.75rem; color: var(--cms-primary); background: none; border: none; cursor: pointer;">
+                            <i class="far fa-eye"></i> Show
+                        </button>
+                    </div>
+                    <input type="password" id="loginPassword" class="cms-input" placeholder="Enter password" required autocomplete="current-password" value="admin123">
+                </div>
+
+                <div class="cms-credentials-hint">
+                    <i class="fas fa-key" style="color: var(--cms-primary); margin-top: 2px;"></i>
+                    <div>
+                        <strong>Default Credentials:</strong><br>
+                        Username: <code>admin</code> or <code>iamoffixial@gmail.com</code><br>
+                        Password: <code>admin123</code>
+                    </div>
+                </div>
+
+                <button type="submit" class="cms-btn cms-btn-primary" id="loginSubmitBtn" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.95rem; margin-top: 1.15rem;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In to Studio
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Header Navigation -->
     <header class="cms-navbar">
@@ -1092,13 +1505,28 @@
                 <button type="button" class="cms-nav-tab" id="tabEditorBtn" onclick="openNewPostEditor()">
                     <i class="fas fa-feather-alt"></i> New Article
                 </button>
-                <button type="button" class="cms-nav-tab" id="tabDecapBtn" onclick="switchView('decap')">
-                    <i class="fas fa-cube"></i> Netlify CMS View
+                <button type="button" class="cms-nav-tab" id="tabMediaBtn" onclick="switchView('media')">
+                    <i class="fas fa-images"></i> Media Library
                 </button>
             </nav>
         </div>
 
         <div class="cms-actions">
+            <!-- User Status & Sign Out -->
+            <div class="cms-user-pill" id="cmsUserPill" title="Authenticated Studio User">
+                <i class="fas fa-user-circle" style="color: var(--cms-primary);"></i>
+                <span id="currentUserName">iamoffixial@gmail.com</span>
+                <button type="button" class="cms-logout-btn" onclick="handleLogout()" title="Sign Out of Studio">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+
+            <!-- Google Ads Linking Action -->
+            <button type="button" class="cms-btn cms-btn-secondary" onclick="openAdsModal()" title="Link your Google Ads / AdSense Account">
+                <i class="fab fa-google" style="color: #4285f4;"></i>
+                <span>Ads & Monetization</span>
+            </button>
+
             <!-- Site Rebuild Action -->
             <button type="button" class="cms-btn cms-btn-secondary" id="rebuildBtn" onclick="triggerRebuild()" title="Recompile static site with Eleventy">
                 <i class="fas fa-sync-alt" id="rebuildIcon"></i>
@@ -1219,6 +1647,10 @@
                         <div class="cms-pane-title">
                             <span id="editorModeTitle"><i class="fas fa-edit" style="color: var(--cms-primary);"></i> Edit Article</span>
                             <span class="cms-badge cms-badge-draft" id="postStatusBadge">Draft</span>
+                            <span class="cms-autosave-badge" id="autosaveBadge" style="font-size: 0.75rem; color: var(--cms-text-subtle); display: inline-flex; align-items: center; gap: 0.35rem; margin-left: 0.5rem; background: var(--cms-code-bg); padding: 0.2rem 0.6rem; border-radius: 6px; border: 1px solid var(--cms-border);">
+                                <i class="fas fa-check-circle" style="color: #10b981;" id="autosaveIcon"></i>
+                                <span id="autosaveText">Autosave active</span>
+                            </span>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -1235,10 +1667,45 @@
                     </div>
 
                     <div class="cms-editor-body">
-                        <!-- Headline Input -->
+                        <!-- Local Autosave Draft Restore Notification Banner -->
+                        <div id="autosaveRestoreBanner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <i class="fas fa-history" style="color: #3b82f6; font-size: 1.1rem;"></i>
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--cms-text);">Unsaved Local Draft Detected</strong>
+                                        <p style="font-size: 0.78rem; color: var(--cms-text-muted); margin: 0;" id="autosaveBannerDetails">Saved from a previous editing session.</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button type="button" class="cms-btn cms-btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="restoreAutosavedDraft()">
+                                        <i class="fas fa-undo"></i> Restore Draft
+                                    </button>
+                                    <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="discardAutosavedDraft()">
+                                        <i class="fas fa-trash-alt"></i> Discard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Headline Input with Live Automated SEO Checker -->
                         <div class="cms-form-group">
-                            <label class="cms-label" for="postTitle">Headline Title</label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" for="postTitle" style="margin-bottom: 0;">Headline Title</label>
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">SEO Limit: 60 chars</span>
+                                    <span id="titleCountBadge" class="cms-seo-status-pill optimal">0 / 60 chars</span>
+                                </div>
+                            </div>
                             <input type="text" id="postTitle" class="cms-input cms-input-title" placeholder="Enter a compelling article headline..." oninput="handleTitleChange()">
+                            
+                            <!-- Dynamic SEO Title Length Meter -->
+                            <div class="cms-seo-meter-track" title="Title Length Progress Bar (Standard search engine limit: 60 chars)">
+                                <div id="titleSeoMeter" class="cms-seo-meter-fill" style="width: 0%; background-color: var(--cms-primary);"></div>
+                            </div>
+
+                            <!-- Title SEO Warning Box (shows when exceeding 60 chars or when too short) -->
+                            <div id="titleSeoWarning" class="cms-seo-warning-inline" style="display: none;"></div>
                             
                             <div class="cms-slug-preview">
                                 <span>URL Permalink: /posts/</span>
@@ -1288,7 +1755,7 @@
                                 <button type="button" class="cms-tool-btn" onclick="insertSyntax('1. ', '')" title="Numbered List"><i class="fas fa-list-ol"></i></button>
                                 <div class="cms-tool-divider"></div>
                                 <button type="button" class="cms-tool-btn" onclick="insertLink()" title="Insert Link"><i class="fas fa-link"></i></button>
-                                <button type="button" class="cms-tool-btn" onclick="insertImagePrompt()" title="Insert Image"><i class="fas fa-image"></i></button>
+                                <button type="button" class="cms-tool-btn" onclick="openInsertImageModal()" title="Insert Image (Upload from Computer or Web)"><i class="fas fa-image"></i></button>
                                 <button type="button" class="cms-tool-btn" onclick="insertCallout()" title="Callout Box"><i class="fas fa-info-circle"></i></button>
                                 <button type="button" class="cms-tool-btn" onclick="insertDivider()" title="Horizontal Line"><i class="fas fa-minus"></i></button>
                             </div>
@@ -1301,10 +1768,68 @@
                             </div>
                         </div>
 
+                        <!-- AI Taxonomy & Tagging Assistant Panel -->
+                        <div id="aiTaxonomyPanel" style="display: none; background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.28); border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem; position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                            <strong style="font-size: 0.92rem; color: var(--cms-text);">AI Category & Tag Recommendations</strong>
+                                            <span class="cms-badge" id="aiTaxonomySourceBadge" style="font-size: 0.68rem; background: rgba(139, 92, 246, 0.2); color: #8b5cf6; padding: 0.15rem 0.5rem; border-radius: 4px;">Gemini 3.8 Flash</span>
+                                        </div>
+                                        <span style="font-size: 0.75rem; color: var(--cms-text-subtle);">Based on deep semantic analysis of title and article content</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <button type="button" class="cms-btn cms-btn-primary" style="font-size: 0.76rem; padding: 0.3rem 0.75rem; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); border: none;" onclick="applyAllAITaxonomy()" id="applyAllAIBtn">
+                                        <i class="fas fa-check-double"></i> Apply All
+                                    </button>
+                                    <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.85rem; padding: 0.25rem 0.55rem;" onclick="closeAITaxonomyPanel()" title="Dismiss AI suggestions">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- AI Reasoning Note -->
+                            <p id="aiTaxonomyReason" style="font-size: 0.82rem; color: var(--cms-text-muted); margin: 0 0 0.85rem 0; line-height: 1.5; font-style: italic;"></p>
+
+                            <!-- Suggested Category Section -->
+                            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.85rem; padding-bottom: 0.75rem; border-bottom: 1px dashed rgba(139, 92, 246, 0.25);">
+                                <span style="font-size: 0.78rem; font-weight: 600; color: var(--cms-text-subtle);">Recommended Category:</span>
+                                <button type="button" class="cms-btn cms-btn-primary" id="aiPrimaryCategoryBtn" style="font-size: 0.78rem; padding: 0.28rem 0.75rem;" onclick="applyAICategory(this.dataset.cat)">
+                                    <i class="fas fa-folder"></i> <span id="aiPrimaryCatLabel">Technology</span> <span style="font-size: 0.7rem; opacity: 0.85; margin-left: 4px;">(Apply)</span>
+                                </button>
+                                <div id="aiAlternativeCategories" style="display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                                    <!-- Alternative category chips -->
+                                </div>
+                            </div>
+
+                            <!-- Suggested Tags Section -->
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--cms-text-subtle);">Suggested Topic Tags (Click any to add to post):</span>
+                                    <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="addAllAITags()">
+                                        <i class="fas fa-plus"></i> Add All Tags
+                                    </button>
+                                </div>
+                                <div id="aiSuggestedTagsContainer" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                                    <!-- Suggested tag buttons inserted dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Core Article Metadata -->
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                             <div class="cms-form-group">
-                                <label class="cms-label" for="postCategory">Category</label>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                    <label class="cms-label" for="postCategory" style="margin-bottom: 0;">Category</label>
+                                    <button type="button" class="cms-btn" id="aiTaxonomyBtn" onclick="requestAITaxonomySuggestions()" title="Analyze post content and suggest appropriate category & tags with AI" style="font-size: 0.72rem; padding: 0.2rem 0.55rem; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); border: none; color: #fff; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25);">
+                                        <i class="fas fa-magic"></i> AI Suggest
+                                    </button>
+                                </div>
                                 <select id="postCategory" class="cms-select" style="width: 100%;" onchange="updateLivePreview()">
                                     <option value="Technology">Technology</option>
                                     <option value="News">News</option>
@@ -1331,13 +1856,65 @@
                             </div>
                         </div>
 
-                        <!-- Excerpt / Meta Description -->
+                        <!-- Excerpt / Meta Description with Live Automated SEO Checker -->
                         <div class="cms-form-group">
-                            <label class="cms-label" for="postExcerpt">
-                                <span>Excerpt & Meta Description</span>
-                                <span id="excerptCountLabel" style="font-weight: 400; font-size: 0.72rem;">0 / 160 chars</span>
-                            </label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" for="postExcerpt" style="margin-bottom: 0;">
+                                    <span>Excerpt & Meta Description</span>
+                                </label>
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="font-size: 0.72rem; color: var(--cms-text-subtle);">SEO Limit: 160 chars</span>
+                                    <span id="excerptCountLabel" class="cms-seo-status-pill optimal">0 / 160 chars</span>
+                                </div>
+                            </div>
                             <textarea id="postExcerpt" class="cms-textarea" rows="3" placeholder="Brief summary of the article for social share snippets, Google search results, and category card feeds..." oninput="handleExcerptChange()"></textarea>
+
+                            <!-- Dynamic SEO Excerpt Length Meter -->
+                            <div class="cms-seo-meter-track" title="Meta Description Progress Bar (Standard search engine limit: 160 chars)">
+                                <div id="excerptSeoMeter" class="cms-seo-meter-fill" style="width: 0%; background-color: var(--cms-primary);"></div>
+                            </div>
+
+                            <!-- Excerpt SEO Warning Box (shows when exceeding 160 chars or when too short) -->
+                            <div id="excerptSeoWarning" class="cms-seo-warning-inline" style="display: none;"></div>
+                        </div>
+
+                        <!-- Automated SEO Meta Data Audit Card -->
+                        <div class="cms-seo-audit-box" id="seoAuditBox">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-search" style="color: #38bdf8;"></i>
+                                    <strong style="font-size: 0.88rem; color: var(--cms-text);">Automated SEO Meta Data Checker</strong>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span id="seoOverallScoreBadge" class="cms-seo-status-pill optimal">
+                                        <i class="fas fa-check-circle"></i> SEO Ready
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <div style="background: var(--cms-code-bg); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--cms-border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--cms-text);">Title Tag (Max 60 chars)</span>
+                                        <span id="auditTitleChars" style="font-size: 0.75rem; font-family: var(--cms-font-mono);">0 / 60</span>
+                                    </div>
+                                    <p id="auditTitleStatus" style="font-size: 0.75rem; color: var(--cms-text-muted); margin: 0; line-height: 1.4;">Enter a title to begin SEO check.</p>
+                                </div>
+                                <div style="background: var(--cms-code-bg); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--cms-border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--cms-text);">Description (Max 160 chars)</span>
+                                        <span id="auditExcerptChars" style="font-size: 0.75rem; font-family: var(--cms-font-mono);">0 / 160</span>
+                                    </div>
+                                    <p id="auditExcerptStatus" style="font-size: 0.75rem; color: var(--cms-text-muted); margin: 0; line-height: 1.4;">Enter an excerpt to begin SEO check.</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.65rem;">
+                                <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="autoTrimTitle()" id="btnTrimTitle" style="display: none;">
+                                    <i class="fas fa-cut"></i> Trim Title (60 chars)
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;" onclick="autoTrimExcerpt()" id="btnTrimExcerpt" style="display: none;">
+                                    <i class="fas fa-cut"></i> Trim Excerpt (160 chars)
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Author Bio -->
@@ -1346,17 +1923,78 @@
                             <input type="text" id="postAuthorBio" class="cms-input" placeholder="Short bio describing the author's specialty or role..." oninput="updateLivePreview()">
                         </div>
 
-                        <!-- Featured Image & Presets -->
+                        <!-- Featured Image: Direct Computer Upload & URL Manager -->
                         <div class="cms-form-group">
-                            <label class="cms-label" for="postImage">Featured Hero Image URL</label>
-                            <input type="url" id="postImage" class="cms-input" placeholder="https://images.unsplash.com/photo-..." oninput="updateLivePreview()">
+                            <label class="cms-label" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Featured Hero Image</span>
+                                <span style="font-size: 0.72rem; color: #10b981;"><i class="fas fa-check-circle"></i> Direct Device Upload Enabled</span>
+                            </label>
                             
-                            <label class="cms-label" for="postImageCaption" style="margin-top: 0.4rem;">Image Caption</label>
+                            <!-- Master hidden input storing current image path/URL for payload -->
+                            <input type="hidden" id="postImage">
+
+                            <!-- Direct Computer Upload Dropzone Area -->
+                            <div id="heroDropArea" class="cms-hero-dropzone" ondragover="handleHeroDragOver(event)" ondragleave="handleHeroDragLeave(event)" ondrop="handleHeroDrop(event)">
+                                <input type="file" id="heroFileInput" accept="image/*" style="display: none;" onchange="handleHeroFileSelect(this.files)">
+                                
+                                <!-- Empty state with Browse button -->
+                                <div id="heroEmptyState">
+                                    <div class="hero-drop-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                                    <div class="hero-drop-text">
+                                        <strong>Upload image directly from your computer</strong>
+                                        <span>Drag & drop PNG, JPG, WEBP, GIF (up to 15MB) or select options below</span>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.6rem;">
+                                        <button type="button" class="cms-btn cms-btn-primary" onclick="document.getElementById('heroFileInput').click()">
+                                            <i class="fas fa-folder-open"></i> Browse Files From Device
+                                        </button>
+                                        <button type="button" class="cms-btn cms-btn-outline" onclick="toggleHeroUrlInput()">
+                                            <i class="fas fa-link"></i> Enter Image Link
+                                        </button>
+                                        <button type="button" class="cms-btn cms-btn-outline" onclick="openMediaPickerForHero()">
+                                            <i class="fas fa-images"></i> Media Library
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Upload Progress Indicator -->
+                                <div id="heroUploadProgress" style="display: none; padding: 1.5rem 0;">
+                                    <i class="fas fa-spinner fa-spin" style="font-size: 2.2rem; color: var(--cms-primary); margin-bottom: 0.6rem;"></i>
+                                    <p id="heroUploadStatusText" style="font-weight: 600; font-size: 0.88rem; color: var(--cms-text);">Uploading directly to server...</p>
+                                </div>
+
+                                <!-- Uploaded Photo Preview Card -->
+                                <div id="heroPreviewCard" style="display: none; position: relative;">
+                                    <img id="heroPreviewImg" src="" alt="Hero Image" style="width: 100%; max-height: 240px; object-fit: cover; border-radius: 8px; border: 1px solid var(--cms-border);">
+                                    <div class="hero-preview-overlay">
+                                        <span id="heroImageMetaBadge" style="font-size: 0.72rem; color: #ffffff; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.8);"></span>
+                                        <div style="display: flex; gap: 0.4rem;">
+                                            <button type="button" class="cms-btn cms-btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;" onclick="document.getElementById('heroFileInput').click()" title="Replace with another file from computer">
+                                                <i class="fas fa-sync-alt"></i> Replace
+                                            </button>
+                                            <button type="button" class="cms-btn cms-btn-danger" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;" onclick="removeHeroImage()" title="Clear image">
+                                                <i class="fas fa-trash"></i> Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optional Direct URL Input Field -->
+                            <div id="heroUrlWrapper" style="display: none; margin-top: 0.5rem; background: var(--cms-code-bg); padding: 0.6rem; border-radius: 8px; border: 1px solid var(--cms-border);">
+                                <label style="font-size: 0.75rem; color: var(--cms-text-muted); display: block; margin-bottom: 0.3rem;">Paste Image URL:</label>
+                                <div style="display: flex; gap: 0.4rem;">
+                                    <input type="url" id="postImageUrlInput" class="cms-input" placeholder="https://images.unsplash.com/photo-..." oninput="handleHeroUrlChange(this.value)">
+                                    <button type="button" class="cms-btn cms-btn-secondary" onclick="toggleHeroUrlInput()">Done</button>
+                                </div>
+                            </div>
+                            
+                            <label class="cms-label" for="postImageCaption" style="margin-top: 0.65rem;">Image Caption</label>
                             <input type="text" id="postImageCaption" class="cms-input" placeholder="Credit or caption for featured photo..." oninput="updateLivePreview()">
 
                             <!-- Curated Preset Photos -->
-                            <div style="margin-top: 0.5rem;">
-                                <span style="font-size: 0.72rem; color: var(--cms-text-subtle); display: block; margin-bottom: 0.25rem;">Quick Unsplash Stock Assets:</span>
+                            <div style="margin-top: 0.65rem;">
+                                <span style="font-size: 0.72rem; color: var(--cms-text-subtle); display: block; margin-bottom: 0.25rem;">Or Pick Stock Preset:</span>
                                 <div class="cms-curated-images">
                                     <button type="button" class="cms-curated-img-btn" onclick="selectCuratedImage('https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=1200&q=80', 'AI & Neural Systems')">
                                         <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=150&q=80" alt="Tech">
@@ -1388,7 +2026,12 @@
 
                         <!-- Tags Manager -->
                         <div class="cms-form-group">
-                            <label class="cms-label">Topic Tags</label>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="cms-label" style="margin-bottom: 0;">Topic Tags</label>
+                                <button type="button" class="cms-btn cms-btn-outline" onclick="requestAITaxonomySuggestions()" style="font-size: 0.72rem; padding: 0.18rem 0.5rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+                                    <i class="fas fa-magic" style="color: #8b5cf6;"></i> AI Suggest Tags
+                                </button>
+                            </div>
                             <div class="cms-tags-container" id="tagsContainer">
                                 <!-- Chips will be populated here -->
                                 <input type="text" id="tagInput" class="cms-tag-input" placeholder="Type tag & press Enter..." onkeydown="handleTagKeyDown(event)">
@@ -1405,9 +2048,12 @@
 
                         <!-- Publishing Action Buttons Bar -->
                         <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--cms-border); margin-top: 0.5rem; gap: 0.75rem; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                                 <button type="button" class="cms-btn cms-btn-secondary" onclick="savePost(true)" id="saveDraftBtn">
                                     <i class="fas fa-save"></i> Save Draft
+                                </button>
+                                <button type="button" class="cms-btn cms-btn-outline" onclick="clearCurrentLocalDraft()" title="Clear unsaved autosave cache for this session">
+                                    <i class="fas fa-eraser"></i> Clear Cache
                                 </button>
                                 <button type="button" class="cms-btn cms-btn-danger" id="deletePostBtn" onclick="confirmDeleteCurrentPost()" style="display: none;">
                                     <i class="fas fa-trash-alt"></i> Delete
@@ -1481,10 +2127,97 @@
                             <div id="prevTagsWrapper" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color, #262c36);">
                                 <!-- rendered tags -->
                             </div>
+
+                            <!-- Reusable Author Profile Live Preview -->
+                            <div id="prevAuthorProfileWrapper" class="author-profile-card" style="margin-top: 2rem; background: var(--cms-card); border-color: var(--cms-border);">
+                                <div class="author-profile-inner">
+                                    <div class="author-profile-media">
+                                        <div class="author-avatar-wrapper">
+                                            <img id="prevAuthorAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Author" class="author-profile-img" style="border-color: var(--cms-primary);">
+                                            <span class="author-verified-badge" style="background: var(--cms-primary); border-color: var(--cms-card);"><i class="fas fa-check"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="author-profile-content">
+                                        <div class="author-profile-header">
+                                            <div class="author-identity">
+                                                <span class="author-kicker" style="color: var(--cms-primary);">Written By</span>
+                                                <h3 class="author-name" id="prevAuthorCardName" style="color: var(--cms-text);">Alex Morgan</h3>
+                                                <div class="author-credentials">
+                                                    <span class="author-role" id="prevAuthorCardRole" style="color: var(--cms-text-muted);">Editorial Contributor</span>
+                                                    <span class="author-separator" aria-hidden="true">&middot;</span>
+                                                    <span class="author-desk" style="color: var(--cms-text-subtle);"><i class="fas fa-map-marker-alt" style="font-size: 0.72rem; margin-right: 3px;"></i>Viral Son Newsroom</span>
+                                                </div>
+                                            </div>
+                                            <div class="author-social-links">
+                                                <a href="https://twitter.com/viralson_mag" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                                                <a href="https://linkedin.com" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                                <a href="https://viralson.com" target="_blank" class="author-social-btn" style="background: var(--cms-surface); border-color: var(--cms-border); color: var(--cms-text);" title="Website"><i class="fas fa-globe"></i></a>
+                                            </div>
+                                        </div>
+                                        <p class="author-bio-text" id="prevAuthorCardBio" style="color: var(--cms-text-muted); font-size: 0.92rem; line-height: 1.6;">Author biography...</p>
+                                        <div class="author-profile-footer" style="border-top-color: var(--cms-border);">
+                                            <span class="author-articles-meta" style="color: var(--cms-text-subtle);"><i class="far fa-newspaper" style="margin-right: 4px;"></i> Contributor to Viral Son Editorial</span>
+                                            <span class="author-desk-link" style="color: var(--cms-primary);"><span>Verified Editorial Desk</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Mode 2: SEO Simulator Tab -->
                         <div id="seoPreviewTab" style="display: none; width: 100%; max-width: 720px;">
+                            <!-- Automated SEO Meta Data Checker Audit Panel -->
+                            <div class="cms-seo-card cms-seo-checker-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--cms-border); padding-bottom: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                        <i class="fas fa-search-dollar" style="color: var(--cms-primary); font-size: 1.2rem;"></i>
+                                        <div>
+                                            <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--cms-text);">Automated SEO Meta Data Checker</h4>
+                                            <p style="margin: 0; font-size: 0.78rem; color: var(--cms-text-subtle);">Real-time SERP compliance against search engine limits</p>
+                                        </div>
+                                    </div>
+                                    <span id="seoOverallScoreBadge" class="cms-seo-status-pill optimal">100% SEO Ready</span>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                                    <!-- Title Audit Metric -->
+                                    <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.75rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                            <strong style="font-size: 0.84rem; color: var(--cms-text);">
+                                                <i class="fas fa-heading" style="color: var(--cms-primary); margin-right: 4px;"></i> Headline Title (Max 60 Chars)
+                                            </strong>
+                                            <span id="auditTitleChars" style="font-size: 0.8rem; font-weight: 600; font-family: monospace;">0 / 60</span>
+                                        </div>
+                                        <div id="auditTitleStatus" style="font-size: 0.78rem; color: var(--cms-text-muted); line-height: 1.4;">
+                                            Optimal title length keeps full headline visible in Google and prevents truncation.
+                                        </div>
+                                        <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
+                                            <button type="button" id="btnTrimTitle" class="cms-btn cms-btn-danger" style="display: none; padding: 3px 10px; font-size: 0.75rem;" onclick="autoTrimTitle()">
+                                                <i class="fas fa-cut"></i> Auto-Trim Title to 60 Chars
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Excerpt Audit Metric -->
+                                    <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.75rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                            <strong style="font-size: 0.84rem; color: var(--cms-text);">
+                                                <i class="fas fa-align-left" style="color: var(--cms-primary); margin-right: 4px;"></i> Meta Description / Excerpt (Max 160 Chars)
+                                            </strong>
+                                            <span id="auditExcerptChars" style="font-size: 0.8rem; font-weight: 600; font-family: monospace;">0 / 160</span>
+                                        </div>
+                                        <div id="auditExcerptStatus" style="font-size: 0.78rem; color: var(--cms-text-muted); line-height: 1.4;">
+                                            Optimal meta descriptions between 120–160 chars maximize click-through rate.
+                                        </div>
+                                        <div style="margin-top: 0.5rem; display: flex; justify-content: flex-end;">
+                                            <button type="button" id="btnTrimExcerpt" class="cms-btn cms-btn-danger" style="display: none; padding: 3px 10px; font-size: 0.75rem;" onclick="autoTrimExcerpt()">
+                                                <i class="fas fa-cut"></i> Auto-Trim Description to 160 Chars
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="cms-seo-card">
                                 <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--cms-text-subtle); margin-bottom: 0.75rem;">
                                     <i class="fab fa-google" style="color: #4285f4;"></i> Google Search SERP Snippet Preview
@@ -1528,34 +2261,282 @@
             </div>
         </section>
 
-        <!-- VIEW 3: Netlify CMS / Decap CMS Standard Integration View -->
-        <section id="viewDecap" class="cms-view-container" style="display: none;">
-            <div style="background: var(--cms-card); border: 1px solid var(--cms-border); border-radius: var(--cms-radius); padding: 1.5rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
-                    <div>
-                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-cube" style="color: var(--cms-primary);"></i> Netlify CMS & Decap Identity Mode
-                        </h3>
-                        <p style="font-size: 0.88rem; color: var(--cms-text-muted); max-width: 800px; line-height: 1.5;">
-                            This view runs the classic Netlify CMS / Decap widget with Git Gateway and Netlify Identity support, reading directly from <code>admin/config.yml</code>. You can switch back to the modern Visual Studio anytime using the top navigation bar.
-                        </p>
-                    </div>
+        <!-- VIEW 3: Server Media Library & Device Uploads Hub -->
+        <section id="viewMedia" class="cms-view-container" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 class="section-title" style="margin-bottom: 0.25rem; font-size: 1.5rem;">
+                        <i class="fas fa-photo-video" style="color: var(--cms-primary); margin-right: 0.5rem;"></i> Media Library
+                    </h2>
+                    <p style="color: var(--cms-text-muted); font-size: 0.85rem;">All images uploaded directly from your computer to the server. Available across all stories.</p>
+                </div>
 
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button type="button" class="cms-btn cms-btn-secondary" onclick="netlifyIdentity.open()">
-                            <i class="fas fa-user-lock"></i> Netlify Identity Login
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <input type="file" id="mediaLibraryUploadInput" accept="image/*" multiple style="display: none;" onchange="handleMediaBatchUpload(this.files)">
+                    <button type="button" class="cms-btn cms-btn-primary" onclick="document.getElementById('mediaLibraryUploadInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Photos From Computer
+                    </button>
+                    <button type="button" class="cms-btn cms-btn-outline" onclick="loadMediaLibrary()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Drag & Drop Zone for Media Library -->
+            <div class="cms-media-dropzone" ondragover="handleMediaDragOver(event)" ondragleave="handleMediaDragLeave(event)" ondrop="handleMediaDrop(event)" onclick="document.getElementById('mediaLibraryUploadInput').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 2.4rem; color: var(--cms-primary); margin-bottom: 0.5rem; display: block;"></i>
+                <div style="font-weight: 700; font-size: 1rem; color: var(--cms-text); margin-bottom: 0.25rem;">Drop image files here or click to browse computer</div>
+                <div style="font-size: 0.8rem; color: var(--cms-text-muted);">Supports PNG, JPG, JPEG, WEBP, GIF, SVG up to 15MB each</div>
+            </div>
+
+            <!-- Uploading status banner -->
+            <div id="mediaBatchStatus" style="display: none; padding: 1rem; margin-top: 1rem; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--cms-primary); border-radius: 8px; text-align: center;">
+                <i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem; color: var(--cms-primary);"></i>
+                <span id="mediaBatchStatusText" style="font-weight: 600; font-size: 0.88rem;">Uploading files to server...</span>
+            </div>
+
+            <!-- Media Items Grid -->
+            <div id="mediaGrid" class="cms-media-grid" style="margin-top: 1.5rem;">
+                <!-- Populated dynamically by loadMediaLibrary() -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- In-Article Image Insertion Modal -->
+    <div class="cms-modal-backdrop" id="insertImageModal">
+        <div class="cms-modal-card" style="max-width: 620px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 class="cms-modal-title"><i class="fas fa-image" style="color: var(--cms-primary); margin-right: 0.5rem;"></i> Insert Image into Article</h3>
+                <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="closeInsertImageModal()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Modal Tabs -->
+            <div class="cms-modal-tabs">
+                <button type="button" class="cms-modal-tab active" id="modalTabUploadBtn" onclick="switchImageModalTab('upload')">
+                    <i class="fas fa-upload"></i> Upload From Computer
+                </button>
+                <button type="button" class="cms-modal-tab" id="modalTabLibraryBtn" onclick="switchImageModalTab('library')">
+                    <i class="fas fa-images"></i> Media Library
+                </button>
+                <button type="button" class="cms-modal-tab" id="modalTabUrlBtn" onclick="switchImageModalTab('url')">
+                    <i class="fas fa-link"></i> Web URL
+                </button>
+            </div>
+
+            <!-- Tab 1: Upload from Computer -->
+            <div id="imageModalUploadTab">
+                <div class="cms-hero-dropzone" style="padding: 1.5rem; text-align: center; margin-bottom: 1rem;" onclick="document.getElementById('modalImageFileInput').click()">
+                    <input type="file" id="modalImageFileInput" accept="image/*" style="display: none;" onchange="handleModalImageFileSelect(this.files)">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 2.2rem; color: var(--cms-primary); margin-bottom: 0.5rem; display: block;"></i>
+                    <div id="modalUploadPromptText" style="font-weight: 700; font-size: 0.95rem; color: var(--cms-text);">Click to browse image from computer</div>
+                    <span style="font-size: 0.78rem; color: var(--cms-text-muted);">or drag and drop it directly here</span>
+                </div>
+                <div id="modalImagePreviewWrapper" style="display: none; margin-bottom: 1rem; text-align: center;">
+                    <img id="modalImagePreview" src="" alt="Preview" style="max-height: 180px; border-radius: 8px; border: 1px solid var(--cms-border);">
+                </div>
+                <div class="cms-form-group">
+                    <label class="cms-label" for="modalImageAlt">Image Alt Description</label>
+                    <input type="text" id="modalImageAlt" class="cms-input" placeholder="e.g. Demonstration of next-gen prototype">
+                </div>
+                <div class="cms-modal-actions" style="margin-top: 1rem;">
+                    <button type="button" class="cms-btn cms-btn-secondary" onclick="closeInsertImageModal()">Cancel</button>
+                    <button type="button" class="cms-btn cms-btn-primary" id="btnUploadAndInsert" onclick="executeUploadAndInsertImage()">
+                        <i class="fas fa-check"></i> Upload & Insert
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 2: From Media Library -->
+            <div id="imageModalLibraryTab" style="display: none;">
+                <p style="font-size: 0.8rem; color: var(--cms-text-muted); margin-bottom: 0.75rem;">Click any uploaded image below to insert it into the story:</p>
+                <div id="modalLibraryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.6rem; max-height: 260px; overflow-y: auto; padding: 0.5rem; background: var(--cms-code-bg); border-radius: 8px;">
+                    <!-- Dynamically populated -->
+                </div>
+                <div class="cms-form-group" style="margin-top: 0.75rem;">
+                    <label class="cms-label" for="modalLibraryImageAlt">Alt Description</label>
+                    <input type="text" id="modalLibraryImageAlt" class="cms-input" placeholder="Description of selected image">
+                </div>
+                <div class="cms-modal-actions" style="margin-top: 1rem;">
+                    <button type="button" class="cms-btn cms-btn-secondary" onclick="closeInsertImageModal()">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Tab 3: Web URL -->
+            <div id="imageModalUrlTab" style="display: none;">
+                <div class="cms-form-group" style="margin-bottom: 0.75rem;">
+                    <label class="cms-label" for="modalDirectUrl">Image URL</label>
+                    <input type="url" id="modalDirectUrl" class="cms-input" placeholder="https://images.unsplash.com/...">
+                </div>
+                <div class="cms-form-group">
+                    <label class="cms-label" for="modalDirectUrlAlt">Alt Description</label>
+                    <input type="text" id="modalDirectUrlAlt" class="cms-input" placeholder="Description of image">
+                </div>
+                <div class="cms-modal-actions" style="margin-top: 1rem;">
+                    <button type="button" class="cms-btn cms-btn-secondary" onclick="closeInsertImageModal()">Cancel</button>
+                    <button type="button" class="cms-btn cms-btn-primary" onclick="executeInsertImageUrl()">
+                        <i class="fas fa-check"></i> Insert Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-Article Link Modal -->
+    <div class="cms-modal-backdrop" id="insertLinkModal">
+        <div class="cms-modal-card" style="max-width: 450px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 class="cms-modal-title"><i class="fas fa-link" style="color: var(--cms-primary); margin-right: 0.5rem;"></i> Insert Hyperlink</h3>
+                <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="closeInsertLinkModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cms-form-group" style="margin-bottom: 0.75rem;">
+                <label class="cms-label" for="linkText">Link Display Text</label>
+                <input type="text" id="linkText" class="cms-input" placeholder="e.g. Read the complete study">
+            </div>
+            <div class="cms-form-group">
+                <label class="cms-label" for="linkUrl">Destination URL</label>
+                <input type="url" id="linkUrl" class="cms-input" placeholder="https://example.com" value="https://">
+            </div>
+            <div class="cms-modal-actions" style="margin-top: 1.25rem;">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeInsertLinkModal()">Cancel</button>
+                <button type="button" class="cms-btn cms-btn-primary" onclick="executeInsertLink()">
+                    <i class="fas fa-check"></i> Insert Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-Article Callout Modal -->
+    <div class="cms-modal-backdrop" id="insertCalloutModal">
+        <div class="cms-modal-card" style="max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 class="cms-modal-title"><i class="fas fa-info-circle" style="color: var(--cms-primary); margin-right: 0.5rem;"></i> Insert Editorial Callout</h3>
+                <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="closeInsertCalloutModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cms-form-group" style="margin-bottom: 0.75rem;">
+                <label class="cms-label" for="calloutType">Callout Style</label>
+                <select id="calloutType" class="cms-select" style="width: 100%;">
+                    <option value="info">Editorial Note (Blue)</option>
+                    <option value="tip">Key Takeaway (Green)</option>
+                    <option value="warning">Important Alert (Orange)</option>
+                </select>
+            </div>
+            <div class="cms-form-group">
+                <label class="cms-label" for="calloutContent">Callout Content</label>
+                <textarea id="calloutContent" class="cms-input" style="height: 90px;" placeholder="Crucial insight or editorial context..."></textarea>
+            </div>
+            <div class="cms-modal-actions" style="margin-top: 1.25rem;">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeInsertCalloutModal()">Cancel</button>
+                <button type="button" class="cms-btn cms-btn-primary" onclick="executeInsertCallout()">
+                    <i class="fas fa-check"></i> Insert Box
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Picker for Hero Image Modal -->
+    <div class="cms-modal-backdrop" id="heroMediaPickerModal">
+        <div class="cms-modal-card" style="max-width: 650px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 class="cms-modal-title"><i class="fas fa-images" style="color: var(--cms-primary); margin-right: 0.5rem;"></i> Select Hero Image from Media Library</h3>
+                <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="closeHeroMediaPicker()"><i class="fas fa-times"></i></button>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--cms-text-muted); margin-bottom: 1rem;">Click on any previously uploaded image below to set it as this article's featured hero image:</p>
+            <div id="heroMediaPickerGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; max-height: 350px; overflow-y: auto; padding: 0.5rem; background: var(--cms-code-bg); border-radius: 8px;">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="cms-modal-actions" style="margin-top: 1rem;">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeHeroMediaPicker()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Ads & AdSense Setup Modal -->
+    <div class="cms-modal-backdrop" id="adsModal">
+        <div class="cms-modal-card" style="max-width: 640px; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <h3 class="cms-modal-title" style="margin-bottom: 0.25rem;">
+                        <i class="fab fa-google" style="color: #4285f4; margin-right: 0.5rem;"></i> Link Your Google AdSense Account
+                    </h3>
+                    <p style="font-size: 0.84rem; color: var(--cms-text-muted); margin: 0;">Connect your Publisher ID to monetize all page views with live Google Ads.</p>
+                </div>
+                <button type="button" class="cms-btn cms-btn-outline cms-btn-icon" onclick="closeAdsModal()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- AdSense Publisher ID Input Form -->
+            <div style="background: var(--cms-code-bg); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--cms-border); margin-bottom: 1.25rem;">
+                <label class="cms-label" for="adsPublisherIdInput" style="margin-bottom: 0.4rem;">
+                    <span>Google AdSense Publisher ID</span>
+                    <span style="font-size: 0.72rem; color: #10b981;"><i class="fas fa-check-circle"></i> Direct Sync</span>
+                </label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="adsPublisherIdInput" class="cms-input" placeholder="ca-pub-9481237418920194" style="font-family: var(--cms-font-mono); font-size: 0.95rem;">
+                    <button type="button" class="cms-btn cms-btn-primary" onclick="saveAdSettings()" id="saveAdsBtn">
+                        <i class="fas fa-save"></i> Save & Sync
+                    </button>
+                </div>
+                <small style="font-size: 0.75rem; color: var(--cms-text-subtle); display: block; margin-top: 0.4rem;">
+                    Format: <code>ca-pub-XXXXXXXXXXXXXXXX</code> or <code>pub-XXXXXXXXXXXXXXXX</code>.
+                </small>
+            </div>
+
+            <!-- 4 Step Guide -->
+            <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.5rem;">
+                <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.85rem 1rem;">
+                    <div style="font-weight: 700; font-size: 0.88rem; color: var(--cms-text); margin-bottom: 0.35rem;">
+                        <span style="color: var(--cms-primary); margin-right: 0.4rem;">Step 1:</span> Locate your Publisher ID in AdSense
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--cms-text-muted); line-height: 1.4; margin: 0;">
+                        Log in to your <a href="https://adsense.google.com" target="_blank" rel="noopener noreferrer" style="color: var(--cms-primary); text-decoration: underline;">Google AdSense Dashboard</a>. Click <strong>Account</strong> &rarr; <strong>Settings</strong> &rarr; <strong>Account information</strong>. Copy your 16-digit <strong>Publisher ID</strong>.
+                    </p>
+                </div>
+
+                <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.85rem 1rem;">
+                    <div style="font-weight: 700; font-size: 0.88rem; color: var(--cms-text); margin-bottom: 0.35rem;">
+                        <span style="color: var(--cms-primary); margin-right: 0.4rem;">Step 2:</span> Paste ID Above & Click "Save & Sync"
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--cms-text-muted); line-height: 1.4; margin: 0;">
+                        Saving updates <code>src/_data/site.json</code>, updates your public <code>/ads.txt</code> authorization file, and regenerates your static site templates automatically.
+                    </p>
+                </div>
+
+                <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.85rem 1rem;">
+                    <div style="font-weight: 700; font-size: 0.88rem; color: var(--cms-text); margin-bottom: 0.35rem;">
+                        <span style="color: var(--cms-primary); margin-right: 0.4rem;">Step 3:</span> Add Your Site Domain in AdSense
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--cms-text-muted); line-height: 1.4; margin: 0;">
+                        In your AdSense dashboard, navigate to <strong>Sites</strong> &rarr; <strong>Add Site</strong>. Enter your custom domain (e.g. <code>viralson.com</code>). AdSense will verify the meta tags already present in your pages and the <code>/ads.txt</code> file.
+                    </p>
+                </div>
+
+                <div style="background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px; padding: 0.85rem 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <div style="font-weight: 700; font-size: 0.88rem; color: var(--cms-text);">
+                            <span style="color: var(--cms-primary); margin-right: 0.4rem;">Step 4:</span> Public ads.txt Verification Record
+                        </div>
+                        <button type="button" class="cms-btn cms-btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;" onclick="copyAdsTxtRecord()">
+                            <i class="far fa-copy"></i> Copy Line
                         </button>
-                        <button type="button" class="cms-btn cms-btn-primary" onclick="switchView('posts')">
-                            <i class="fas fa-arrow-left"></i> Return to Studio
-                        </button>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--cms-text-muted); line-height: 1.4; margin-bottom: 0.5rem;">
+                        Your authorization file is live at <a href="/ads.txt" target="_blank" style="color: var(--cms-primary); text-decoration: underline;">/ads.txt</a>:
+                    </p>
+                    <div class="cms-slug-preview" style="user-select: all; font-size: 0.75rem;">
+                        <code id="adsTxtRecordDisplay">google.com, pub-9481237418920194, DIRECT, f08c47fec0942fa0</code>
                     </div>
                 </div>
             </div>
 
-            <div id="nc-root"></div>
-        </section>
-
-    </main>
+            <div class="cms-modal-actions">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeAdsModal()">Close</button>
+                <a href="https://adsense.google.com" target="_blank" rel="noopener noreferrer" class="cms-btn cms-btn-primary">
+                    <span>Open AdSense Dashboard</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Delete Confirmation Modal -->
     <div class="cms-modal-backdrop" id="deleteModal">
@@ -1572,9 +2553,6 @@
     <!-- Toast Notifications Container -->
     <div class="cms-toast-container" id="toastContainer"></div>
 
-    <!-- Decap CMS Core Script -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
     <!-- Studio Application Logic -->
     <script>
         // State
@@ -1585,24 +2563,131 @@
         let tagsList = [];
         let postToDeleteSlug = null;
 
+        // Current Auth User & Session Token
+        let currentUser = null;
+        let authToken = localStorage.getItem('viralson_admin_token') || null;
+
         // Initialize CMS
         document.addEventListener('DOMContentLoaded', () => {
-            initNetlifyIdentity();
-            loadStats();
-            loadPosts();
             setupTheme();
+            checkAuthStatus();
+            initAutosaveEngine();
         });
 
-        // --- Netlify Identity Support ---
-        function initNetlifyIdentity() {
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.on('init', user => {
-                    if (!user) {
-                        window.netlifyIdentity.on('login', () => {
-                            document.location.reload();
-                        });
-                    }
+        // --- Authentication Engine ---
+        async function checkAuthStatus() {
+            if (!authToken) {
+                showLoginOverlay();
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/verify', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
                 });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentUser = data.user;
+                    onAuthSuccess(currentUser);
+                } else {
+                    localStorage.removeItem('viralson_admin_token');
+                    authToken = null;
+                    showLoginOverlay();
+                }
+            } catch (e) {
+                // If offline or network glitch, show login
+                showLoginOverlay();
+            }
+        }
+
+        function showLoginOverlay() {
+            const overlay = document.getElementById('loginOverlay');
+            if (overlay) overlay.style.display = 'flex';
+            const userPill = document.getElementById('cmsUserPill');
+            if (userPill) userPill.style.display = 'none';
+        }
+
+        function onAuthSuccess(user) {
+            const overlay = document.getElementById('loginOverlay');
+            if (overlay) overlay.style.display = 'none';
+
+            const userPill = document.getElementById('cmsUserPill');
+            if (userPill) userPill.style.display = 'inline-flex';
+
+            const nameEl = document.getElementById('currentUserName');
+            if (nameEl) nameEl.textContent = user.username || user.email || 'Admin';
+
+            loadStats();
+            loadPosts();
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('loginUsername');
+            const passwordInput = document.getElementById('loginPassword');
+            const alertBox = document.getElementById('loginAlertBox');
+            const submitBtn = document.getElementById('loginSubmitBtn');
+
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            alertBox.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    localStorage.setItem('viralson_admin_token', authToken);
+                    onAuthSuccess(currentUser);
+                    showToast(`Signed in as ${currentUser.username}`, 'success');
+                } else {
+                    alertBox.textContent = data.error || 'Authentication failed. Please verify credentials.';
+                    alertBox.style.display = 'block';
+                }
+            } catch (err) {
+                alertBox.textContent = 'Server connection error: ' + err.message;
+                alertBox.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Studio';
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                if (authToken) {
+                    await fetch('/api/auth/logout', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                }
+            } catch (e) {}
+
+            localStorage.removeItem('viralson_admin_token');
+            authToken = null;
+            currentUser = null;
+            showLoginOverlay();
+            showToast('You have been signed out.', 'info');
+        }
+
+        function togglePasswordVisibility() {
+            const pass = document.getElementById('loginPassword');
+            const btn = document.getElementById('togglePassBtn');
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                btn.innerHTML = '<i class="far fa-eye-slash"></i> Hide';
+            } else {
+                pass.type = 'password';
+                btn.innerHTML = '<i class="far fa-eye"></i> Show';
             }
         }
 
@@ -1631,11 +2716,15 @@
         function switchView(viewName) {
             document.getElementById('viewPosts').style.display = viewName === 'posts' ? 'block' : 'none';
             document.getElementById('viewEditor').style.display = viewName === 'editor' ? 'block' : 'none';
-            document.getElementById('viewDecap').style.display = viewName === 'decap' ? 'block' : 'none';
+            document.getElementById('viewMedia').style.display = viewName === 'media' ? 'block' : 'none';
 
             document.getElementById('tabPostsBtn').classList.toggle('active', viewName === 'posts');
             document.getElementById('tabEditorBtn').classList.toggle('active', viewName === 'editor');
-            document.getElementById('tabDecapBtn').classList.toggle('active', viewName === 'decap');
+            document.getElementById('tabMediaBtn').classList.toggle('active', viewName === 'media');
+
+            if (viewName === 'media') {
+                loadMediaLibrary();
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1808,6 +2897,7 @@
             document.getElementById('deletePostBtn').style.display = 'none';
             switchView('editor');
             updateLivePreview();
+            checkForAutosavedDraft();
         }
 
         // --- Edit Existing Post ---
@@ -1824,6 +2914,7 @@
                     document.getElementById('deletePostBtn').style.display = 'inline-flex';
                     switchView('editor');
                     updateLivePreview();
+                    checkForAutosavedDraft(slug);
                 } else {
                     showToast('Failed to load article data', 'error');
                 }
@@ -1845,6 +2936,7 @@
             document.getElementById('postContent').value = post.content || '';
             document.getElementById('postImage').value = post.image || '';
             document.getElementById('postImageCaption').value = post.imageCaption || '';
+            setHeroImage(post.image || '', post.image ? 'Featured Hero' : '');
 
             // Status Badge
             const statusBadge = document.getElementById('postStatusBadge');
@@ -1877,14 +2969,227 @@
             if (!isEditing || !document.getElementById('postSlug').value) {
                 document.getElementById('postSlug').value = slugifyText(title);
             }
+            auditSeoMetadata();
             updateLivePreview();
         }
 
         function handleExcerptChange() {
-            const text = document.getElementById('postExcerpt').value;
-            document.getElementById('excerptCountLabel').textContent = `${text.length} / 160 chars`;
+            auditSeoMetadata();
             updateLivePreview();
         }
+
+        // ==========================================================================
+        // AUTOMATED SEO META DATA CHECKER (Title & Excerpt/Meta Description Audit)
+        // ==========================================================================
+        function auditSeoMetadata() {
+            const titleInput = document.getElementById('postTitle');
+            const excerptInput = document.getElementById('postExcerpt');
+            if (!titleInput || !excerptInput) return;
+
+            const title = (titleInput.value || '').trim();
+            const excerpt = (excerptInput.value || '').trim();
+            const titleLen = title.length;
+            const excerptLen = excerpt.length;
+
+            const titleLimit = 60;
+            const excerptLimit = 160;
+
+            // 1. Title Audit
+            const titleCountBadge = document.getElementById('titleCountBadge');
+            const titleMeter = document.getElementById('titleSeoMeter');
+            const titleWarning = document.getElementById('titleSeoWarning');
+            const auditTitleChars = document.getElementById('auditTitleChars');
+            const auditTitleStatus = document.getElementById('auditTitleStatus');
+            const btnTrimTitle = document.getElementById('btnTrimTitle');
+
+            let titleIsOk = false;
+            let titlePercent = Math.min(100, Math.round((titleLen / titleLimit) * 100));
+
+            if (titleMeter) titleMeter.style.width = `${titlePercent}%`;
+            if (titleCountBadge) titleCountBadge.textContent = `${titleLen} / ${titleLimit} chars`;
+            if (auditTitleChars) auditTitleChars.textContent = `${titleLen} / ${titleLimit}`;
+
+            if (titleLen === 0) {
+                if (titleCountBadge) titleCountBadge.className = 'cms-seo-status-pill';
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-primary)';
+                if (titleWarning) titleWarning.style.display = 'none';
+                if (auditTitleStatus) auditTitleStatus.textContent = 'Please enter an article headline.';
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            } else if (titleLen > titleLimit) {
+                // EXCEEDED WARNING (Standard search engine limit: 60 chars)
+                const over = titleLen - titleLimit;
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill danger';
+                    titleCountBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${titleLen} / ${titleLimit} (Exceeds Limit!)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-danger)';
+                if (titleWarning) {
+                    titleWarning.style.display = 'flex';
+                    titleWarning.className = 'cms-seo-warning-inline';
+                    titleWarning.innerHTML = `
+                        <span><i class="fas fa-exclamation-circle" style="color: #ef4444; margin-right: 4px;"></i> <strong>Title exceeds limit:</strong> Headline is ${titleLen} characters (+${over} over 60-character limit). Search engines will truncate it with '...'.</span>
+                        <button type="button" class="cms-btn cms-btn-danger" style="padding: 2px 8px; font-size: 0.72rem; white-space: nowrap;" onclick="autoTrimTitle()">Auto-Trim to 60</button>
+                    `;
+                }
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-danger);"><i class="fas fa-times-circle"></i> Exceeds 60-char limit by +${over} chars. Search engines will truncate with '...'.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'inline-flex';
+            } else if (titleLen < 25) {
+                // TOO SHORT NOTICE
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill warning';
+                    titleCountBadge.innerHTML = `<i class="fas fa-info-circle"></i> ${titleLen} / ${titleLimit} (Short)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-warning)';
+                if (titleWarning) {
+                    titleWarning.style.display = 'flex';
+                    titleWarning.className = 'cms-seo-warning-inline info';
+                    titleWarning.innerHTML = `<span><i class="fas fa-info-circle" style="color: #f59e0b; margin-right: 4px;"></i> <strong>Headline is short (${titleLen} chars):</strong> Recommended optimal length is 35–60 characters to capture key search queries.</span>`;
+                }
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-warning);"><i class="fas fa-exclamation-triangle"></i> Headline is brief. Expand to 35–60 chars for optimal click-through rates.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            } else {
+                // OPTIMAL
+                titleIsOk = true;
+                if (titleCountBadge) {
+                    titleCountBadge.className = 'cms-seo-status-pill optimal';
+                    titleCountBadge.innerHTML = `<i class="fas fa-check"></i> ${titleLen} / ${titleLimit} (Optimal)`;
+                }
+                if (titleMeter) titleMeter.style.backgroundColor = 'var(--cms-success)';
+                if (titleWarning) titleWarning.style.display = 'none';
+                if (auditTitleStatus) {
+                    auditTitleStatus.innerHTML = `<span style="color: var(--cms-success);"><i class="fas fa-check-circle"></i> Optimal length. Displays fully on Google mobile and desktop search results.</span>`;
+                }
+                if (btnTrimTitle) btnTrimTitle.style.display = 'none';
+            }
+
+            // 2. Excerpt / Meta Description Audit
+            const excerptCountBadge = document.getElementById('excerptCountLabel');
+            const excerptMeter = document.getElementById('excerptSeoMeter');
+            const excerptWarning = document.getElementById('excerptSeoWarning');
+            const auditExcerptChars = document.getElementById('auditExcerptChars');
+            const auditExcerptStatus = document.getElementById('auditExcerptStatus');
+            const btnTrimExcerpt = document.getElementById('btnTrimExcerpt');
+
+            let excerptIsOk = false;
+            let excerptPercent = Math.min(100, Math.round((excerptLen / excerptLimit) * 100));
+
+            if (excerptMeter) excerptMeter.style.width = `${excerptPercent}%`;
+            if (excerptCountBadge) excerptCountBadge.textContent = `${excerptLen} / ${excerptLimit} chars`;
+            if (auditExcerptChars) auditExcerptChars.textContent = `${excerptLen} / ${excerptLimit}`;
+
+            if (excerptLen === 0) {
+                if (excerptCountBadge) excerptCountBadge.className = 'cms-seo-status-pill';
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-primary)';
+                if (excerptWarning) excerptWarning.style.display = 'none';
+                if (auditExcerptStatus) auditExcerptStatus.textContent = 'Please enter an excerpt / meta description.';
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            } else if (excerptLen > excerptLimit) {
+                // EXCEEDED WARNING (Standard search engine limit: 160 chars)
+                const over = excerptLen - excerptLimit;
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill danger';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${excerptLen} / ${excerptLimit} (Exceeds Limit!)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-danger)';
+                if (excerptWarning) {
+                    excerptWarning.style.display = 'flex';
+                    excerptWarning.className = 'cms-seo-warning-inline';
+                    excerptWarning.innerHTML = `
+                        <span><i class="fas fa-exclamation-circle" style="color: #ef4444; margin-right: 4px;"></i> <strong>Description exceeds limit:</strong> Meta description is ${excerptLen} characters (+${over} over 160-character limit). Search engines will truncate it with '...'.</span>
+                        <button type="button" class="cms-btn cms-btn-danger" style="padding: 2px 8px; font-size: 0.72rem; white-space: nowrap;" onclick="autoTrimExcerpt()">Auto-Trim to 160</button>
+                    `;
+                }
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-danger);"><i class="fas fa-times-circle"></i> Exceeds 160-char limit by +${over} chars. Snippets will be clipped by search engines.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'inline-flex';
+            } else if (excerptLen < 70) {
+                // TOO SHORT NOTICE
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill warning';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-info-circle"></i> ${excerptLen} / ${excerptLimit} (Short)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-warning)';
+                if (excerptWarning) {
+                    excerptWarning.style.display = 'flex';
+                    excerptWarning.className = 'cms-seo-warning-inline info';
+                    excerptWarning.innerHTML = `<span><i class="fas fa-info-circle" style="color: #f59e0b; margin-right: 4px;"></i> <strong>Description is short (${excerptLen} chars):</strong> Aim for 120–160 characters for complete search snippets and rich social cards.</span>`;
+                }
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-warning);"><i class="fas fa-exclamation-triangle"></i> Description is brief. Aim for 120–160 chars for optimal search presence.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            } else {
+                // OPTIMAL
+                excerptIsOk = true;
+                if (excerptCountBadge) {
+                    excerptCountBadge.className = 'cms-seo-status-pill optimal';
+                    excerptCountBadge.innerHTML = `<i class="fas fa-check"></i> ${excerptLen} / ${excerptLimit} (Optimal)`;
+                }
+                if (excerptMeter) excerptMeter.style.backgroundColor = 'var(--cms-success)';
+                if (excerptWarning) excerptWarning.style.display = 'none';
+                if (auditExcerptStatus) {
+                    auditExcerptStatus.innerHTML = `<span style="color: var(--cms-success);"><i class="fas fa-check-circle"></i> Optimal length. Fits cleanly inside Google search snippet cards.</span>`;
+                }
+                if (btnTrimExcerpt) btnTrimExcerpt.style.display = 'none';
+            }
+
+            // 3. Overall Score Badge
+            const scoreBadge = document.getElementById('seoOverallScoreBadge');
+            if (scoreBadge) {
+                if (titleLen > titleLimit || excerptLen > excerptLimit) {
+                    scoreBadge.className = 'cms-seo-status-pill danger';
+                    scoreBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Warning: Limits Exceeded';
+                } else if (!titleIsOk || !excerptIsOk) {
+                    scoreBadge.className = 'cms-seo-status-pill warning';
+                    scoreBadge.innerHTML = '<i class="fas fa-info-circle"></i> SEO Needs Polish';
+                } else {
+                    scoreBadge.className = 'cms-seo-status-pill optimal';
+                    scoreBadge.innerHTML = '<i class="fas fa-check-circle"></i> 100% SEO Ready';
+                }
+            }
+        }
+
+        // Auto-Trim helper for Title (60 chars)
+        window.autoTrimTitle = function() {
+            const titleInput = document.getElementById('postTitle');
+            if (!titleInput) return;
+            let val = titleInput.value.trim();
+            if (val.length > 60) {
+                let trimmed = val.substring(0, 60);
+                const lastSpace = trimmed.lastIndexOf(' ');
+                if (lastSpace > 45) {
+                    trimmed = trimmed.substring(0, lastSpace);
+                }
+                titleInput.value = trimmed;
+                handleTitleChange();
+                showToast('Headline trimmed to 60 characters for optimal SEO.', 'success');
+            }
+        };
+
+        // Auto-Trim helper for Excerpt (160 chars)
+        window.autoTrimExcerpt = function() {
+            const excerptInput = document.getElementById('postExcerpt');
+            if (!excerptInput) return;
+            let val = excerptInput.value.trim();
+            if (val.length > 160) {
+                let trimmed = val.substring(0, 160);
+                const lastPeriod = trimmed.lastIndexOf('.');
+                const lastSpace = trimmed.lastIndexOf(' ');
+                if (lastPeriod > 120) {
+                    trimmed = trimmed.substring(0, lastPeriod + 1);
+                } else if (lastSpace > 140) {
+                    trimmed = trimmed.substring(0, lastSpace);
+                }
+                excerptInput.value = trimmed;
+                handleExcerptChange();
+                showToast('Meta description trimmed to 160 characters for optimal SEO.', 'success');
+            }
+        };
 
         function handleContentChange() {
             updateWordCount();
@@ -1925,12 +3230,14 @@
             if (clean && !tagsList.includes(clean)) {
                 tagsList.push(clean);
                 renderTags();
+                if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
             }
         }
 
         function removeTag(index) {
             tagsList.splice(index, 1);
             renderTags();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
         }
 
         function handleTagKeyDown(e) {
@@ -1946,11 +3253,197 @@
             }
         }
 
+        // ==========================================================================
+        // AI TAXONOMY & TAGGING ASSISTANT (Gemini 3.8 Flash + Semantic Engine)
+        // ==========================================================================
+        let latestAISuggestions = null;
+
+        async function requestAITaxonomySuggestions() {
+            const title = (document.getElementById('postTitle')?.value || '').trim();
+            const content = (document.getElementById('postContent')?.value || '').trim();
+            const excerpt = (document.getElementById('postExcerpt')?.value || '').trim();
+            const currentCategory = document.getElementById('postCategory')?.value || '';
+
+            if (!title && !content && !excerpt) {
+                showToast('Please enter an article title or write some body text first so the AI can analyze your post.', 'warning');
+                return;
+            }
+
+            const btn = document.getElementById('aiTaxonomyBtn');
+            const origHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+                btn.disabled = true;
+            }
+
+            try {
+                showToast('AI analyzing article themes and taxonomy...', 'info');
+                const resp = await fetch('/api/ai/suggest-tags-categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, excerpt, currentCategory })
+                });
+
+                if (!resp.ok) {
+                    const err = await resp.json();
+                    throw new Error(err.error || 'Failed to retrieve AI suggestions');
+                }
+
+                const data = await resp.json();
+                latestAISuggestions = data;
+                renderAITaxonomySuggestions(data);
+                showToast(`AI recommended category: ${data.category} and ${data.tags.length} topic tags!`, 'success');
+            } catch (err) {
+                console.error('AI Taxonomy suggestion error:', err);
+                showToast(`AI analysis note: ${err.message}`, 'error');
+            } finally {
+                if (btn) {
+                    btn.innerHTML = origHtml;
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        function renderAITaxonomySuggestions(data) {
+            const panel = document.getElementById('aiTaxonomyPanel');
+            if (!panel) return;
+
+            // Update badge source
+            const sourceBadge = document.getElementById('aiTaxonomySourceBadge');
+            if (sourceBadge) {
+                sourceBadge.textContent = data.source === 'gemini-ai' ? 'Gemini 3.8 Flash' : 'Semantic Engine';
+            }
+
+            // Reasoning note
+            const reasonEl = document.getElementById('aiTaxonomyReason');
+            if (reasonEl) {
+                reasonEl.textContent = data.categoryReason || `Classified based on key article themes.`;
+            }
+
+            // Primary recommended category
+            const primaryBtn = document.getElementById('aiPrimaryCategoryBtn');
+            const primaryLabel = document.getElementById('aiPrimaryCatLabel');
+            if (primaryBtn && primaryLabel) {
+                primaryLabel.textContent = data.category;
+                primaryBtn.dataset.cat = data.category;
+                
+                const currentCat = document.getElementById('postCategory')?.value;
+                if (currentCat === data.category) {
+                    primaryBtn.style.opacity = '0.85';
+                    primaryBtn.title = 'Category already applied';
+                } else {
+                    primaryBtn.style.opacity = '1';
+                }
+            }
+
+            // Alternative categories
+            const altContainer = document.getElementById('aiAlternativeCategories');
+            if (altContainer) {
+                if (data.alternativeCategories && data.alternativeCategories.length > 0) {
+                    altContainer.innerHTML = '<span style="font-size: 0.72rem; color: var(--cms-text-subtle); margin-left: 0.35rem;">Alternatives:</span>' +
+                        data.alternativeCategories.map(cat => `
+                            <button type="button" class="cms-btn cms-btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" onclick="applyAICategory('${escapeHtml(cat)}')">
+                                ${escapeHtml(cat)}
+                            </button>
+                        `).join('');
+                } else {
+                    altContainer.innerHTML = '';
+                }
+            }
+
+            // Render suggested tags
+            renderAISuggestedTags(data.tags || []);
+
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function renderAISuggestedTags(tags) {
+            const container = document.getElementById('aiSuggestedTagsContainer');
+            if (!container) return;
+
+            if (!tags || tags.length === 0) {
+                container.innerHTML = '<span style="font-size: 0.75rem; color: var(--cms-text-subtle);">No specific tags suggested.</span>';
+                return;
+            }
+
+            container.innerHTML = tags.map(tag => {
+                const isAdded = tagsList.includes(tag);
+                return `
+                    <button type="button" class="cms-btn ${isAdded ? 'cms-btn-secondary' : 'cms-btn-outline'}" 
+                        style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem;" 
+                        onclick="toggleAITag('${escapeHtml(tag)}', this)"
+                        title="${isAdded ? 'Tag already added (click to remove)' : 'Click to add tag to post'}">
+                        <i class="fas ${isAdded ? 'fa-check' : 'fa-plus'}" style="${isAdded ? 'color: #10b981;' : ''}"></i>
+                        <span>#${escapeHtml(tag)}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleAITag(tag, btnEl) {
+            const clean = String(tag || '').trim().replace(/^#/, '');
+            const idx = tagsList.indexOf(clean);
+            if (idx === -1) {
+                addTag(clean);
+                showToast(`Added tag #${clean}`, 'success');
+            } else {
+                removeTag(idx);
+                showToast(`Removed tag #${clean}`, 'info');
+            }
+            if (latestAISuggestions && latestAISuggestions.tags) {
+                renderAISuggestedTags(latestAISuggestions.tags);
+            }
+        }
+
+        function applyAICategory(category) {
+            if (!category) return;
+            const select = document.getElementById('postCategory');
+            if (select) {
+                select.value = category;
+                updateLivePreview();
+                if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
+                showToast(`Applied category: ${category}`, 'success');
+                if (latestAISuggestions) renderAITaxonomySuggestions(latestAISuggestions);
+            }
+        }
+
+        function addAllAITags() {
+            if (!latestAISuggestions || !latestAISuggestions.tags) return;
+            let addedCount = 0;
+            latestAISuggestions.tags.forEach(tag => {
+                const clean = String(tag || '').trim().replace(/^#/, '');
+                if (clean && !tagsList.includes(clean)) {
+                    tagsList.push(clean);
+                    addedCount++;
+                }
+            });
+            renderTags();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
+            renderAISuggestedTags(latestAISuggestions.tags);
+            showToast(`Added ${addedCount} tags to post!`, 'success');
+        }
+
+        function applyAllAITaxonomy() {
+            if (!latestAISuggestions) return;
+            if (latestAISuggestions.category) {
+                applyAICategory(latestAISuggestions.category);
+            }
+            addAllAITags();
+            showToast('All AI category and tag suggestions applied!', 'success');
+        }
+
+        function closeAITaxonomyPanel() {
+            const panel = document.getElementById('aiTaxonomyPanel');
+            if (panel) panel.style.display = 'none';
+        }
+
         // --- Unsplash Curated Asset Selection ---
         function selectCuratedImage(url, caption) {
-            document.getElementById('postImage').value = url;
+            setHeroImage(url, 'Stock Preset');
             document.getElementById('postImageCaption').value = caption || '';
             updateLivePreview();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
             showToast('Featured hero image set!', 'success');
         }
 
@@ -1973,30 +3466,574 @@
             insertSyntax(hashes, '');
         }
 
+        // --- Link Modal Workflow ---
         function insertLink() {
-            const url = prompt('Enter destination URL:', 'https://');
-            if (url) {
-                insertSyntax('[', `](${url})`);
+            const textarea = document.getElementById('postContent');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end).trim();
+            const textInput = document.getElementById('linkText');
+            const urlInput = document.getElementById('linkUrl');
+            if (textInput) textInput.value = selected || '';
+            if (urlInput) urlInput.value = 'https://';
+            const modal = document.getElementById('insertLinkModal');
+            if (modal) {
+                modal.classList.add('open');
+                if (selected) {
+                    urlInput.focus();
+                    urlInput.select();
+                } else {
+                    textInput.focus();
+                }
             }
+        }
+
+        function closeInsertLinkModal() {
+            const modal = document.getElementById('insertLinkModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        function executeInsertLink() {
+            const text = (document.getElementById('linkText')?.value || '').trim() || 'Link';
+            const url = (document.getElementById('linkUrl')?.value || '').trim() || '#';
+            insertSyntax(`[${text}](`, `${url})`);
+            closeInsertLinkModal();
+            showToast('Link inserted!', 'success');
+        }
+
+        // --- Article Image Modal & Direct Device Upload ---
+        let pendingModalImageFile = null;
+
+        function openInsertImageModal() {
+            const modal = document.getElementById('insertImageModal');
+            if (!modal) return;
+            modal.classList.add('open');
+            switchImageModalTab('upload');
+            // Reset input fields
+            const fileInput = document.getElementById('modalImageFileInput');
+            if (fileInput) fileInput.value = '';
+            const altInput = document.getElementById('modalImageAlt');
+            if (altInput) altInput.value = '';
+            const previewWrapper = document.getElementById('modalImagePreviewWrapper');
+            if (previewWrapper) previewWrapper.style.display = 'none';
+            pendingModalImageFile = null;
         }
 
         function insertImagePrompt() {
-            const url = prompt('Enter Image URL:', 'https://images.unsplash.com/...');
-            if (url) {
-                const alt = prompt('Enter Image Alt Description:', 'Illustration photo') || 'Image';
-                insertSyntax(`![${alt}](`, `${url})`);
+            openInsertImageModal();
+        }
+
+        function closeInsertImageModal() {
+            const modal = document.getElementById('insertImageModal');
+            if (modal) modal.classList.remove('open');
+            pendingModalImageFile = null;
+        }
+
+        function switchImageModalTab(tab) {
+            const uploadTab = document.getElementById('imageModalUploadTab');
+            const libraryTab = document.getElementById('imageModalLibraryTab');
+            const urlTab = document.getElementById('imageModalUrlTab');
+
+            if (uploadTab) uploadTab.style.display = tab === 'upload' ? 'block' : 'none';
+            if (libraryTab) libraryTab.style.display = tab === 'library' ? 'block' : 'none';
+            if (urlTab) urlTab.style.display = tab === 'url' ? 'block' : 'none';
+
+            const tabUploadBtn = document.getElementById('modalTabUploadBtn');
+            const tabLibraryBtn = document.getElementById('modalTabLibraryBtn');
+            const tabUrlBtn = document.getElementById('modalTabUrlBtn');
+
+            if (tabUploadBtn) tabUploadBtn.classList.toggle('active', tab === 'upload');
+            if (tabLibraryBtn) tabLibraryBtn.classList.toggle('active', tab === 'library');
+            if (tabUrlBtn) tabUrlBtn.classList.toggle('active', tab === 'url');
+
+            if (tab === 'library') {
+                loadModalLibraryImages();
             }
         }
 
-        function insertCallout() {
-            const content = prompt('Enter callout key takeaway:', 'Crucial insight for our readers');
-            if (content) {
-                insertSyntax(`<div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 6px; margin: 1.5rem 0;">\n<strong>Editorial Note:</strong> ${content}\n</div>\n`, '');
+        function handleModalImageFileSelect(files) {
+            if (!files || !files.length) return;
+            const file = files[0];
+            pendingModalImageFile = file;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.getElementById('modalImagePreview');
+                const wrapper = document.getElementById('modalImagePreviewWrapper');
+                if (img) img.src = e.target.result;
+                if (wrapper) wrapper.style.display = 'block';
+                const altInput = document.getElementById('modalImageAlt');
+                if (altInput && !altInput.value) {
+                    const clean = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                    altInput.value = clean.charAt(0).toUpperCase() + clean.slice(1);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function executeUploadAndInsertImage() {
+            if (!pendingModalImageFile) {
+                showToast('Please choose an image file from your computer first.', 'error');
+                return;
             }
+
+            const btn = document.getElementById('btnUploadAndInsert');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading to server...';
+            btn.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                        },
+                        body: JSON.stringify({
+                            fileName: pendingModalImageFile.name,
+                            fileData: e.target.result
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        const alt = (document.getElementById('modalImageAlt')?.value || '').trim() || pendingModalImageFile.name;
+                        insertSyntax(`\n\n![${alt}](`, `${data.url})\n\n`);
+                        closeInsertImageModal();
+                        showToast('Image uploaded directly from computer and inserted!', 'success');
+                    } else {
+                        showToast(data.error || 'Upload failed', 'error');
+                    }
+                } catch (err) {
+                    showToast('Upload error: ' + err.message, 'error');
+                } finally {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsDataURL(pendingModalImageFile);
+        }
+
+        function executeInsertImageUrl() {
+            const urlInput = document.getElementById('modalDirectUrl');
+            const altInput = document.getElementById('modalDirectUrlAlt');
+            const url = (urlInput?.value || '').trim();
+            const alt = (altInput?.value || '').trim() || 'Illustration';
+
+            if (!url) {
+                showToast('Please enter an image link URL', 'error');
+                if (urlInput) urlInput.focus();
+                return;
+            }
+
+            insertSyntax(`\n\n![${alt}](`, `${url})\n\n`);
+            closeInsertImageModal();
+            showToast('Image inserted!', 'success');
+        }
+
+        async function loadModalLibraryImages() {
+            const grid = document.getElementById('modalLibraryGrid');
+            if (!grid) return;
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 1.5rem;"><i class="fas fa-spinner fa-spin" style="color: var(--cms-primary);"></i> Loading images...</div>';
+            try {
+                const res = await fetch('/api/media', {
+                    headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
+                });
+                if (res.ok) {
+                    const items = await res.json();
+                    if (!items.length) {
+                        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 1.5rem; color: var(--cms-text-muted); font-size: 0.8rem;">No images uploaded yet. Use "Upload From Computer" tab!</div>';
+                        return;
+                    }
+                    grid.innerHTML = items.map(item => `
+                        <div style="cursor: pointer; border: 2px solid var(--cms-border); border-radius: 6px; overflow: hidden; background: #000; transition: border-color 0.2s;" onclick="selectModalLibraryImage('${escapeHtml(item.url)}', '${escapeHtml(item.filename)}')" onmouseover="this.style.borderColor='var(--cms-primary)'" onmouseout="this.style.borderColor='var(--cms-border)'" title="Click to insert ${escapeHtml(item.filename)}">
+                            <img src="${escapeHtml(item.url)}" style="width: 100%; height: 75px; object-fit: cover; display: block;">
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; color: var(--cms-danger); padding: 1rem; font-size: 0.8rem;">Failed to load library: ${escapeHtml(err.message)}</div>`;
+            }
+        }
+
+        function selectModalLibraryImage(url, filename) {
+            const altInput = document.getElementById('modalLibraryImageAlt');
+            const cleanAlt = (altInput?.value || '').trim() || filename.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+            insertSyntax(`\n\n![${cleanAlt}](`, `${url})\n\n`);
+            closeInsertImageModal();
+            showToast('Image inserted from Media Library!', 'success');
+        }
+
+        // --- In-Article Callout Modal ---
+        function insertCallout() {
+            const modal = document.getElementById('insertCalloutModal');
+            if (modal) {
+                modal.classList.add('open');
+                const contentInput = document.getElementById('calloutContent');
+                if (contentInput) {
+                    contentInput.value = '';
+                    contentInput.focus();
+                }
+            }
+        }
+
+        function closeInsertCalloutModal() {
+            const modal = document.getElementById('insertCalloutModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        function executeInsertCallout() {
+            const type = document.getElementById('calloutType')?.value || 'info';
+            const content = (document.getElementById('calloutContent')?.value || '').trim();
+            if (!content) {
+                showToast('Please enter callout text content', 'error');
+                return;
+            }
+
+            const styles = {
+                info: 'background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3b82f6;',
+                tip: 'background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10b981;',
+                warning: 'background: rgba(245, 158, 11, 0.08); border-left: 4px solid #f59e0b;'
+            };
+            const labels = {
+                info: 'Editorial Note',
+                tip: 'Key Takeaway',
+                warning: 'Important Alert'
+            };
+
+            const block = `\n<div style="${styles[type]} padding: 1.25rem 1.5rem; border-radius: 8px; margin: 1.75rem 0;">\n<strong>${labels[type]}:</strong> ${escapeHtml(content)}\n</div>\n\n`;
+            insertSyntax(block, '');
+            closeInsertCalloutModal();
+            showToast('Callout box inserted!', 'success');
         }
 
         function insertDivider() {
             insertSyntax('\n\n---\n\n', '');
+        }
+
+        // --- Featured Hero Image: Direct Computer Upload Engine ---
+        function handleHeroFileSelect(files) {
+            if (!files || !files.length) return;
+            const file = files[0];
+            uploadHeroFileDirectly(file);
+        }
+
+        function handleHeroDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const area = document.getElementById('heroDropArea');
+            if (area) area.classList.add('dragover');
+        }
+
+        function handleHeroDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const area = document.getElementById('heroDropArea');
+            if (area) area.classList.remove('dragover');
+        }
+
+        function handleHeroDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const area = document.getElementById('heroDropArea');
+            if (area) area.classList.remove('dragover');
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+                handleHeroFileSelect(e.dataTransfer.files);
+            }
+        }
+
+        function uploadHeroFileDirectly(file) {
+            if (!file) return;
+            if (file.size > 15 * 1024 * 1024) {
+                showToast('Image size cannot exceed 15MB', 'error');
+                return;
+            }
+
+            const dropState = document.getElementById('heroEmptyState');
+            const progress = document.getElementById('heroUploadProgress');
+            const statusText = document.getElementById('heroUploadStatusText');
+
+            if (dropState) dropState.style.display = 'none';
+            if (progress) progress.style.display = 'block';
+            if (statusText) statusText.textContent = `Uploading ${file.name} (${formatBytes(file.size)}) directly...`;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64Data = e.target.result;
+                try {
+                    const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                        },
+                        body: JSON.stringify({
+                            fileName: file.name,
+                            fileData: base64Data
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (progress) progress.style.display = 'none';
+
+                    if (res.ok && data.success) {
+                        setHeroImage(data.url, `${file.name} • ${formatBytes(data.size)}`);
+                        showToast('Featured hero photo uploaded directly from computer!', 'success');
+                    } else {
+                        if (dropState) dropState.style.display = 'block';
+                        showToast(data.error || 'Upload failed', 'error');
+                    }
+                } catch (err) {
+                    if (progress) progress.style.display = 'none';
+                    if (dropState) dropState.style.display = 'block';
+                    showToast('Upload connection error: ' + err.message, 'error');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function setHeroImage(url, metaBadgeText = '') {
+            const input = document.getElementById('postImage');
+            if (input) input.value = url || '';
+
+            const previewCard = document.getElementById('heroPreviewCard');
+            const emptyState = document.getElementById('heroEmptyState');
+            const previewImg = document.getElementById('heroPreviewImg');
+            const metaBadge = document.getElementById('heroImageMetaBadge');
+
+            if (url) {
+                if (previewImg) previewImg.src = url;
+                if (metaBadge) metaBadge.textContent = metaBadgeText || 'Direct Upload';
+                if (previewCard) previewCard.style.display = 'block';
+                if (emptyState) emptyState.style.display = 'none';
+            } else {
+                if (previewCard) previewCard.style.display = 'none';
+                if (emptyState) emptyState.style.display = 'block';
+            }
+
+            updateLivePreview();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
+        }
+
+        function renderHeroImagePreview(url) {
+            setHeroImage(url);
+        }
+
+        function removeHeroImage() {
+            setHeroImage('');
+            const fileInput = document.getElementById('heroFileInput');
+            if (fileInput) fileInput.value = '';
+            const urlInput = document.getElementById('postImageUrlInput');
+            if (urlInput) urlInput.value = '';
+            showToast('Featured hero photo removed.', 'info');
+        }
+
+        function toggleHeroUrlInput() {
+            const wrapper = document.getElementById('heroUrlWrapper');
+            if (!wrapper) return;
+            const isHidden = wrapper.style.display === 'none';
+            wrapper.style.display = isHidden ? 'block' : 'none';
+            if (isHidden) {
+                const current = document.getElementById('postImage')?.value || '';
+                const urlInput = document.getElementById('postImageUrlInput');
+                if (urlInput) {
+                    urlInput.value = current;
+                    urlInput.focus();
+                }
+            }
+        }
+
+        function handleHeroUrlChange(val) {
+            const url = (val || '').trim();
+            setHeroImage(url, 'Web Link');
+        }
+
+        // --- Media Picker Modal for Hero Image ---
+        async function openMediaPickerForHero() {
+            const modal = document.getElementById('heroMediaPickerModal');
+            const grid = document.getElementById('heroMediaPickerGrid');
+            if (!modal || !grid) return;
+
+            modal.classList.add('open');
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--cms-primary);"></i><p style="margin-top: 0.5rem; color: var(--cms-text-muted);">Loading Media Library...</p></div>';
+
+            try {
+                const res = await fetch('/api/media', {
+                    headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
+                });
+                if (res.ok) {
+                    const items = await res.json();
+                    if (!items.length) {
+                        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--cms-text-muted);">No images uploaded yet. Upload one from your computer above!</div>';
+                        return;
+                    }
+                    grid.innerHTML = items.map(item => `
+                        <div style="cursor: pointer; border: 2px solid var(--cms-border); border-radius: 8px; overflow: hidden; background: #000; transition: all 0.2s;" onclick="selectHeroFromLibrary('${escapeHtml(item.url)}', '${escapeHtml(item.filename)}')" onmouseover="this.style.borderColor='var(--cms-primary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--cms-border)'; this.style.transform='none'" title="Select this image">
+                            <img src="${escapeHtml(item.url)}" style="width: 100%; height: 95px; object-fit: cover; display: block;">
+                            <div style="padding: 0.4rem; font-size: 0.72rem; color: #fff; background: rgba(0,0,0,0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(item.filename)}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                grid.innerHTML = `<div style="color: var(--cms-danger); padding: 1rem;">Failed to load library: ${escapeHtml(err.message)}</div>`;
+            }
+        }
+
+        function closeHeroMediaPicker() {
+            const modal = document.getElementById('heroMediaPickerModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        function selectHeroFromLibrary(url, filename = '') {
+            setHeroImage(url, filename || 'Media Library');
+            closeHeroMediaPicker();
+            showToast('Hero image updated from Media Library!', 'success');
+        }
+
+        // --- Master Media Library View ---
+        async function loadMediaLibrary() {
+            const grid = document.getElementById('mediaGrid');
+            if (!grid) return;
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin" style="font-size: 1.8rem; color: var(--cms-primary);"></i><p style="margin-top: 0.5rem; color: var(--cms-text-muted);">Loading media files from storage...</p></div>';
+
+            try {
+                const res = await fetch('/api/media', {
+                    headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
+                });
+                if (res.ok) {
+                    const items = await res.json();
+                    renderMediaGrid(items);
+                } else {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--cms-text-muted);">Failed to load media files.</div>';
+                }
+            } catch (err) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--cms-danger);">Error: ${escapeHtml(err.message)}</div>`;
+            }
+        }
+
+        function renderMediaGrid(items) {
+            const grid = document.getElementById('mediaGrid');
+            if (!grid) return;
+
+            if (!items || !items.length) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; background: var(--cms-surface); border: 2px dashed var(--cms-border); border-radius: 12px;">
+                        <i class="fas fa-images" style="font-size: 3rem; color: var(--cms-border-light); margin-bottom: 0.75rem; display: block;"></i>
+                        <h4 style="color: var(--cms-text); margin-bottom: 0.25rem;">No Media Files Uploaded Yet</h4>
+                        <p style="color: var(--cms-text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Upload photos directly from your computer to use across articles.</p>
+                        <button type="button" class="cms-btn cms-btn-primary" onclick="document.getElementById('mediaLibraryUploadInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Photos From Computer
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => `
+                <div class="cms-media-card">
+                    <div class="cms-media-thumb">
+                        <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.filename)}" loading="lazy">
+                    </div>
+                    <div class="cms-media-meta">
+                        <strong title="${escapeHtml(item.filename)}" style="display: block; font-size: 0.8rem; color: var(--cms-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.25rem;">${escapeHtml(item.filename)}</strong>
+                        <div style="font-size: 0.72rem; color: var(--cms-text-muted); display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                            <span>${formatBytes(item.size)}</span>
+                            <span>${new Date(item.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
+                            <button type="button" class="cms-btn cms-btn-secondary cms-btn-icon" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" onclick="copyMediaUrl('${escapeHtml(item.url)}')" title="Copy Image URL">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button type="button" class="cms-btn cms-btn-primary cms-btn-icon" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" onclick="useAsHeroFromMedia('${escapeHtml(item.url)}')" title="Use as Featured Hero Photo">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button type="button" class="cms-btn cms-btn-danger cms-btn-icon" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" onclick="deleteMediaItem('${escapeHtml(item.filename)}')" title="Delete from server">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function handleMediaBatchUpload(files) {
+            if (!files || !files.length) return;
+            const progress = document.getElementById('mediaBatchProgress');
+            const statusText = document.getElementById('mediaBatchStatusText');
+            if (progress) progress.style.display = 'block';
+
+            let count = 0;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (statusText) statusText.textContent = `Uploading ${i + 1} of ${files.length}: ${file.name}...`;
+                await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = async (e) => {
+                        try {
+                            const res = await fetch('/api/upload', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                                },
+                                body: JSON.stringify({ fileName: file.name, fileData: e.target.result })
+                            });
+                            if (res.ok) count++;
+                        } catch (err) {}
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            if (progress) progress.style.display = 'none';
+            const batchInput = document.getElementById('mediaLibraryUploadInput');
+            if (batchInput) batchInput.value = '';
+            showToast(`Uploaded ${count} image(s) directly from your computer!`, 'success');
+            loadMediaLibrary();
+        }
+
+        async function deleteMediaItem(filename) {
+            if (!confirm(`Permanently delete "${filename}" from server?`)) return;
+            try {
+                const res = await fetch(`/api/media/${encodeURIComponent(filename)}`, {
+                    method: 'DELETE',
+                    headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
+                });
+                if (res.ok) {
+                    showToast(`Deleted ${filename}`, 'info');
+                    loadMediaLibrary();
+                } else {
+                    const d = await res.json();
+                    showToast(d.error || 'Failed to delete file', 'error');
+                }
+            } catch (err) {
+                showToast('Error: ' + err.message, 'error');
+            }
+        }
+
+        function copyMediaUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('Direct Image URL copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy URL', 'error');
+            });
+        }
+
+        function useAsHeroFromMedia(url) {
+            setHeroImage(url, 'Media Library');
+            switchView('editor');
+            showToast('Featured hero photo updated from Media Library!', 'success');
+        }
+
+        function formatBytes(bytes) {
+            if (!bytes || bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         }
 
         // --- Templates ---
@@ -2021,6 +4058,7 @@
             }
 
             handleContentChange();
+            if (typeof markAutosaveDirty === 'function') markAutosaveDirty();
             showToast(`Loaded ${type.toUpperCase()} template!`, 'success');
         }
 
@@ -2087,6 +4125,15 @@
             // Tags
             const tagsWrapper = document.getElementById('prevTagsWrapper');
             tagsWrapper.innerHTML = tagsList.map(t => `<span class="search-category-pill" style="margin-right: 0.35rem;">#${escapeHtml(t)}</span>`).join('');
+
+            // Author Profile Card Preview
+            const authorCardName = document.getElementById('prevAuthorCardName');
+            const authorCardBio = document.getElementById('prevAuthorCardBio');
+            const authorCardRole = document.getElementById('prevAuthorCardRole');
+            const authorBioInput = (document.getElementById('postAuthorBio')?.value || '').trim();
+            if (authorCardName) authorCardName.textContent = author || 'Viral Son Editorial';
+            if (authorCardBio) authorCardBio.textContent = authorBioInput || 'Senior contributor covering cultural movements, technology breakthroughs, and global stories for Viral Son.';
+            if (authorCardRole) authorCardRole.textContent = `${category} Contributor`;
 
             // 2. SEO Simulator Elements
             document.getElementById('seoGoogleSlug').textContent = slug;
@@ -2246,7 +4293,10 @@ ${body}`;
 
                 const res = await fetch(url, {
                     method,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+                    },
                     body: JSON.stringify(payload)
                 });
 
@@ -2270,6 +4320,9 @@ ${body}`;
                     // Reload stats and posts list in background
                     loadStats();
                     loadPosts();
+                    if (typeof clearCurrentAutosave === 'function') {
+                        clearCurrentAutosave(result.slug);
+                    }
                 } else {
                     showToast('Failed to save article: ' + (result.error || result.details || 'Unknown server error'), 'error');
                 }
@@ -2330,7 +4383,10 @@ ${body}`;
             btn.innerHTML = '<i class="fas fa-spinner spin"></i> Deleting...';
 
             try {
-                const res = await fetch(`/api/posts/${postToDeleteSlug}`, { method: 'DELETE' });
+                const res = await fetch(`/api/posts/${postToDeleteSlug}`, {
+                    method: 'DELETE',
+                    headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
+                });
                 const result = await res.json();
 
                 if (res.ok && result.success) {
@@ -2436,6 +4492,333 @@ ${body}`;
             const p = document.createElement('p');
             p.textContent = str;
             return p.innerHTML;
+        }
+
+        // ==========================================
+        // --- AUTOSAVE ENGINE (localStorage) ---
+        // ==========================================
+        let autosaveInterval = null;
+        let autosaveDebounceTimer = null;
+        let isAutosaveDirty = false;
+        let detectedAutosaveDraft = null;
+        let currentAutosaveKey = null;
+
+        function getAutosaveStorageKey(slug) {
+            if (slug && isEditing) {
+                return `viralson_cms_autosave_${slug}`;
+            }
+            return 'viralson_cms_autosave_new';
+        }
+
+        function initAutosaveEngine() {
+            // Periodic timer: checks every 5 seconds if dirty, saves to localStorage
+            if (autosaveInterval) clearInterval(autosaveInterval);
+            autosaveInterval = setInterval(() => {
+                const editorView = document.getElementById('viewEditor');
+                if (editorView && editorView.style.display !== 'none' && isAutosaveDirty) {
+                    performAutosave();
+                }
+            }, 5000);
+
+            // Listen for changes across the editor container
+            const editorPane = document.getElementById('viewEditor');
+            if (editorPane) {
+                editorPane.addEventListener('input', (e) => {
+                    if (e.target && !e.target.closest('#adsModal') && !e.target.closest('#deleteModal')) {
+                        markAutosaveDirty();
+                    }
+                });
+                editorPane.addEventListener('change', (e) => {
+                    if (e.target && !e.target.closest('#adsModal') && !e.target.closest('#deleteModal')) {
+                        markAutosaveDirty();
+                    }
+                });
+            }
+
+            // Keyboard shortcut: Ctrl+S / Cmd+S to force manual autosave
+            window.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                    const editorView = document.getElementById('viewEditor');
+                    if (editorView && editorView.style.display !== 'none') {
+                        e.preventDefault();
+                        performAutosave(true);
+                    }
+                }
+            });
+        }
+
+        function markAutosaveDirty() {
+            isAutosaveDirty = true;
+            updateAutosaveBadge('dirty');
+
+            // Debounced autosave after 1.5 seconds of inactivity
+            if (autosaveDebounceTimer) clearTimeout(autosaveDebounceTimer);
+            autosaveDebounceTimer = setTimeout(() => {
+                const editorView = document.getElementById('viewEditor');
+                if (editorView && editorView.style.display !== 'none' && isAutosaveDirty) {
+                    performAutosave();
+                }
+            }, 1500);
+        }
+
+        function updateAutosaveBadge(status, timestamp = null) {
+            const badge = document.getElementById('autosaveBadge');
+            const icon = document.getElementById('autosaveIcon');
+            const text = document.getElementById('autosaveText');
+            if (!badge || !icon || !text) return;
+
+            if (status === 'dirty') {
+                icon.className = 'fas fa-pencil-alt';
+                icon.style.color = 'var(--cms-warning, #f59e0b)';
+                text.textContent = 'Unsaved changes...';
+            } else if (status === 'saving') {
+                icon.className = 'fas fa-sync-alt spin';
+                icon.style.color = 'var(--cms-primary, #3b82f6)';
+                text.textContent = 'Autosaving draft...';
+            } else if (status === 'saved') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#10b981';
+                const timeString = timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                text.textContent = `Autosaved locally at ${timeString}`;
+            } else if (status === 'idle') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#10b981';
+                text.textContent = 'Autosave active';
+            }
+        }
+
+        function performAutosave(manualTrigger = false) {
+            const titleInput = document.getElementById('postTitle');
+            const contentInput = document.getElementById('postContent');
+            if (!titleInput && !contentInput) return;
+
+            const title = (titleInput ? titleInput.value : '').trim();
+            const content = (contentInput ? contentInput.value : '').trim();
+            const excerpt = (document.getElementById('postExcerpt') ? document.getElementById('postExcerpt').value : '').trim();
+
+            // Do not autosave completely empty initial state
+            if (!title && !content && !excerpt && !isEditing) {
+                isAutosaveDirty = false;
+                updateAutosaveBadge('idle');
+                return;
+            }
+
+            updateAutosaveBadge('saving');
+
+            const slug = (document.getElementById('postSlug')?.value || slugifyText(title)).trim();
+            const key = getAutosaveStorageKey(originalSlug || slug);
+            currentAutosaveKey = key;
+
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateString = now.toLocaleDateString();
+
+            const words = content.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+
+            const draftData = {
+                title: document.getElementById('postTitle')?.value || '',
+                slug: slug,
+                category: document.getElementById('postCategory')?.value || 'Technology',
+                author: document.getElementById('postAuthor')?.value || '',
+                authorBio: document.getElementById('postAuthorBio')?.value || '',
+                date: document.getElementById('postDate')?.value || '',
+                views: document.getElementById('postViews')?.value || '1.4K views',
+                excerpt: document.getElementById('postExcerpt')?.value || '',
+                content: document.getElementById('postContent')?.value || '',
+                image: document.getElementById('postImage')?.value || '',
+                imageCaption: document.getElementById('postImageCaption')?.value || '',
+                tags: [...tagsList],
+                isEditing: !!isEditing,
+                originalSlug: originalSlug || null,
+                savedAt: now.toISOString(),
+                savedTimeDisplay: `${dateString} at ${timeString}`,
+                wordCount: words
+            };
+
+            try {
+                localStorage.setItem(key, JSON.stringify(draftData));
+                isAutosaveDirty = false;
+                updateAutosaveBadge('saved', timeString);
+
+                if (manualTrigger) {
+                    showToast(`Draft manually saved to localStorage (${timeString})`, 'success');
+                }
+            } catch (err) {
+                console.error('Failed to save draft to localStorage:', err);
+                const text = document.getElementById('autosaveText');
+                if (text) text.textContent = 'Storage full';
+            }
+        }
+
+        function checkForAutosavedDraft(slug = null) {
+            const banner = document.getElementById('autosaveRestoreBanner');
+            const details = document.getElementById('autosaveBannerDetails');
+            if (!banner) return;
+
+            const key = getAutosaveStorageKey(slug);
+            currentAutosaveKey = key;
+            const savedRaw = localStorage.getItem(key);
+
+            if (!savedRaw) {
+                banner.style.display = 'none';
+                detectedAutosaveDraft = null;
+                updateAutosaveBadge('idle');
+                return;
+            }
+
+            try {
+                const draft = JSON.parse(savedRaw);
+                // Check if draft has actual data
+                if (!draft.title && !draft.content && !draft.excerpt) {
+                    banner.style.display = 'none';
+                    detectedAutosaveDraft = null;
+                    return;
+                }
+
+                // If editing existing post, verify draft is actually different
+                if (isEditing && currentPost) {
+                    const isIdentical = 
+                        draft.title === currentPost.title &&
+                        draft.content === currentPost.content &&
+                        draft.excerpt === currentPost.excerpt;
+                    if (isIdentical) {
+                        banner.style.display = 'none';
+                        detectedAutosaveDraft = null;
+                        return;
+                    }
+                }
+
+                detectedAutosaveDraft = draft;
+                details.textContent = `Autosaved on ${draft.savedTimeDisplay || 'earlier session'} (${draft.wordCount || 0} words). Click Restore to apply these changes.`;
+                banner.style.display = 'block';
+                updateAutosaveBadge('saved', draft.savedTimeDisplay ? draft.savedTimeDisplay.split('at ')[1] : null);
+            } catch (e) {
+                banner.style.display = 'none';
+                detectedAutosaveDraft = null;
+            }
+        }
+
+        function restoreAutosavedDraft() {
+            if (!detectedAutosaveDraft) return;
+
+            const draft = detectedAutosaveDraft;
+            populateEditorForm(draft);
+            updateLivePreview();
+
+            const banner = document.getElementById('autosaveRestoreBanner');
+            if (banner) banner.style.display = 'none';
+
+            markAutosaveDirty();
+            showToast(`Restored autosaved draft from ${draft.savedTimeDisplay || 'local storage'}!`, 'success');
+        }
+
+        function discardAutosavedDraft() {
+            if (currentAutosaveKey) {
+                localStorage.removeItem(currentAutosaveKey);
+            }
+            detectedAutosaveDraft = null;
+            const banner = document.getElementById('autosaveRestoreBanner');
+            if (banner) banner.style.display = 'none';
+            updateAutosaveBadge('idle');
+            showToast('Discarded local autosave draft.', 'info');
+        }
+
+        function clearCurrentAutosave(slug = null) {
+            const key = getAutosaveStorageKey(slug || originalSlug);
+            localStorage.removeItem(key);
+            localStorage.removeItem('viralson_cms_autosave_new');
+            isAutosaveDirty = false;
+            detectedAutosaveDraft = null;
+            const banner = document.getElementById('autosaveRestoreBanner');
+            if (banner) banner.style.display = 'none';
+            updateAutosaveBadge('saved');
+        }
+
+        // ==========================================
+        // --- GOOGLE ADS & ADSENSE INTEGRATION ---
+        // ==========================================
+        async function openAdsModal() {
+            const modal = document.getElementById('adsModal');
+            if (!modal) return;
+
+            modal.classList.add('open');
+
+            // Fetch live settings from server
+            try {
+                const res = await fetch('/api/settings/ads');
+                if (res.ok) {
+                    const data = await res.json();
+                    const clientId = data.clientId || 'ca-pub-9481237418920194';
+                    const pubId = clientId.replace(/^ca-/, '');
+
+                    document.getElementById('adsPublisherIdInput').value = clientId;
+                    document.getElementById('adsTxtRecordDisplay').textContent = `google.com, ${pubId}, DIRECT, f08c47fec0942fa0`;
+                }
+            } catch (err) {
+                console.warn('Could not load ad settings:', err);
+            }
+        }
+
+        function closeAdsModal() {
+            const modal = document.getElementById('adsModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        async function saveAdSettings() {
+            const input = document.getElementById('adsPublisherIdInput');
+            const saveBtn = document.getElementById('saveAdsBtn');
+            let rawValue = (input.value || '').trim();
+
+            if (!rawValue) {
+                showToast('Please enter your Google AdSense Publisher ID.', 'error');
+                input.focus();
+                return;
+            }
+
+            // Normalization
+            let cleanPubId = rawValue;
+            if (cleanPubId.startsWith('ca-pub-')) {
+                cleanPubId = cleanPubId.replace('ca-', '');
+            } else if (!cleanPubId.startsWith('pub-')) {
+                cleanPubId = 'pub-' + cleanPubId.replace(/[^0-9]/g, '');
+            }
+
+            const fullClientId = 'ca-' + cleanPubId;
+
+            const originalBtnHtml = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-spinner spin"></i> Saving...';
+            saveBtn.disabled = true;
+
+            try {
+                const res = await fetch('/api/settings/ads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ clientId: fullClientId })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    input.value = fullClientId;
+                    document.getElementById('adsTxtRecordDisplay').textContent = `google.com, ${cleanPubId}, DIRECT, f08c47fec0942fa0`;
+                    showToast('Google AdSense linked! Site regenerated with updated ads.txt.', 'success');
+                } else {
+                    showToast('Failed to save: ' + (data.error || 'Server error'), 'error');
+                }
+            } catch (err) {
+                showToast('Error saving ad settings: ' + err.message, 'error');
+            } finally {
+                saveBtn.innerHTML = originalBtnHtml;
+                saveBtn.disabled = false;
+            }
+        }
+
+        function copyAdsTxtRecord() {
+            const record = document.getElementById('adsTxtRecordDisplay').textContent.trim();
+            navigator.clipboard.writeText(record).then(() => {
+                showToast('ads.txt verification record copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Unable to copy to clipboard', 'error');
+            });
         }
     </script>
 </body>

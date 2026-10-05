@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs, { existsSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { execSync } from 'child_process';
+import crypto from 'crypto';
 import { load as yamlLoad, dump as yamlDump } from 'js-yaml';
 import { GoogleGenAI } from '@google/genai';
 
@@ -14,6 +15,17 @@ const PORT = parseInt(process.env.PORT || '3000', 10);
 const siteDir = path.join(__dirname, '_site');
 const postsDir = path.join(__dirname, 'src', 'posts');
 const searchDataFile = path.join(__dirname, 'src', '_data', 'searchData.json');
+const uploadsDir = path.join(__dirname, 'Assets', 'images', 'uploads');
+const siteUploadsDir = path.join(siteDir, 'Assets', 'images', 'uploads');
+
+if (!existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+if (!existsSync(siteUploadsDir)) fs.mkdirSync(siteUploadsDir, { recursive: true });
+
+// Admin Authentication State
+const activeSessions = new Map();
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'iamoffixial@gmail.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 // Middleware for JSON and form data
 app.use(express.json({ limit: '15mb' }));
@@ -127,6 +139,173 @@ function parsePostFile(filename) {
 }
 
 // API Routes
+// Auth: Login
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body || {};
+  const trimmedUser = String(username || '').trim().toLowerCase();
+  const pass = String(password || '');
+
+  const isValidUser = trimmedUser === ADMIN_USERNAME.toLowerCase() || 
+                      trimmedUser === ADMIN_EMAIL.toLowerCase() ||
+                      trimmedUser === 'iamoffixial' ||
+                      trimmedUser === 'admin';
+  const isValidPass = pass.trim() === ADMIN_PASSWORD;
+
+  if (!isValidUser || !isValidPass) {
+    return res.status(401).json({ error: 'Invalid username/email or password.' });
+  }
+
+  const token = crypto.randomBytes(32).toString('hex');
+  const user = {
+    username: trimmedUser.includes('@') ? trimmedUser.split('@')[0] : trimmedUser,
+    email: ADMIN_EMAIL,
+    role: 'Administrator & Chief Editor',
+    loginTime: new Date().toISOString()
+  };
+
+  activeSessions.set(token, { user, expiresAt: Date.now() + 7 * 24 * 3600 * 1000 });
+
+  res.json({ success: true, token, user });
+});
+
+// Auth: Verify Session
+app.get('/api/auth/verify', (req, res) => {
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.replace(/^Bearer\s+/i, '') || req.headers['x-auth-token'];
+
+  if (token && activeSessions.has(token)) {
+    const session = activeSessions.get(token);
+    if (session.expiresAt > Date.now()) {
+      return res.json({ authenticated: true, user: session.user });
+    }
+    activeSessions.delete(token);
+  }
+
+  res.status(401).json({ authenticated: false, error: 'Session expired or not authenticated' });
+});
+
+// Auth: Logout
+app.post('/api/auth/logout', (req, res) => {
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.replace(/^Bearer\s+/i, '') || req.headers['x-auth-token'];
+  if (token) activeSessions.delete(token);
+  res.json({ success: true, message: 'Logged out successfully' });
+});
+
+// Media: Upload Image Directly from Computer
+app.post('/api/upload', (req, res) => {
+  try {
+    const { fileName, fileData } = req.body || {};
+
+    if (!fileData) {
+      return res.status(400).json({ error: 'No image data provided for upload' });
+    }
+
+    // Match data URI: data:image/(png|jpeg|jpg|webp|gif|svg+xml);base64,...
+    const matches = String(fileData).match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    let buffer;
+    let extension = 'jpg';
+
+    if (matches && matches.length === 3) {
+      const mime = matches[1].toLowerCase();
+      if (mime.includes('jpeg') || mime.includes('jpg')) extension = 'jpg';
+      else if (mime.includes('png')) extension = 'png';
+      else if (mime.includes('webp')) extension = 'webp';
+      else if (mime.includes('gif')) extension = 'gif';
+      else if (mime.includes('svg')) extension = 'svg';
+      buffer = Buffer.from(matches[2], 'base64');
+    } else {
+      buffer = Buffer.from(fileData, 'base64');
+      if (fileName && fileName.includes('.')) {
+        extension = fileName.split('.').pop().toLowerCase();
+      }
+    }
+
+    if (buffer.length > 15 * 1024 * 1024) {
+      return res.status(400).json({ error: 'Image exceeds maximum allowed size of 15MB' });
+    }
+
+    const rawName = path.parse(fileName || 'image').name;
+    const baseName = slugify(rawName) || 'photo';
+    const timestamp = Date.now();
+    const finalFileName = `${timestamp}-${baseName}.${extension}`;
+    const targetFile = path.join(uploadsDir, finalFileName);
+    const siteTargetFile = path.join(siteUploadsDir, finalFileName);
+
+    writeFileSync(targetFile, buffer);
+    try {
+      if (!existsSync(siteUploadsDir)) fs.mkdirSync(siteUploadsDir, { recursive: true });
+      writeFileSync(siteTargetFile, buffer);
+    } catch (e) {
+      console.warn('Could not mirror to _site uploads immediately:', e.message);
+    }
+
+    const publicUrl = `/Assets/images/uploads/${finalFileName}`;
+
+    res.json({
+      success: true,
+      url: publicUrl,
+      fileName: finalFileName,
+      size: buffer.length,
+      message: 'Image uploaded directly from device successfully!'
+    });
+  } catch (err) {
+    console.error('Error during image upload:', err);
+    res.status(500).json({ error: 'Failed to process file upload', details: err.message });
+  }
+});
+
+// Media: List Uploaded Media Library
+app.get('/api/media', (req, res) => {
+  try {
+    if (!existsSync(uploadsDir)) {
+      return res.json([]);
+    }
+    const files = readdirSync(uploadsDir).filter(f => !f.startsWith('.'));
+    const media = files.map(filename => {
+      const filePath = path.join(uploadsDir, filename);
+      const stat = fs.statSync(filePath);
+      return {
+        filename,
+        url: `/Assets/images/uploads/${filename}`,
+        size: stat.size,
+        createdAt: stat.birthtime || stat.mtime
+      };
+    }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    res.json(media);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to list media library', details: err.message });
+  }
+});
+
+// Media: Delete Uploaded Image
+app.delete('/api/media/:filename', (req, res) => {
+  try {
+    const filename = path.basename(req.params.filename);
+    const target = path.join(uploadsDir, filename);
+    const siteTarget = path.join(siteUploadsDir, filename);
+
+    let deleted = false;
+    if (existsSync(target)) {
+      unlinkSync(target);
+      deleted = true;
+    }
+    if (existsSync(siteTarget)) {
+      unlinkSync(siteTarget);
+      deleted = true;
+    }
+
+    if (!deleted) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+
+    res.json({ success: true, message: `Image ${filename} removed successfully.` });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete image', details: err.message });
+  }
+});
+
 // 1. GET /api/posts - List all posts
 app.get('/api/posts', (req, res) => {
   try {

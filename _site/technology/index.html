@@ -18,8 +18,25 @@
     
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
+
+    <!-- Google AdSense Official Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9481237418920194" crossorigin="anonymous"></script>
+
+    <!-- Theme Initialization to prevent FOUC -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('viralson_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
-<body>
+<body class="">
     <!-- Global Reusable Page Loader -->
     <!-- Reusable Page Loader Component -->
 <div class="page-loader" id="pageLoader">
@@ -51,48 +68,327 @@
 
 
     <!-- Dynamic Header -->
-    <!-- Dynamic Header Component -->
+    <!-- Header Component with Search, Dark Mode & Navigation -->
 <header>
     <div class="container header-container">
         <a href="/" class="logo">
             <div class="logo-icon">VS</div>
             <div class="logo-text">Viral Son</div>
         </a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav-wrapper">
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/" class="nav-link ">Home</a></li>
                 <li><a href="/news/" class="nav-link ">News</a></li>
                 <li><a href="/entertainment/" class="nav-link ">Entertainment</a></li>
                 <li><a href="/technology/" class="nav-link active">Technology</a></li>
+                <li><a href="/sports/" class="nav-link ">Sports</a></li>
                 <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
                 <li><a href="/community/" class="nav-link ">Community</a></li>
                 <li><a href="/about/" class="nav-link ">About</a></li>
+                <li><a href="/contact/" class="nav-link ">Contact</a></li>
             </ul>
         </nav>
+
+        <!-- Header Actions: Search, Dark Mode, Mobile Toggle -->
+        <div class="header-actions">
+            <!-- Search Button -->
+            <button class="action-btn search-trigger" id="searchOpenBtn" aria-label="Open search dialog" title="Search site (Press /)">
+                <i class="fas fa-search"></i>
+                <span class="search-hint">Search...</span>
+            </button>
+
+            <!-- Dark Mode Toggle Button -->
+            <button class="action-btn theme-toggle" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
     </div>
 </header>
 
+<!-- Site-Wide Search Modal Overlay -->
+<div class="search-modal-backdrop" id="searchModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="search-modal-card">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-input-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search news, tech, music, guides, topics..." autocomplete="off">
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear search input" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+            <button type="button" id="searchCloseBtn" class="search-close-btn" aria-label="Close search">
+                <span class="esc-badge">ESC</span>
+            </button>
+        </div>
+
+        <div class="search-results-container">
+            <div id="searchResultsSummary" class="search-summary" style="display: none;"></div>
+            <ul id="searchResultsList" class="search-results-list"></ul>
+            <div id="searchEmptyState" class="search-empty-state">
+                <i class="fas fa-search" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.8rem; opacity: 0.6;"></i>
+                <p>Type keywords to search across articles, audio downloads, and topic hubs.</p>
+                <div class="search-quick-tags">
+                    <span>Popular:</span>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Climate')">Climate</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('AI')">AI</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Phone')">Phone</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Music')">Music</button>
+                    <button type="button" class="quick-tag-btn" onclick="quickSearch('Productivity')">Productivity</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Header Navigation, Search, and Dark Mode Logic
     (function() {
-        const btn = document.getElementById('mobileMenuBtn');
-        const menu = document.getElementById('navMenu');
-        if (btn && menu) {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menu.classList.toggle('active');
+        // --- 1. Dark Mode Functionality ---
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeBtn.setAttribute('title', 'Switch to light mode');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeBtn.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeIcon(currentTheme);
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('viralson_theme', newTheme);
+                updateThemeIcon(newTheme);
             });
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('header')) {
-                    menu.classList.remove('active');
+        }
+
+        // --- 2. Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileBtn && navMenu) {
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'fas fa-times';
+                } else {
+                    menuIcon.className = 'fas fa-bars';
                 }
             });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('header')) {
+                    navMenu.classList.remove('active');
+                    if (menuIcon) menuIcon.className = 'fas fa-bars';
+                }
+            });
+        }
+
+        // --- 3. Site-Wide Search Functionality ---
+        const searchModal = document.getElementById('searchModal');
+        const searchOpenBtn = document.getElementById('searchOpenBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const resultsList = document.getElementById('searchResultsList');
+        const resultsSummary = document.getElementById('searchResultsSummary');
+        const emptyState = document.getElementById('searchEmptyState');
+
+        let searchData = [];
+        let dataFetched = false;
+
+        async function fetchSearchIndex() {
+            if (dataFetched) return;
+            try {
+                const res = await fetch('/search-index.json');
+                if (res.ok) {
+                    searchData = await res.json();
+                    dataFetched = true;
+                }
+            } catch (err) {
+                console.warn('Could not load search index:', err);
+            }
+        }
+
+        function openSearch() {
+            fetchSearchIndex();
+            searchModal.classList.add('open');
+            searchModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => searchInput.focus(), 50);
+        }
+
+        function closeSearch() {
+            searchModal.classList.remove('open');
+            searchModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        if (searchOpenBtn) searchOpenBtn.addEventListener('click', openSearch);
+        if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeSearch);
+
+        // Click outside modal card to close
+        searchModal.addEventListener('click', function(e) {
+            if (e.target === searchModal) {
+                closeSearch();
+            }
+        });
+
+        // Keyboard shortcuts: '/' or 'Cmd/Ctrl+K' to open, ESC to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchModal.classList.contains('open')) {
+                closeSearch();
+            } else if ((e.key === '/' || (e.ctrlKey && e.key === 'k') || (e.metaKey && e.key === 'k')) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                e.preventDefault();
+                openSearch();
+            }
+        });
+
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchClearBtn.style.display = 'none';
+                executeSearch('');
+                searchInput.focus();
+            });
+        }
+
+        window.quickSearch = function(term) {
+            searchInput.value = term;
+            searchClearBtn.style.display = 'block';
+            executeSearch(term);
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                searchClearBtn.style.display = query.length > 0 ? 'block' : 'none';
+                executeSearch(query);
+            });
+        }
+
+        function executeSearch(query) {
+            if (!query || query.length < 2) {
+                resultsList.innerHTML = '';
+                resultsSummary.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            const qLower = query.toLowerCase();
+            const matches = searchData.filter(item => {
+                const inTitle = item.title.toLowerCase().includes(qLower);
+                const inExcerpt = (item.excerpt || '').toLowerCase().includes(qLower);
+                const inCategory = (item.category || '').toLowerCase().includes(qLower);
+                const inTags = (item.tags || []).some(t => t.toLowerCase().includes(qLower));
+                return inTitle || inExcerpt || inCategory || inTags;
+            });
+
+            emptyState.style.display = 'none';
+            resultsSummary.style.display = 'block';
+            resultsSummary.innerHTML = `Found <strong>${matches.length}</strong> result${matches.length === 1 ? '' : 's'} for "<strong>${escapeHtml(query)}</strong>"`;
+
+            if (matches.length === 0) {
+                resultsList.innerHTML = `
+                    <li class="search-no-results">
+                        <i class="far fa-frown" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-light);"></i>
+                        <p>No matches found. Try searching for "climate", "foldable", "music", or "AI".</p>
+                    </li>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = matches.map(item => `
+                <li class="search-result-item">
+                    <a href="${item.url}" class="search-result-link">
+                        <div class="search-result-meta">
+                            <span class="search-category-pill">${item.category}</span>
+                            <span class="search-result-date">${item.date || ''}</span>
+                        </div>
+                        <h4 class="search-result-title">${highlightMatch(item.title, query)}</h4>
+                        <p class="search-result-excerpt">${highlightMatch(item.excerpt || '', query)}</p>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function highlightMatch(text, query) {
+            if (!text || !query) return escapeHtml(text || '');
+            const escaped = escapeHtml(text);
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return escaped.replace(regex, '<mark class="search-highlight">$1</mark>');
         }
     })();
 </script>
 
+
+    <!-- Top Leaderboard Google Ads Scene (On Every Page) -->
+    
+    <div class="container ad-leaderboard-container">
+        
+        
+
+<!-- Google Ads Scene: Top Leaderboard Banner (728x90 / 970x90 / 320x50 Responsive) -->
+<div class="google-ad-wrapper leaderboard-wrapper" data-ad-type="leaderboard">
+    <div class="google-ad-header">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Ads by Google / AdChoices">
+            <span>AdChoices</span>
+            <svg class="adchoices-icon" viewBox="0 0 12 12" width="12" height="12">
+                <path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/>
+            </svg>
+        </a>
+    </div>
+    
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="8947291032"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene leaderboard-scene">
+        <div class="ad-scene-brand">
+            <span class="ad-badge-google"><i class="fab fa-google"></i> Google Cloud</span>
+            <h4 class="ad-scene-title">Build Intelligence Faster with Vertex AI on Google Cloud</h4>
+            <p class="ad-scene-desc">Access state-of-the-art multimodal Gemini models, enterprise embeddings, and serverless vector search. Start with $300 free credits.</p>
+        </div>
+        <div class="ad-scene-cta">
+            <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noopener noreferrer" class="ad-cta-btn">
+                <span>Start Free</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+    </div>
+    
 
     <!-- Main Content Area -->
     <main>
@@ -107,17 +403,17 @@
 </section>
 
 <div class="container">
-    <!-- Category Filter Pills -->
-    <div class="filter-pills">
-        <span class="filter-pill active">All Tech</span>
-        <span class="filter-pill">Artificial Intelligence</span>
-        <span class="filter-pill">Smartphones & Hardware</span>
-        <span class="filter-pill">Software & Web</span>
-        <span class="filter-pill">Cybersecurity</span>
+    <!-- Category Filter Pills with Auto-Selection Tags -->
+    <div class="filter-pills" id="techFilterPills">
+        <span class="filter-pill active" data-tag="all">All Tech</span>
+        <span class="filter-pill" data-tag="ai">Artificial Intelligence</span>
+        <span class="filter-pill" data-tag="hardware">Smartphones & Hardware</span>
+        <span class="filter-pill" data-tag="software">Software & Web</span>
+        <span class="filter-pill" data-tag="security">Cybersecurity</span>
     </div>
 
     <!-- Featured Post -->
-    <article class="news-card featured" style="margin-bottom: 3rem;">
+    <article class="news-card featured" data-tags="hardware smartphones gadgets innovation mobile" style="margin-bottom: 3rem;">
         <div class="news-image">
             <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80" alt="Foldable smartphone innovation">
         </div>
@@ -132,7 +428,7 @@
 
     <div class="posts-grid">
         <!-- AI Card -->
-        <article class="post-card">
+        <article class="post-card" data-tags="ai machine-learning artificial-intelligence agents neural">
             <div class="post-image">
                 <img src="https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=600&q=80" alt="Artificial Intelligence">
             </div>
@@ -147,41 +443,282 @@
             </div>
         </article>
 
+        <!-- In-Feed Google Ads Card -->
+        <div class="infeed-grid-item" data-tags="ai cloud developer google infrastructure">
+            
+            
+            
+            
+            
+            
+            
+
+<!-- Google Ads Scene: In-Feed Native Card Unit -->
+<div class="google-ad-wrapper infeed-ad-wrapper" data-ad-type="infeed">
+    <div class="ad-infeed-card">
+        <div class="ad-infeed-image">
+            <img src="https://images.unsplash.com/photo-1591453089816-0fbb971b454c?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Sponsored Content">
+            <span class="ad-sponsored-flag">Sponsored Ad</span>
+        </div>
+        <div class="ad-infeed-content">
+            <div class="ad-infeed-meta">
+                <span class="ad-source-brand"><i class="fab fa-google"></i> Google Cloud</span>
+                <span class="ad-infeed-bullet">•</span>
+                <span class="ad-infeed-notice">Recommended for you</span>
+            </div>
+            <h3 class="ad-infeed-title">
+                <a href="https://cloud.google.com/tpu" target="_blank" rel="noopener noreferrer">
+                    Scale Enterprise AI on Google Cloud TPU v5e
+                </a>
+            </h3>
+            <p class="ad-infeed-desc">
+                Cost-effective acceleration for large language models, computer vision training, and low-latency inference on the world&#39;s most scalable tensor infrastructure.
+            </p>
+            <div class="ad-infeed-footer">
+                <span class="ad-action-hint">Promoted Story</span>
+                <a href="https://cloud.google.com/tpu" target="_blank" rel="noopener noreferrer" class="ad-infeed-btn">
+                    Visit Website <i class="fas fa-angle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+        </div>
+
         <!-- Quantum Computing Card -->
-        <article class="post-card">
+        <article class="post-card" data-tags="hardware computing quantum physics chips">
             <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80" alt="Quantum Processor">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80" alt="Quantum Computing Chips">
             </div>
             <div class="post-content">
-                <span class="post-category tech">Quantum Computing</span>
-                <h3 class="post-title"><a href="/posts/future-of-ai/">Room-Temperature Quantum Qubits Demonstrate Stability</a></h3>
-                <p class="post-excerpt">Physics researchers achieve fault-tolerant quantum error correction without cryogenic dilution chillers.</p>
+                <span class="post-category tech">Hardware & Chips</span>
+                <h3 class="post-title"><a href="/posts/revolutionary-foldable-phone/">Quantum Processors Reach 1,000 Logical Qubits</a></h3>
+                <p class="post-excerpt">Breakthrough in topological error correction brings fault-tolerant quantum algorithms within industrial reach.</p>
                 <div class="post-meta">
-                    <span>June 14, 2026</span>
-                    <a href="/posts/future-of-ai/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                    <span>June 11, 2026</span>
+                    <a href="/posts/revolutionary-foldable-phone/" style="color: var(--primary-blue); font-weight: 600;">Explore Specs &rarr;</a>
                 </div>
             </div>
         </article>
 
-        <!-- Electric Mobility Card -->
-        <article class="post-card">
+        <!-- Software Architecture -->
+        <article class="post-card" data-tags="software web frameworks frontend developer">
             <div class="post-image">
-                <img src="https://images.unsplash.com/photo-1558441719-8b489c634a10?auto=format&fit=crop&w=600&q=80" alt="Electric vehicle">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Coding workspace">
             </div>
             <div class="post-content">
-                <span class="post-category tech">Mobility</span>
-                <h3 class="post-title"><a href="/posts/revolutionary-foldable-phone/">Solid-State Batteries Promise 10-Minute Full Charging</a></h3>
-                <p class="post-excerpt">Automotive battery consortium rolls out production pilot for high-energy silicon anode battery cells.</p>
+                <span class="post-category tech">Software & Web</span>
+                <h3 class="post-title"><a href="/posts/simple-post/">Modern Static Site Architecture at Global Scale</a></h3>
+                <p class="post-excerpt">Why engineering teams are replacing monolithic server renderers with blazing fast static generation on edge CDNs.</p>
                 <div class="post-meta">
-                    <span>June 11, 2026</span>
-                    <a href="/posts/revolutionary-foldable-phone/" style="color: var(--primary-blue); font-weight: 600;">Read More &rarr;</a>
+                    <span>June 8, 2026</span>
+                    <a href="/posts/simple-post/" style="color: var(--primary-blue); font-weight: 600;">Read Architecture &rarr;</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Cybersecurity -->
+        <article class="post-card" data-tags="security cybersecurity privacy zero-trust encryption">
+            <div class="post-image">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Cybersecurity lock">
+            </div>
+            <div class="post-content">
+                <span class="post-category tech">Cybersecurity</span>
+                <h3 class="post-title"><a href="/posts/future-of-ai/">Zero-Trust Authentication in the Post-Password Era</a></h3>
+                <p class="post-excerpt">Passkeys, decentralized identity, and hardware security keys are making credential stuffing attacks obsolete.</p>
+                <div class="post-meta">
+                    <span>June 5, 2026</span>
+                    <a href="/posts/future-of-ai/" style="color: var(--primary-blue); font-weight: 600;">Security Audit &rarr;</a>
                 </div>
             </div>
         </article>
     </div>
 </div>
 
+<!-- Category Tabs & Dynamic Tag Filter Script -->
+<script>
+    (function() {
+        function initCategoryFilter() {
+            const filterContainer = document.querySelector('.filter-pills');
+            if (!filterContainer) return;
+
+            const pills = filterContainer.querySelectorAll('.filter-pill');
+            if (!pills.length) return;
+
+            // Find all filterable article items
+            const filterableCards = document.querySelectorAll('[data-tags]');
+            if (!filterableCards.length) return;
+
+            // Empty state container element
+            let emptyState = document.getElementById('categoryFilterEmptyState');
+            if (!emptyState) {
+                emptyState = document.createElement('div');
+                emptyState.id = 'categoryFilterEmptyState';
+                emptyState.className = 'category-filter-empty';
+                emptyState.style.display = 'none';
+                emptyState.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 1.5rem; background: var(--card-bg); border-radius: var(--radius-md); border: 1px dashed var(--border-color); margin: 2rem 0;">
+                        <i class="fas fa-filter" style="font-size: 2.2rem; color: var(--primary-blue); opacity: 0.6; margin-bottom: 0.8rem;"></i>
+                        <h4 style="font-size: 1.25rem; color: var(--text-dark); margin-bottom: 0.4rem;">No articles found under this tag</h4>
+                        <p style="color: var(--text-light); font-size: 0.92rem; margin-bottom: 1.2rem;">Try selecting a different topic or return to all stories.</p>
+                        <button type="button" class="btn btn-outline" id="resetCategoryFilterBtn">Show All Stories</button>
+                    </div>
+                `;
+                
+                // Append after grid or container
+                const grid = document.querySelector('.posts-grid') || document.querySelector('.news-container');
+                if (grid && grid.parentNode) {
+                    grid.parentNode.insertBefore(emptyState, grid.nextSibling);
+                }
+            }
+
+            const resetBtn = document.getElementById('resetCategoryFilterBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => applyFilter('all'));
+            }
+
+            function applyFilter(selectedTag) {
+                const normalizedFilter = (selectedTag || 'all').toLowerCase().trim();
+
+                // Update active class on pills
+                pills.forEach(pill => {
+                    const pillTag = (pill.getAttribute('data-tag') || pill.textContent || '').toLowerCase().trim();
+                    const isAll = (normalizedFilter === 'all' && (pillTag.includes('all') || pillTag === 'all'));
+                    const isMatch = pillTag.includes(normalizedFilter) || normalizedFilter.includes(pillTag) || (pill.getAttribute('data-tag') === normalizedFilter);
+
+                    if (isAll || isMatch) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+
+                // Filter cards
+                let matchCount = 0;
+                filterableCards.forEach(card => {
+                    const cardTags = (card.getAttribute('data-tags') || '').toLowerCase();
+                    const cardCategory = (card.querySelector('.post-category')?.textContent || '').toLowerCase();
+                    const cardTitle = (card.querySelector('h2, h3, h4')?.textContent || '').toLowerCase();
+
+                    const matches = normalizedFilter === 'all' || 
+                                    cardTags.includes(normalizedFilter) || 
+                                    cardCategory.includes(normalizedFilter) ||
+                                    cardTitle.includes(normalizedFilter);
+
+                    if (matches) {
+                        card.style.display = '';
+                        card.classList.remove('filter-hidden');
+                        card.classList.add('filter-visible');
+                        matchCount++;
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.add('filter-hidden');
+                        card.classList.remove('filter-visible');
+                    }
+                });
+
+                // Handle empty state
+                if (matchCount === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+
+                // Update query parameter without page reload
+                try {
+                    const url = new URL(window.location.href);
+                    if (normalizedFilter === 'all') {
+                        url.searchParams.delete('tag');
+                    } else {
+                        url.searchParams.set('tag', normalizedFilter);
+                    }
+                    window.history.replaceState({}, '', url.toString());
+                } catch (e) {}
+            }
+
+            // Click event listeners for filter pills
+            pills.forEach(pill => {
+                pill.style.cursor = 'pointer';
+                pill.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tag = this.getAttribute('data-tag') || this.textContent.trim();
+                    applyFilter(tag);
+                });
+            });
+
+            // Auto-selection on page load from URL (?tag=... or #...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tagFromUrl = urlParams.get('tag') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+            if (tagFromUrl) {
+                applyFilter(tagFromUrl);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCategoryFilter);
+        } else {
+            initCategoryFilter();
+        }
+    })();
+</script>
+
+
     </main>
+
+    <!-- Pre-Footer Billboard Google Ads Scene (On Every Page) -->
+    
+    <div class="container ad-billboard-container">
+        
+        
+
+<!-- Google Ads Scene: Pre-Footer Large Billboard Banner (970x250 / Responsive) -->
+<div class="google-ad-wrapper billboard-wrapper" data-ad-type="billboard">
+    <div class="google-ad-header">
+        <span class="ad-label">SPONSORED SHOWCASE</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Manage Google Ads">
+            <i class="fab fa-google"></i> <span>Google Ad Services</span>
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="9182736450"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene billboard-scene">
+        <div class="billboard-scene-inner">
+            <div class="billboard-text">
+                <span class="billboard-kicker"><i class="fas fa-shield-alt"></i> Official Partner Feature</span>
+                <h3 class="billboard-title">Next-Generation Privacy & Threat Protection with NordVPN</h3>
+                <p class="billboard-desc">Protect your browsing telemetry across public Wi-Fi networks with high-speed 10Gbps servers in 111 countries and built-in malware filtration.</p>
+                <div class="billboard-features">
+                    <span><i class="fas fa-check-circle"></i> Zero-logs audited</span>
+                    <span><i class="fas fa-check-circle"></i> Threat Protection Pro</span>
+                    <span><i class="fas fa-check-circle"></i> 30-day money-back guarantee</span>
+                </div>
+            </div>
+            <div class="billboard-action">
+                <a href="https://nordvpn.com" target="_blank" rel="noopener noreferrer" class="billboard-cta-btn">
+                    <span>Get 71% Off + 3 Months</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <span class="billboard-disclaimer">Special offer for Viral Son readers</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    </div>
+    
 
     <!-- Dynamic Footer -->
     <!-- Dynamic Footer Component -->
@@ -213,9 +750,12 @@
                     <li class="footer-link"><a href="/news/">News</a></li>
                     <li class="footer-link"><a href="/entertainment/">Entertainment</a></li>
                     <li class="footer-link"><a href="/technology/">Technology</a></li>
+                    <li class="footer-link"><a href="/sports/">Sports</a></li>
                     <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
                     <li class="footer-link"><a href="/community/">Community Hub</a></li>
                     <li class="footer-link"><a href="/about/">About Us</a></li>
+                    <li class="footer-link"><a href="/contact/">Contact Us</a></li>
+                    <li class="footer-link"><a href="/terms/">Terms &amp; Conditions</a></li>
                 </ul>
             </div>
 
@@ -255,10 +795,258 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2026 Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
+            <p>&copy; <span id="footerCurrentYear">2026</span> Viral Son. All rights reserved. Built with 11ty for GitHub & Netlify.</p>
         </div>
     </div>
 </footer>
 
+<!-- Auto-Update Yearly Date Script -->
+<script>
+    (function() {
+        const yearEl = document.getElementById('footerCurrentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    })();
+</script>
+
+
+    <!-- Sitewide Newsletter Popup Modal -->
+    <!-- Triggered Newsletter Signup Modal with Blur Backdrop & Theme Matching -->
+<div class="newsletter-modal-backdrop" id="newsletterModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="newsletter-modal-card" id="newsletterModalCard">
+        <!-- Prominent Close Button -->
+        <button type="button" class="newsletter-close-btn" id="newsletterCloseBtn" aria-label="Close newsletter popup" title="Close (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Badge -->
+        <div class="newsletter-modal-badge">
+            <i class="fas fa-bolt" style="margin-right: 5px; color: var(--primary-blue);"></i> Daily Viral Dispatch
+        </div>
+
+        <h3 class="newsletter-modal-title">Stay Ahead of the Curve</h3>
+        <p class="newsletter-modal-desc">
+            Get our editors' top investigative scoops, breaking tech & sports reports, and cultural premieres delivered directly to your inbox every morning.
+        </p>
+
+        <!-- Newsletter Submission Form -->
+        <form id="newsletterModalForm" class="newsletter-modal-form">
+            <div class="newsletter-input-group">
+                <input type="email" id="newsletterModalEmail" class="newsletter-modal-input" placeholder="Enter your email address" required autocomplete="email">
+                <button type="submit" class="btn newsletter-modal-submit" id="newsletterModalSubmit">
+                    <span>Subscribe Free</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </div>
+            <p class="newsletter-privacy-note">
+                <i class="fas fa-shield-alt" style="color: var(--green); margin-right: 4px;"></i> Zero spam. One-click unsubscribe anytime.
+            </p>
+        </form>
+
+        <!-- Success Confirmation State (shown post-submit) -->
+        <div id="newsletterSuccessState" class="newsletter-success-state" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: var(--green); margin-bottom: 0.8rem;"></i>
+            <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark);">Welcome to Viral Son!</h4>
+            <p style="font-size: 0.92rem; color: var(--text-light);">You're on the VIP list. We've queued your first morning briefing.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const COOKIE_NAME = 'viralson_newsletter_suppressed';
+        const SUPPRESSION_DAYS = 14;
+
+        // Check if on home/index page
+        const path = window.location.pathname;
+        const isIndexPage = path === '/' || path === '/index.html' || path === '';
+
+        // Only trigger on the index page
+        if (!isIndexPage) return;
+
+        // Cookie & Storage Helpers
+        function getCookie(name) {
+            try {
+                const match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+                return match ? decodeURIComponent(match[3]) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            try {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+                localStorage.setItem(name, 'true');
+            } catch (e) {}
+        }
+
+        function isSuppressed() {
+            try {
+                if (getCookie(COOKIE_NAME) === 'true') return true;
+                if (localStorage.getItem(COOKIE_NAME) === 'true') return true;
+            } catch (e) {}
+            return false;
+        }
+
+        if (isSuppressed()) return;
+
+        const backdrop = document.getElementById('newsletterModalBackdrop');
+        const card = document.getElementById('newsletterModalCard');
+        const closeBtn = document.getElementById('newsletterCloseBtn');
+        const form = document.getElementById('newsletterModalForm');
+        const successState = document.getElementById('newsletterSuccessState');
+        const emailInput = document.getElementById('newsletterModalEmail');
+
+        if (!backdrop || !card) return;
+
+        let modalShown = false;
+        let timer = null;
+
+        function showModal() {
+            if (modalShown || isSuppressed()) return;
+            modalShown = true;
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('scroll', checkScroll);
+
+            backdrop.style.display = 'flex';
+            backdrop.setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                backdrop.classList.add('visible');
+                if (emailInput) emailInput.focus();
+            }, 30);
+        }
+
+        function closeModal(suppressDays = SUPPRESSION_DAYS) {
+            setCookie(COOKIE_NAME, 'true', suppressDays);
+            backdrop.classList.remove('visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 350);
+        }
+
+        // Trigger 1: 50% Scroll of page content
+        function checkScroll() {
+            if (modalShown) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal <= 0) return;
+            const currentScroll = window.scrollY || window.pageYOffset;
+            if ((currentScroll / scrollTotal) >= 0.50) {
+                showModal();
+            }
+        }
+
+        // Trigger 2: Exactly 30 seconds on index page
+        timer = setTimeout(showModal, 30000);
+
+        window.addEventListener('scroll', checkScroll, { passive: true });
+
+        // Close Handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeModal(SUPPRESSION_DAYS);
+            });
+        }
+
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('visible')) {
+                closeModal(SUPPRESSION_DAYS);
+            }
+        });
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                if (!email) return;
+
+                form.style.display = 'none';
+                if (successState) successState.style.display = 'block';
+
+                setCookie(COOKIE_NAME, 'true', 60);
+
+                setTimeout(function() {
+                    closeModal(60);
+                }, 2600);
+            });
+        }
+    })();
+</script>
+
+
+    <!-- Sticky Bottom Viewport Floating Google Ad Anchor -->
+    
+        
+        
+
+<!-- Google Ads Scene: Sticky Bottom Viewport Floating Anchor Ad -->
+<div class="google-ad-anchor-container" id="googleAdAnchor">
+    <div class="google-ad-anchor-bar">
+        <div class="anchor-ad-content">
+            <div class="anchor-ad-badge">
+                <span class="ad-label">AD</span>
+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="anchor-adchoices" title="Ads by Google">
+                    <svg viewBox="0 0 12 12" width="10" height="10"><path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/></svg>
+                </a>
+            </div>
+            <div class="anchor-ad-text">
+                <strong>Google Developers:</strong> Accelerate your full-stack roadmap with Firebase Data Connect and Studio tooling.
+            </div>
+            <a href="https://firebase.google.com" target="_blank" rel="noopener noreferrer" class="anchor-ad-cta">
+                Try Free &rarr;
+            </a>
+        </div>
+        <button type="button" class="anchor-close-btn" onclick="dismissAnchorAd()" aria-label="Close Ad">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+
+
+    
+
+    <!-- Safe Google AdSense & Anchor Control Script -->
+    <script>
+        (function() {
+            // Dismiss anchor ad
+            window.dismissAnchorAd = function() {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) {
+                    anchor.classList.add('hidden');
+                    sessionStorage.setItem('viralson_anchor_dismissed', 'true');
+                }
+            };
+
+            // Check if dismissed in this session
+            if (sessionStorage.getItem('viralson_anchor_dismissed') === 'true') {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) anchor.classList.add('hidden');
+            }
+
+            // Safe push for Google AdSense slots without breaking if adblocker is present
+            try {
+                const adSlots = document.querySelectorAll('.adsbygoogle');
+                if (adSlots.length > 0 && window.adsbygoogle) {
+                    adSlots.forEach(() => {
+                        try {
+                            (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        } catch(e) {}
+                    });
+                }
+            } catch(e) {}
+        })();
+    </script>
 </body>
 </html>

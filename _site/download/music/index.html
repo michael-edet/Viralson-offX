@@ -21,6 +21,9 @@
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/Assets/CD/CSS/index.css">
 
+    <!-- Google AdSense Official Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9481237418920194" crossorigin="anonymous"></script>
+
     <!-- Theme Initialization to prevent FOUC -->
     <script>
         (function() {
@@ -86,17 +89,12 @@
                 <li><a href="/lifestyle/" class="nav-link ">Lifestyle</a></li>
                 <li><a href="/community/" class="nav-link ">Community</a></li>
                 <li><a href="/about/" class="nav-link ">About</a></li>
+                <li><a href="/contact/" class="nav-link ">Contact</a></li>
             </ul>
         </nav>
 
         <!-- Header Actions: Search, Dark Mode, Mobile Toggle -->
         <div class="header-actions">
-            <!-- Studio CMS Button -->
-            <a href="/admin/" class="action-btn studio-trigger" aria-label="Open Content Management Studio" title="Open Content Publishing Studio" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-dark); background: var(--light-blue); padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.82rem; border: 1px solid rgba(52, 152, 219, 0.25);">
-                <i class="fas fa-feather-alt" style="color: var(--primary-blue);"></i>
-                <span class="studio-label">CMS Studio</span>
-            </a>
-
             <!-- Search Button -->
             <button class="action-btn search-trigger" id="searchOpenBtn" aria-label="Open search dialog" title="Search site (Press /)">
                 <i class="fas fa-search"></i>
@@ -347,6 +345,53 @@
 </script>
 
 
+    <!-- Top Leaderboard Google Ads Scene (On Every Page) -->
+    
+    <div class="container ad-leaderboard-container">
+        
+        
+
+<!-- Google Ads Scene: Top Leaderboard Banner (728x90 / 970x90 / 320x50 Responsive) -->
+<div class="google-ad-wrapper leaderboard-wrapper" data-ad-type="leaderboard">
+    <div class="google-ad-header">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Ads by Google / AdChoices">
+            <span>AdChoices</span>
+            <svg class="adchoices-icon" viewBox="0 0 12 12" width="12" height="12">
+                <path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/>
+            </svg>
+        </a>
+    </div>
+    
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="8947291032"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene leaderboard-scene">
+        <div class="ad-scene-brand">
+            <span class="ad-badge-google"><i class="fab fa-google"></i> Google Cloud</span>
+            <h4 class="ad-scene-title">Build Intelligence Faster with Vertex AI on Google Cloud</h4>
+            <p class="ad-scene-desc">Access state-of-the-art multimodal Gemini models, enterprise embeddings, and serverless vector search. Start with $300 free credits.</p>
+        </div>
+        <div class="ad-scene-cta">
+            <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noopener noreferrer" class="ad-cta-btn">
+                <span>Start Free</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+    </div>
+    
+
     <!-- Main Content Area -->
     <main>
         
@@ -537,6 +582,49 @@
 
             </div>
 
+            <!-- In-Article Google Ads Native Scene -->
+            
+            
+
+<!-- Google Ads Scene: In-Article Mid-Content Native Unit -->
+<div class="google-ad-wrapper inarticle-ad-wrapper" data-ad-type="inarticle">
+    <div class="google-ad-header">
+        <span class="ad-label">ADVERTISEMENT</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link">
+            <span>Ads by Google</span>
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="3819204918"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene inarticle-scene">
+        <div class="inarticle-grid">
+            <div class="inarticle-info">
+                <span class="ad-category-tag"><i class="fas fa-code"></i> Developer Platform</span>
+                <h4 class="ad-scene-title">GitHub Copilot Enterprise: Code at the Speed of Thought</h4>
+                <p class="ad-scene-desc">Context-aware pair programming trained on your organization's private repositories. Boost sprint delivery by 55% while maintaining enterprise security compliance.</p>
+                <a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer" class="ad-cta-btn">
+                    <span>Explore Copilot</span>
+                    <i class="fas fa-external-link-alt" style="font-size: 0.75rem;"></i>
+                </a>
+            </div>
+            <div class="inarticle-thumbnail">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80" alt="Code productivity">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
             <!-- Post Tags & Share Buttons -->
             <div class="post-footer-tools">
                 <div class="post-tags">
@@ -582,14 +670,139 @@
                 </div>
             </div>
 
-            <!-- Author Box -->
-            <div class="author-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=150&amp;q=80" alt="Viral Son Music Desk" class="author-avatar">
-                <div class="author-info">
-                    <h4>Viral Son Music Desk</h4>
-                    <p>Covering music premieres, cinematic soundtracks, international festivals, and emerging electronic innovators.</p>
+            <!-- Reusable Author Profile Section -->
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="author-profile-card" aria-label="Author Profile: Viral Son Music Desk">
+    <div class="author-profile-inner">
+        <!-- Author Avatar & Status Badge -->
+        <div class="author-profile-media">
+            <div class="author-avatar-wrapper">
+                <img 
+                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&amp;fit=crop&amp;w=300&amp;q=80" 
+                    alt="Viral Son Music Desk" 
+                    class="author-profile-img" 
+                    loading="lazy"
+                    width="96" 
+                    height="96"
+                    onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'"
+                >
+                <span class="author-verified-badge" title="Verified Editorial Staff" aria-label="Verified staff badge">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Author Biography & Metadata -->
+        <div class="author-profile-content">
+            <div class="author-profile-header">
+                <div class="author-identity">
+                    <span class="author-kicker">Written By</span>
+                    <h3 class="author-name">Viral Son Music Desk</h3>
+                    <div class="author-credentials">
+                        <span class="author-role">Music &amp; Audio Curation Team</span>
+                        
+                        <span class="author-separator" aria-hidden="true">&middot;</span>
+                        <span class="author-desk"><i class="fas fa-map-marker-alt" style="font-size: 0.72rem; margin-right: 3px; opacity: 0.8;"></i>Sound Lab</span>
+                        
+                    </div>
+                </div>
+
+                <!-- Social Follow Icons Row -->
+                <div class="author-social-links" aria-label="Connect with Viral Son Music Desk">
+                    
+                    <a href="https://twitter.com/viralson_music" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Follow Viral Son Music Desk on X (Twitter)" aria-label="Twitter profile">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    
+
+                    
+
+                    
+                    <a href="https://viralson.com/download/music/" target="_blank" rel="noopener noreferrer" class="author-social-btn" title="Visit Viral Son Music Desk's personal site" aria-label="Personal website">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    
+
+                    
+
+                    
+
+                    
                 </div>
             </div>
+
+            <!-- Author Bio Paragraph with Expand / Collapse Feature -->
+            <div class="author-bio-container" id="authorBioContainer_viral-son-music-desk">
+                <p class="author-bio-text author-bio-summary">Covering music premieres, cinematic soundtracks, international festivals, and emerging electronic innovators.</p>
+                
+                <div class="author-bio-extended" id="authorBioExtended_viral-son-music-desk" style="display: none;">
+                    <p class="author-bio-text author-bio-full-details">Curating sonic breakthroughs, spatial audio releases, emerging producers, and lossless listening experiences across all digital and vinyl releases. Our sound engineers review multitrack stems, master recordings, and live acoustic arrangements.</p>
+                </div>
+                <button type="button" class="author-bio-toggle-btn" aria-expanded="false" aria-controls="authorBioExtended_viral-son-music-desk" onclick="toggleAuthorBio(this, 'authorBioExtended_viral-son-music-desk')">
+                    <span class="bio-toggle-label">Read Full Biography</span>
+                    <i class="fas fa-chevron-down bio-toggle-icon"></i>
+                </button>
+                
+            </div>
+
+            <script>
+                if (typeof window.toggleAuthorBio !== 'function') {
+                    window.toggleAuthorBio = function(btn, targetId) {
+                        const extendedEl = document.getElementById(targetId);
+                        if (!extendedEl) return;
+                        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                        const labelEl = btn.querySelector('.bio-toggle-label');
+                        const iconEl = btn.querySelector('.bio-toggle-icon');
+                        
+                        if (isExpanded) {
+                            extendedEl.style.display = 'none';
+                            btn.setAttribute('aria-expanded', 'false');
+                            btn.classList.remove('expanded');
+                            if (labelEl) labelEl.textContent = 'Read Full Biography';
+                            if (iconEl) iconEl.className = 'fas fa-chevron-down bio-toggle-icon';
+                        } else {
+                            extendedEl.style.display = 'block';
+                            btn.setAttribute('aria-expanded', 'true');
+                            btn.classList.add('expanded');
+                            if (labelEl) labelEl.textContent = 'Collapse Biography';
+                            if (iconEl) iconEl.className = 'fas fa-chevron-up bio-toggle-icon';
+                        }
+                    };
+                }
+            </script>
+
+            <!-- Author Card Bottom Actions / Attribution -->
+            <div class="author-profile-footer">
+                <span class="author-articles-meta">
+                    <i class="far fa-newspaper" style="margin-right: 4px;"></i> Contributor to Viral Son Editorial
+                </span>
+                <a href="/about/" class="author-desk-link">
+                    <span>About Viral Son Newsroom</span>
+                    <i class="fas fa-arrow-right" style="font-size: 0.72rem; margin-left: 4px;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 
             <!-- Auto-Generated Media Player Widgets Engine (Video/Music Detection & Playback Controls) -->
             <!-- Auto-Generating Visual/Audio Media Player Widgets Engine -->
@@ -1329,11 +1542,88 @@
                         <!-- Populated by comments.js script below -->
                     </div>
                 </div>
+
+                <!-- Comment Report Confirmation Modal Dialog -->
+                <div id="commentReportModal" class="comment-report-backdrop" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle" style="display: none;">
+                    <div class="comment-report-dialog">
+                        <div class="report-dialog-header">
+                            <h4 id="reportModalTitle" style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-flag" style="color: var(--red);"></i> Report Comment for Review
+                            </h4>
+                            <button type="button" class="report-dialog-close" onclick="closeReportDialog()" aria-label="Close dialog">&times;</button>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin: 0.75rem 0 1.25rem 0; line-height: 1.5;">
+                            Help our moderation team keep conversations constructive and civil. Please confirm if this comment violates our community guidelines:
+                        </p>
+                        <form id="commentReportForm" onsubmit="handleConfirmReport(event)">
+                            <input type="hidden" id="reportTargetCommentId" value="">
+                            <div class="form-group" style="margin-bottom: 1.25rem;">
+                                <label for="reportReasonSelect" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-dark);">
+                                    Reason for Report <span style="color: var(--red);">*</span>
+                                </label>
+                                <select id="reportReasonSelect" class="form-control" required style="width: 100%;">
+                                    <option value="Spam or Unsolicited Promotion">Spam or Unsolicited Promotion</option>
+                                    <option value="Harassment or Hate Speech">Harassment, Insults, or Hate Speech</option>
+                                    <option value="Misinformation or False Claims">Misinformation or Deceptive Claims</option>
+                                    <option value="Inappropriate or Vulgar Content">Inappropriate or Vulgar Content</option>
+                                    <option value="Other Policy Violation">Other Code of Conduct Violation</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                                <button type="button" class="btn btn-outline" onclick="closeReportDialog()" style="padding: 8px 16px;">Cancel</button>
+                                <button type="submit" class="btn" style="background-color: var(--red); border-color: var(--red); padding: 8px 18px; color: #fff;">
+                                    <i class="fas fa-shield-alt"></i> Confirm & Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </section>
         </article>
 
         <!-- Sidebar -->
         <aside class="news-sidebar">
+            <!-- Sidebar Google Ads Display Unit -->
+            
+            
+
+<!-- Google Ads Scene: Sidebar Display Unit (300x250 / 300x600 Half-Page) -->
+<div class="google-ad-wrapper sidebar-ad-wrapper" data-ad-type="sidebar">
+    <div class="google-ad-header">
+        <span class="ad-label">SPONSORED</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Ads by Google">
+            <i class="fab fa-google" style="font-size: 0.7rem; margin-right: 2px;"></i> Ad
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="4920192831"
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene sidebar-scene">
+        <div class="ad-scene-media">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80" alt="Google Hardware Showcase">
+            <span class="ad-sponsored-pill">Featured Hardware</span>
+        </div>
+        <div class="ad-scene-content">
+            <h4 class="ad-scene-title">Google Pixel 9 Pro Fold</h4>
+            <p class="ad-scene-desc">The thinnest foldable with Super Actua Flex displays and generative Gemini intelligence built right in.</p>
+            <div class="ad-scene-footer">
+                <span class="ad-price-tag">From $1,799</span>
+                <a href="https://store.google.com" target="_blank" rel="noopener noreferrer" class="ad-cta-btn small">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
             <div class="sidebar-widget">
                 <h3 class="sidebar-title">Trending in Entertainment</h3>
                 <ul class="trending-list">
@@ -1460,7 +1750,7 @@
             }
 
             container.innerHTML = comments.map(c => `
-                <div class="comment-card" id="comment-${c.id}">
+                <div class="comment-card ${c.reported ? 'comment-flagged' : ''}" id="comment-${c.id}">
                     <div class="comment-avatar-wrapper">
                         <img src="${c.avatar}" alt="${escapeHTML(c.author)}" class="comment-avatar">
                     </div>
@@ -1470,13 +1760,22 @@
                             <span class="comment-timestamp">${c.date}</span>
                         </div>
                         <p class="comment-text-paragraph">${escapeHTML(c.text)}</p>
+                        ${c.reported ? `
+                            <div class="comment-reported-tag" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--red); background: rgba(231, 76, 60, 0.1); padding: 3px 8px; border-radius: 4px; margin-bottom: 0.6rem; border: 1px solid rgba(231, 76, 60, 0.25);">
+                                <i class="fas fa-shield-alt"></i> Flagged for moderator review (${escapeHTML(c.reportedReason || 'Policy check')})
+                            </div>
+                        ` : ''}
                         <div class="comment-actions-bar">
-                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')">
+                            <button type="button" class="comment-action-btn like-btn ${c.userLiked ? 'liked' : ''}" onclick="toggleLike('${c.id}')" aria-label="Like comment">
                                 <i class="${c.userLiked ? 'fas' : 'far'} fa-heart"></i>
                                 <span>${c.likes}</span>
                             </button>
-                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')">
+                            <button type="button" class="comment-action-btn reply-btn" onclick="startReply('${escapeHTML(c.author)}')" aria-label="Reply to comment">
                                 <i class="fas fa-reply"></i> Reply
+                            </button>
+                            <button type="button" class="comment-action-btn report-btn ${c.reported ? 'reported' : ''}" onclick="openReportDialog('${c.id}')" ${c.reported ? 'disabled title="Comment is already reported"' : 'title="Report this comment for moderator review"'} aria-label="Report comment">
+                                <i class="${c.reported ? 'fas fa-shield-alt' : 'far fa-flag'}"></i>
+                                <span>${c.reported ? 'Reported' : 'Report'}</span>
                             </button>
                         </div>
                     </div>
@@ -1505,6 +1804,51 @@
                 textarea.value = `@${authorName} `;
                 textarea.focus();
                 textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        // --- Comment Report Confirmation Flow ---
+        window.openReportDialog = function(commentId) {
+            const modal = document.getElementById('commentReportModal');
+            const targetInput = document.getElementById('reportTargetCommentId');
+            if (modal && targetInput) {
+                targetInput.value = commentId;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeReportDialog = function() {
+            const modal = document.getElementById('commentReportModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        };
+
+        window.handleConfirmReport = function(e) {
+            e.preventDefault();
+            const commentId = document.getElementById('reportTargetCommentId')?.value;
+            const reason = document.getElementById('reportReasonSelect')?.value || 'Community guideline check';
+            if (!commentId) return;
+
+            const comments = getComments();
+            const targetComment = comments.find(c => c.id === commentId);
+            if (targetComment) {
+                targetComment.reported = true;
+                targetComment.reportedReason = reason;
+                targetComment.reportedAt = new Date().toISOString();
+                saveComments(comments);
+
+                closeReportDialog();
+
+                // Show affirmative confirmation message
+                const statusMsg = document.getElementById('commentStatusMessage');
+                if (statusMsg) {
+                    statusMsg.innerHTML = '<i class="fas fa-shield-alt" style="color: var(--green);"></i> Comment reported to moderation team. Thank you!';
+                    statusMsg.style.display = 'inline';
+                    setTimeout(() => { statusMsg.style.display = 'none'; }, 5000);
+                }
             }
         };
 
@@ -1607,6 +1951,58 @@
 
     </main>
 
+    <!-- Pre-Footer Billboard Google Ads Scene (On Every Page) -->
+    
+    <div class="container ad-billboard-container">
+        
+        
+
+<!-- Google Ads Scene: Pre-Footer Large Billboard Banner (970x250 / Responsive) -->
+<div class="google-ad-wrapper billboard-wrapper" data-ad-type="billboard">
+    <div class="google-ad-header">
+        <span class="ad-label">SPONSORED SHOWCASE</span>
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="adchoices-link" title="Manage Google Ads">
+            <i class="fab fa-google"></i> <span>Google Ad Services</span>
+        </a>
+    </div>
+
+    <!-- Google AdSense Tag -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9481237418920194"
+         data-ad-slot="9182736450"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+    <!-- Visual Ad Scene Display -->
+    <div class="ad-creative-scene billboard-scene">
+        <div class="billboard-scene-inner">
+            <div class="billboard-text">
+                <span class="billboard-kicker"><i class="fas fa-shield-alt"></i> Official Partner Feature</span>
+                <h3 class="billboard-title">Next-Generation Privacy & Threat Protection with NordVPN</h3>
+                <p class="billboard-desc">Protect your browsing telemetry across public Wi-Fi networks with high-speed 10Gbps servers in 111 countries and built-in malware filtration.</p>
+                <div class="billboard-features">
+                    <span><i class="fas fa-check-circle"></i> Zero-logs audited</span>
+                    <span><i class="fas fa-check-circle"></i> Threat Protection Pro</span>
+                    <span><i class="fas fa-check-circle"></i> 30-day money-back guarantee</span>
+                </div>
+            </div>
+            <div class="billboard-action">
+                <a href="https://nordvpn.com" target="_blank" rel="noopener noreferrer" class="billboard-cta-btn">
+                    <span>Get 71% Off + 3 Months</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <span class="billboard-disclaimer">Special offer for Viral Son readers</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    </div>
+    
+
     <!-- Dynamic Footer -->
     <!-- Dynamic Footer Component -->
 <footer>
@@ -1641,7 +2037,8 @@
                     <li class="footer-link"><a href="/lifestyle/">Lifestyle</a></li>
                     <li class="footer-link"><a href="/community/">Community Hub</a></li>
                     <li class="footer-link"><a href="/about/">About Us</a></li>
-                    <li class="footer-link"><a href="/admin/"><i class="fas fa-feather-alt" style="font-size: 0.8rem; margin-right: 4px; color: var(--primary-blue);"></i> Content Studio</a></li>
+                    <li class="footer-link"><a href="/contact/">Contact Us</a></li>
+                    <li class="footer-link"><a href="/terms/">Terms &amp; Conditions</a></li>
                 </ul>
             </div>
 
@@ -1871,5 +2268,68 @@
     })();
 </script>
 
+
+    <!-- Sticky Bottom Viewport Floating Google Ad Anchor -->
+    
+        
+        
+
+<!-- Google Ads Scene: Sticky Bottom Viewport Floating Anchor Ad -->
+<div class="google-ad-anchor-container" id="googleAdAnchor">
+    <div class="google-ad-anchor-bar">
+        <div class="anchor-ad-content">
+            <div class="anchor-ad-badge">
+                <span class="ad-label">AD</span>
+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="anchor-adchoices" title="Ads by Google">
+                    <svg viewBox="0 0 12 12" width="10" height="10"><path fill="currentColor" d="M1 1h10v10H1V1zm1 1v8h8V2H2zm2 2h4v1H4V4zm0 2h4v1H4V6zm0 2h2v1H4V8z"/></svg>
+                </a>
+            </div>
+            <div class="anchor-ad-text">
+                <strong>Google Developers:</strong> Accelerate your full-stack roadmap with Firebase Data Connect and Studio tooling.
+            </div>
+            <a href="https://firebase.google.com" target="_blank" rel="noopener noreferrer" class="anchor-ad-cta">
+                Try Free &rarr;
+            </a>
+        </div>
+        <button type="button" class="anchor-close-btn" onclick="dismissAnchorAd()" aria-label="Close Ad">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+
+
+    
+
+    <!-- Safe Google AdSense & Anchor Control Script -->
+    <script>
+        (function() {
+            // Dismiss anchor ad
+            window.dismissAnchorAd = function() {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) {
+                    anchor.classList.add('hidden');
+                    sessionStorage.setItem('viralson_anchor_dismissed', 'true');
+                }
+            };
+
+            // Check if dismissed in this session
+            if (sessionStorage.getItem('viralson_anchor_dismissed') === 'true') {
+                const anchor = document.getElementById('googleAdAnchor');
+                if (anchor) anchor.classList.add('hidden');
+            }
+
+            // Safe push for Google AdSense slots without breaking if adblocker is present
+            try {
+                const adSlots = document.querySelectorAll('.adsbygoogle');
+                if (adSlots.length > 0 && window.adsbygoogle) {
+                    adSlots.forEach(() => {
+                        try {
+                            (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        } catch(e) {}
+                    });
+                }
+            } catch(e) {}
+        })();
+    </script>
 </body>
 </html>
